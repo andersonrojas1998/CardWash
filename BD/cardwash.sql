@@ -171,6 +171,21 @@ CREATE TABLE IF NOT EXISTS `marca` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `unidad_de_medida`
+--
+
+DROP TABLE IF EXISTS `unidad_de_medida`;
+CREATE TABLE IF NOT EXISTS `unidad_de_medida` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `abreviatura` varchar(45) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_marca`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `producto`
 --
 
@@ -180,9 +195,11 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `nombre` varchar(45) DEFAULT NULL,
   `id_marca` int(11) NOT NULL,
   `id_tipo_producto` int(11) NOT NULL,
+  `id_unidad_de_medida` int(11) NOT NULL,
   PRIMARY KEY (`id_producto`,`id_tipo_producto`),
   KEY `fk_producto_marca_idx` (`id_marca`),
-  KEY `fk_producto_tipo_producto1_idx` (`id_tipo_producto`)
+  KEY `fk_producto_tipo_producto1_idx` (`id_tipo_producto`),
+  KEY `fk_producto_unidad_de_medida_idx` (`id_unidad_de_medida`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -203,6 +220,12 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_slug_unique` (`slug`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `role_user`
+--
+
+INSERT INTO `roles` (`id`, `name`, `slug`) VALUE(1, 'ADMIN', 'ADMIN');
 
 -- --------------------------------------------------------
 
@@ -373,9 +396,9 @@ INSERT INTO `system_submenu` (`id`, `id_menu`, `nombre`, `url`, `permiso_requeri
 
 DROP TABLE IF EXISTS `tipo_producto`;
 CREATE TABLE IF NOT EXISTS `tipo_producto` (
-  `id` int(11) NOT NULL,
+  `id_tipo_producto` int(11) NOT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id_tipo_producto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -480,7 +503,8 @@ ALTER TABLE `egresos_productos`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `fk_producto_marca` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto_tipo_producto1` FOREIGN KEY (`id_tipo_producto`) REFERENCES `tipo_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_producto_tipo_producto1` FOREIGN KEY (`id_tipo_producto`) REFERENCES `tipo_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_producto_unidad_de_medida` FOREIGN KEY (`id_unidad_de_medida`) REFERENCES `unidad_de_medida` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `servicio_tipo_vehiculo`
