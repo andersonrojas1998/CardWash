@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProducto;
+use App\Model\DetalleCompraProductos;
 use App\Model\Producto;
 use Illuminate\Http\Request;
 use Exception;
@@ -26,7 +27,7 @@ class ProductoController extends Controller
 
             $producto->tipo_producto = $producto->tipo_producto();
 
-            $producto->unidad_de_medida = $producto->unidad_de_medida();
+            $producto->cantidad = $producto->cantidad();
 
             array_push($data['data'], $producto);
         }
@@ -66,5 +67,10 @@ class ProductoController extends Controller
     public function destroy(Producto $producto){
         $producto->delete();
         return redirect()->route('producto.index')->with('success', 'Se ha eliminado el producto satisfactoriamente.');
+    }
+
+    public function getQuantity(Producto $producto)
+    {
+        return response()->json($producto->cantidad());
     }
 }

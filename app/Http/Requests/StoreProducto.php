@@ -29,7 +29,7 @@ class StoreProducto extends FormRequest
             'nombre' => 'required',
             'id_marca' => 'required',
             'id_tipo_producto' => 'required',
-            'id_unidad_de_medida' => 'required'
+            'es_de_venta' => 'required'
         ];
     }
 
@@ -39,12 +39,12 @@ class StoreProducto extends FormRequest
             'nombre.required' => 'El nombre es requerido',
             'id_marca.required' => 'La marca es requerida',
             'id_tipo_producto.required' => 'El tipo de producto es requerido',
-            'id_unidad_de_medida.required' => 'La unidad de medida es requerida'
+            'es_de_venta.required' => 'Seleccione si el producto es de venta o de uso interno'
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    /*protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
-    }
+    }*/
 }

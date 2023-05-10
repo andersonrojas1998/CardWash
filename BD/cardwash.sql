@@ -72,13 +72,14 @@ CREATE TABLE IF NOT EXISTS `detalle_compra_productos` (
   `id_detalle_compra` int(11) NOT NULL AUTO_INCREMENT,
   `id_producto` int(11) NOT NULL,
   `id_compra` int(11) NOT NULL,
+  `id_unidad_de_medida` int(11) NOT NULL,
   `cantidad` int(11) DEFAULT NULL,
   `precio_compra` float DEFAULT NULL,
   `precio_venta` float DEFAULT NULL,
-  `referencia` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_detalle_compra`),
   KEY `fk_producto_has_compra_compra1_idx` (`id_compra`),
-  KEY `fk_producto_has_compra_producto1_idx` (`id_producto`)
+  KEY `fk_producto_has_compra_producto1_idx` (`id_producto`),
+  KEY `fk_producto_has_compra_unidad_de_meidida1_idx` (`id_unidad_de_meidida`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -149,9 +150,9 @@ CREATE TABLE IF NOT EXISTS `egresos_productos` (
 
 DROP TABLE IF EXISTS `estado`;
 CREATE TABLE IF NOT EXISTS `estado` (
-  `id_estado` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_estado`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -195,11 +196,9 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `nombre` varchar(45) DEFAULT NULL,
   `id_marca` int(11) NOT NULL,
   `id_tipo_producto` int(11) NOT NULL,
-  `id_unidad_de_medida` int(11) NOT NULL,
   PRIMARY KEY (`id_producto`,`id_tipo_producto`),
   KEY `fk_producto_marca_idx` (`id_marca`),
-  KEY `fk_producto_tipo_producto1_idx` (`id_tipo_producto`),
-  KEY `fk_producto_unidad_de_medida_idx` (`id_unidad_de_medida`)
+  KEY `fk_producto_tipo_producto1_idx` (`id_tipo_producto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -222,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `role_user`
+-- Volcado de datos para la tabla `role`
 --
 
 INSERT INTO `roles` (`id`, `name`, `slug`) VALUE(1, 'ADMIN', 'ADMIN');
@@ -326,8 +325,8 @@ CREATE TABLE IF NOT EXISTS `system_menu` (
 --
 
 INSERT INTO `system_menu` (`id`, `nombre`, `logo`, `created_at`, `updated_at`) VALUES
-(1, 'Usuarios', 'mdi mdi-account-card-details', '2021-06-11 14:46:24', '2021-06-11 14:46:24'),
-(2, 'Tareas', 'mdi mdi-format-list-bulleted-type', '2021-06-11 14:46:42', '2021-06-11 14:46:42');
+(1, 'Productos', 'mdi mdi-package', '2021-06-11 14:46:24', '2021-06-11 14:46:24'),
+(2, 'Compras', 'mdi mdi-package', '2021-06-11 14:46:42', '2021-06-11 14:46:42');
 
 -- --------------------------------------------------------
 
@@ -385,8 +384,8 @@ CREATE TABLE IF NOT EXISTS `system_submenu` (
 --
 
 INSERT INTO `system_submenu` (`id`, `id_menu`, `nombre`, `url`, `permiso_requerido`, `logo`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Inicio', '/User', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:31:16', '2021-10-21 04:31:16'),
-(2, 2, 'Inicio', '/task', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:30:44', '2021-10-21 04:30:44');
+(1, 1, 'Inicio', '/producto', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:31:16', '2021-10-21 04:31:16'),
+(2, 2, 'Inicio', '/compra', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:30:44', '2021-10-21 04:30:44');
 
 -- --------------------------------------------------------
 
@@ -470,14 +469,15 @@ CREATE TABLE IF NOT EXISTS `venta` (
 --
 ALTER TABLE `compra`
   ADD CONSTRAINT `fk_compra_condiciones1` FOREIGN KEY (`condiciones_id`) REFERENCES `condiciones` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_compra_estado1` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_compra_estado1` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `detalle_compra_productos`
 --
 ALTER TABLE `detalle_compra_productos`
   ADD CONSTRAINT `fk_producto_has_compra_compra1` FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id_compra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto_has_compra_producto1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_producto_has_compra_producto1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_producto_has_compra_unidad_de_medida1` FOREIGN KEY (`id_unidad_de_medida`) REFERENCES `unidad_de_medida` (`id_unidad_de_medida`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `detalle_venta_productos`
@@ -503,8 +503,7 @@ ALTER TABLE `egresos_productos`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `fk_producto_marca` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto_tipo_producto1` FOREIGN KEY (`id_tipo_producto`) REFERENCES `tipo_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto_unidad_de_medida` FOREIGN KEY (`id_unidad_de_medida`) REFERENCES `unidad_de_medida` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_producto_tipo_producto1` FOREIGN KEY (`id_tipo_producto`) REFERENCES `tipo_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `servicio_tipo_vehiculo`

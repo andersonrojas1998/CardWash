@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('producto', 'ProductoController@index')->name('producto.index');
     Route::get('producto/data', 'ProductoController@dataTable')->name('producto.data');
+    Route::get('producto/{producto}', 'ProductoController@getQuantity')->name('producto.cantidad');
     Route::post('producto', 'ProductoController@store')->name('producto.store');
     Route::put('producto', 'ProductoController@update')->name('producto.update');
 
@@ -49,6 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('compra', 'CompraController@index')->name('compra.index');
     Route::get('compra/data', 'CompraController@dataTable')->name('compra.data');
+    Route::get('compra/products/{compra}', 'CompraController@getProducts')->name('compra.products');
     Route::post('compra', 'CompraController@store')->name('compra.store');
     Route::put('compra', 'CompraController@update')->name('compra.update');
 });

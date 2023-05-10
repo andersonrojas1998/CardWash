@@ -8,7 +8,7 @@ class Producto extends Model
 {
     protected $table = 'producto';
 
-    protected $fillable = ['nombre','id_marca','id_tipo_producto','id_unidad_de_medida'];
+    protected $fillable = ['nombre','id_marca','id_tipo_producto', 'es_de_venta'];
 
     public function marca()
     {
@@ -20,8 +20,22 @@ class Producto extends Model
         return Tipo_Producto::where('id', $this->id_tipo_producto)->first();
     }
 
-    public function unidad_de_medida()
+    public function cantidad()
     {
-        return UnidadDeMedida::where('id', $this->id_unidad_de_medida)->first();
+        $compra = DetalleCompraProductos::where([
+            ['id_producto', $this->id],
+            ['compra_o_gasto', 'Compra']
+        ])->join('compra', [
+            ['compra.id','=','detalle_compra_productos.id_compra']
+            ])->sum('cantidad');
+
+        $gasto = DetalleCompraProductos::where([
+            ['id_producto', $this->id],
+            ['compra_o_gasto', 'Gasto']
+        ])->join('compra', [
+            ['compra.id','=','detalle_compra_productos.id_compra']
+            ])->sum('cantidad');
+
+        return $compra - $gasto;
     }
 }

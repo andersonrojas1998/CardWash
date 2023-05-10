@@ -28,7 +28,7 @@ class Compra extends Model
 
     public function estado()
     {
-        return Estado::where('id_estado', $this->id_estado)->first();
+        return Estado::where('id', $this->id_estado)->first();
     }
 
     public function condiciones()

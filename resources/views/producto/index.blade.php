@@ -23,7 +23,8 @@
                         <th>Nombre</th>
                         <th>Marca</th>
                         <th>Tipo</th>
-                        <th>Unidad de medida</th>
+                        <th>Uso interno<br>o venta</th>
+                        <th>Cantidad</th>
                         <th>Acci&oacute;n</th>
                     </tr>
                 </thead>

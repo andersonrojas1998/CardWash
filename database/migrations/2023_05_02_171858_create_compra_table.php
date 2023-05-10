@@ -15,8 +15,8 @@ class CreateCompraTable extends Migration
     {
         Schema::create('compra', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_estado')->index();
-            $table->foreign('id_estado')->references('id_estado')->on('estado')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('id_estado')->unsigned()->index();
+            $table->foreign('id_estado')->references('id')->on('estado')->onDelete('cascade')->onUpdate('cascade');
             $table->string('reg_op');
             $table->date('fecha_emision');
             $table->string('compracol');
@@ -27,7 +27,7 @@ class CreateCompraTable extends Migration
             $table->string('compra_o_gasto');
             $table->string('descuentos_iva');
             $table->string('importe_total');
-            $table->integer('condiciones_id')->index();
+            $table->integer('condiciones_id')->unsigned()->index();
             $table->foreign('condiciones_id')->references('id')->on('condiciones')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

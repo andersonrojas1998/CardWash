@@ -7,7 +7,7 @@
                 </button>
                 <h5 class="modal-title text-uppercase text-center">Crear tipo de producto&nbsp;<span class="mdi mdi-arrow-left-right-bold"></span></h5>
             </div>
-            <form id="create-product-type-form">
+            <form id="create-product-type-form" action="{{route('tipo-producto.store')}}">
                 <div class="modal-body">
                     <div class="form-group" id="form-fields-product-type">
                         <label for="descripcion-tipo-producto">Descripci&oacute;n</label>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="save-product-type" data-url="{{route('tipo-producto.store')}}">Guardar</button>
+                    <button type="button" class="btn btn-success" id="save-product-type">Guardar</button>
                 </div>
             </form>
         </div>

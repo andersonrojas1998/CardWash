@@ -20,8 +20,7 @@ class CreateProductoTable extends Migration
             $table->foreign('id_marca')->references('id')->on('marca')->onDelete('cascade');
             $table->integer('id_tipo_producto')->nullable(false)->unsigned()->index();
             $table->foreign('id_tipo_producto')->references('id')->on('tipo_producto')->onDelete('cascade');
-            $table->integer('id_unidad_de_medida')->nullable(false)->unsigned()->index();
-            $table->foreign('id_unidad_de_medida')->references('id')->on('unidad_de_medida')->onDelete('cascade');
+            $table->integer('es_de_venta');
             $table->timestamps();
         });
     }

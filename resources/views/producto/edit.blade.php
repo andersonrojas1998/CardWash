@@ -15,7 +15,7 @@
     
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="name_product_edit">Nombre :</label>
+                                <label for="name_product_edit">Nombre/Referencia&nbsp;:</label>
                                 <input type="text" id="name_product_edit" name="nombre" class="form-control text-uppercase" placeholder="Ingrese el nombre del producto" required>
                                 <input type="hidden" id="id_producto" name="id">
                             </div>
@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label for="select_tipo_producto_edit" class="control-label">Tipo de producto&nbsp;:</label>
                                     <div class="input-group">
-                                        <select class="custom-select select-tipo-producto" id="select_tipo_producto_edit" name="id_tipo_producto">
+                                        <select class="custom-select select-tipo-producto" id="select_tipo_producto_edit" name="id_tipo_producto" aria-describedby="type_product_edit_help">
                                             <option>Seleccione tipo de producto</option>
                                         </select>
                                         <div class="input-group-append">
@@ -33,6 +33,7 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <small id="type_product_edit_help" class="form-text text-muted">Ejemplo: Filtro de aire, Filtro de aceite, etc.</small>
                                     <input type="hidden" id="select-product-type-data-url" value="{{ route('tipo-producto.index') }}">
                                 </div>
                             </div>
@@ -56,6 +57,16 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                                <div class="form-check">
+                                    <input type="radio" name="es_de_venta" id="es_de_venta_edit1" value="1" class="form-check-input">
+                                    <label for="es_de_venta_edit1">Producto de venta</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" name="es_de_venta" id="es_de_venta_edit0" value="0" class="form-check-input">
+                                    <label for="es_de_venta_edit2">Producto de uso interno</label>
+                                </div>
+                            </div>
+                            <!--<div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="select_unidad_medida_edit" class="control-label">Unidad de medida&nbsp;:</label>
                                     <div class="input-group">
@@ -68,8 +79,9 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="select-unit-measurement-data-url" value="{{ route('unidad-de-medida.index') }}">
+                                    <input type="hidden" id="select-unit-measurement-data-url" value="{ route('unidad-de-medida.index') }}">
                                 </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -7,7 +7,7 @@
                 </button>
                 <h5 class="modal-title text-uppercase text-center">Crear unidad de medida <span class="mdi mdi-beaker-outline"></span></h5>
             </div>
-            <form id="create-unit-measurement-form">
+            <form id="create-unit-measurement-form" action="{{ route('unidad-de-medida.store') }}">
                 <div class="modal-body">
                     <div id="form-fields-unit-measurement" class="row">
                         <div class="col-lg-6">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="save-unit-measurement" data-url="{{ route('unidad-de-medida.store')}}">Guardar</button>
+                    <button type="button" class="btn btn-success" id="save-unit-measurement">Guardar</button>
                 </div>
             </form>
         </div>

@@ -10,7 +10,7 @@ $factory->define(App\Model\Compra::class, function (Faker $faker) {
         'fecha_vencimiento' => $faker->date(),
         'no_comprobante' => $faker->numberBetween(),
         'id_proveedor' => $faker->numberBetween(1000000),
-        'razon_social_proveedor' => $faker->randomElement(['Natural', 'Juridica']),
+        'razon_social_proveedor' => $faker->randomElement(['Natural', 'Jurídica']),
         'compra_o_gasto' => $faker->randomElement(['Compra', 'Gasto']),
         'descuentos_iva' => $faker->sentence(1),
         'importe_total' => $faker->numberBetween(1000000),

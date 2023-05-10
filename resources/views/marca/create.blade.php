@@ -7,13 +7,13 @@
                 </button>
                 <h5 class="modal-title text-uppercase text-center">Crear marca <span class="mdi mdi-alpha-r-circle-outline"></span></h5>
             </div>
-            <form id="create-brand-form" method="POST">
+            <form id="create-brand-form" name="create-brand-form" action="{{route('marca.store')}}" method="POST">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group" id="form-fields-brand">
                                 <label for="nombre-marca">Nombre de la marca</label>
-                                <input type="text" class="form-control text-uppercase" id="nombre-marca" name="nombre" aria-describedby="nombre" placeholder="Ingrese el nombre" required>
+                                <input type="text" class="form-control text-uppercase" id="nombre-marca" name="nombre" aria-describedby="nombre" placeholder="Ingrese el nombre de la marca" required>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="save-brand" data-url="{{ route('marca.store') }}">Guardar</button>
+                    <button type="button" class="btn btn-success" id="save-brand">Guardar</button>
                 </div>
             </form>
         </div>

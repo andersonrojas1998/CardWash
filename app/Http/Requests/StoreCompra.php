@@ -36,7 +36,12 @@ class StoreCompra extends FormRequest
             'compra_o_gasto' => 'required',
             'descuentos_iva' => 'required',
             'importe_total' => 'required',
-            'condiciones_id' => 'required'
+            'condiciones_id' => 'required',
+            'id_producto' => 'required',
+            'id_unidad_medida' => 'required',
+            'cantidad_producto' => 'required',
+            'precio_compra_producto' => 'required',
+            'precio_venta_producto' => 'required'
         ];
     }
 
@@ -53,12 +58,17 @@ class StoreCompra extends FormRequest
             'compra_o_gasto.required' => 'La compra o gasto es requerida',
             'descuentos_iva.required' => 'El descuento del iva son requeridos',
             'importe_total.required' => 'El importe total es requerido',
-            'condiciones_id.required' => 'Las condiciones son requeridas'
+            'condiciones_id.required' => 'Las condiciones son requeridas',
+            'id_producto.required' => 'Agregue los productos',
+            'id_unidad_medida.required' => 'Agregue los productos',
+            'cantidad_producto.required' => 'Agregue los productos',
+            'precio_compra_producto.required' => 'Agregue los productos',
+            'precio_venta_producto.required' => 'Agregue los productos'
         ];
     }
     
-    protected function failedValidation(Validator $validator)
+    /*protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
-    }
+    }*/
 }
