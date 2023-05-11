@@ -7,7 +7,7 @@
                 </button>
                 <h5 class="modal-title text-uppercase text-center">Editar Compra&nbsp;<span class="mdi mdi-package"></span></h5>
             </div>
-            <form id="edit-product-form" action="{{ route('compra.update') }}" method="POST">
+            <form id="edit-buy-form" action="{{ route('compra.update') }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <fieldset>
@@ -36,42 +36,19 @@
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="no_comprobante_compra_edit">No. Comprobante:</label>
                                 <input type="text" id="no_comprobante_compra_edit" name="no_comprobante" class="form-control text-uppercase" placeholder="Ingrese el No. comprobante de la compra" required>
                             </div>
-                            <div class="col-lg-3">
-                                <label for="compra_o_gasto_compra_edit">Compra&nbsp;o&nbsp;gasto:</label>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-check">
-                                            <input type="radio" name="compra_o_gasto" id="compra_o_gasto_edit1" value="Compra" class="form-check-input" required>
-                                            <label for="compra_o_gasto_edit1">Compra</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-check">
-                                            <input type="radio" name="compra_o_gasto" id="compra_o_gasto_edit0" value="Gasto" class="form-check-input" required>
-                                            <label for="compra_o_gasto_edit0">Gasto</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="descuentos_iva_compra_edit">Descuento IVA:</label>
                                 <input type="text" id="descuentos_iva_compra_edit" name="descuentos_iva" class="form-control text-uppercase" placeholder="Ingrese el descuento IVA de la compra" required>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="condiciones_id_compra_edit" class="control-label">Condiciones&nbsp;:</label>
                                 <select class="custom-select select-condiciones" name="condiciones_id" id="condiciones_id_compra_edit">
                                     <option>Seleccione condicion</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <label>Importe total:</label>
-                                <label id="importe_total_compra_edit">$0</label>
                             </div>
                         </div>
                         <div class="container p-1">
@@ -104,10 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="products-edit"></div>
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_add_products">Productos</button>
-                        </div>
+                        @include('compra.addProducts')
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

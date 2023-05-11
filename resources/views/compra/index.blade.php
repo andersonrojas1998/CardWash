@@ -44,7 +44,6 @@
     </div>
     @include('compra.create')
     @include('compra.edit')
-    @include('compra.addProducts')
     @include('unidad_de_medida.create')
 </div>
 @endsection

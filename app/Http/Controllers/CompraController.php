@@ -40,10 +40,10 @@ class CompraController extends Controller
         try{
             $detalle_compra_productos = [
                 'id_producto' => $request->all()['id_producto'],
-                'id_unidad_medida' => $request->all()['id_unidad_medida'],
-                'cantidad_producto' => $request->all()['cantidad_producto'],
-                'precio_compra_producto' => $request->all()['precio_compra_producto'],
-                'precio_venta_producto' => $request->all()['precio_venta_producto']
+                'id_unidad_de_medida' => $request->all()['id_unidad_de_medida'],
+                'cantidad_producto' => $request->all()['cantidad'],
+                'precio_compra_producto' => $request->all()['precio_compra'],
+                'precio_venta_producto' => $request->all()['precio_venta']
             ];
             $compra = new Compra($request->all());
             $compra->save();
@@ -51,7 +51,7 @@ class CompraController extends Controller
             foreach($detalle_compra_productos['id_producto'] as $key => $id_producto){
                 $detalle_compra_producto = new DetalleCompraProductos();
                 $detalle_compra_producto->id_producto = $id_producto;
-                $detalle_compra_producto->id_unidad_de_medida = $detalle_compra_productos['id_unidad_medida'][$key];
+                $detalle_compra_producto->id_unidad_de_medida = $detalle_compra_productos['id_unidad_de_medida'][$key];
                 $detalle_compra_producto->cantidad = $detalle_compra_productos['cantidad_producto'][$key];
                 $detalle_compra_producto->precio_compra = $detalle_compra_productos['precio_compra_producto'][$key];
                 $detalle_compra_producto->precio_venta = $detalle_compra_productos['precio_venta_producto'][$key];
@@ -70,30 +70,16 @@ class CompraController extends Controller
         $compra = Compra::find($request->input('id'));
         $compra->update($request->all());
 
-        $detalleCompraProductos = DetalleCompraProductos::where('id_compra', $compra->id)->get();
-        foreach($detalleCompraProductos as $key => $detalle_compra_producto){
-            $detalle_compra_producto->delete();
-        }
-
-        $detalle_compra_productos = [
-            'id_producto' => $request->all()['id_producto'],
-            'id_unidad_medida' => $request->all()['id_unidad_medida'],
-            'cantidad_producto' => $request->all()['cantidad_producto'],
-            'precio_compra_producto' => $request->all()['precio_compra_producto'],
-            'precio_venta_producto' => $request->all()['precio_venta_producto']
-        ];
-
-        foreach($detalle_compra_productos['id_producto'] as $key => $id_producto){
-            $detalle_compra_producto = new DetalleCompraProductos();
-
-            $detalle_compra_producto->id_producto = $id_producto;
-            $detalle_compra_producto->id_unidad_de_medida = $detalle_compra_productos['id_unidad_medida'][$key];
-            $detalle_compra_producto->cantidad = $detalle_compra_productos['cantidad_producto'][$key];
-            $detalle_compra_producto->precio_compra = $detalle_compra_productos['precio_compra_producto'][$key];
-            $detalle_compra_producto->precio_venta = $detalle_compra_productos['precio_venta_producto'][$key];
-            $detalle_compra_producto->id_compra = $compra->id;
-
-            $detalle_compra_producto->save();
+        foreach ($request->all()['id_detalle_compra_producto'] as $key => $id_detalle_compra_producto) {
+            $values = [
+                "id_producto" => $request->all()['id_producto'][$key],
+                'id_compra' => $compra->id,
+                'id_unidad_de_medida' => $request->all()['id_unidad_de_medida'][$key],
+                'cantidad' => $request->all()['cantidad'][$key],
+                'precio_compra' => $request->all()['precio_compra'][$key],
+                'precio_venta' => $request->all()['precio_venta'][$key],
+            ];
+            DetalleCompraProductos::where('id', $id_detalle_compra_producto)->update($values);
         }
 
         return redirect()->route('compra.index')->with('success', 'Se ha modificado la compra satisfactoriamente.');
@@ -111,6 +97,7 @@ class CompraController extends Controller
         $detalleCompraProductos = DetalleCompraProductos::where('id_compra', $compra->id)->get();
         foreach($detalleCompraProductos as $key => $detalle_compra_producto){
             $detalle_compra_producto->producto = $detalle_compra_producto->producto();
+            $detalle_compra_producto->producto->tipo_producto = $detalle_compra_producto->producto->tipo_producto();
             $detalle_compra_producto->unidad_de_medida = $detalle_compra_producto->unidad_de_medida();
             $data[$key] = $detalle_compra_producto;
         }
