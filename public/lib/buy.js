@@ -91,9 +91,9 @@ $(document).ready(function(){
             timeout: 600000,
             headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
             success: function(data, textStatus, xhr){
-                $('#select-product-compra').empty();
+                $('.select-product-compra').empty();
                 $.each(data.data, function(i, producto){
-                    $('#select-product-compra').append($('<option>',{
+                    $('.select-product-compra').append($('<option>',{
                         value: producto.id,
                         text: producto.nombre + " (" + producto.tipo_producto.descripcion + ")"
                     }));
@@ -179,43 +179,22 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on('change', "#select-product-compra", function(){
-        let form = $($("#form_to_add_products").val()).parents('form');
-        if(form.find('input[value="Gasto"]').is(':checked')){
-            $.ajax({
-                url: $(this).data('url-quantity') + "/" + $(this).val(),
-                type: "get",
-                processData: false,
-                contentType: false,
-                cache: false,
-                timeout: 600000,
-                headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
-                success: function(data, textStatus, xhr){
-                    $("#hidden-quantity-product").val(data);
-                }
-            });
-        }
-    });
-
-    $(document).on('click', "#btn_add_product", function(){
-        if($("#select-product-compra :selected").val() != '' && $('#select-unidad-de-medida :selected').val() != '' &&
-        $('#input-quantity').val() != '' && $('#input-buy-price').val() != '' && $('#input-sell-price').val() != ''){
-            let form = $($("#form_to_add_products").val()).parents('form');
-            if(form.find('input[value="Gasto"]').is(':checked') && parseInt($('#input-quantity').val()) > parseInt($("#hidden-quantity-product").val()) ){
-                alert('La cantidad ' + $('#input-quantity').val() + ' es superior a la(s) ' + $("#hidden-quantity-product").val() + ' registradas del producto ' + $("#select-product-compra :selected").text());
-                return false;
-            }
-            let id_producto = $("#select-product-compra :selected").val();
-            let text_producto = $("#select-product-compra :selected").text();
-            $("#select-product-compra :selected").remove();
-            let id_unidad_medida = $('#select-unidad-de-medida :selected').val();
-            let text_unidad_medida = $('#select-unidad-de-medida :selected').text();
-            let cantidad = parseInt($('#input-quantity').val());
-            $('#input-quantity').val('');
-            let precio_compra = parseFloat($('#input-buy-price').val());
-            $('#input-buy-price').val('');
-            let precio_venta = parseFloat($('#input-sell-price').val());
-            $('#input-sell-price').val('');
+    $(document).on('click', ".btn_add_product", function(){
+        let div = $(this).parents('.modal-body');
+        if(div.find(".select-product-compra :selected").val() != '' && div.find('.select-unidad-de-medida :selected').val() != '' &&
+        div.find('.input-quantity').val() != '' && div.find('.input-buy-price').val() != '' && div.find('.input-sell-price').val() != ''){
+            let id_producto = div.find(".select-product-compra :selected").val();
+            let text_producto = div.find(".select-product-compra :selected").text();
+            div.find(".select-product-compra :selected").remove();
+            let id_unidad_medida = div.find('.select-unidad-de-medida :selected').val();
+            let text_unidad_medida = div.find('.select-unidad-de-medida :selected').text();
+            let cantidad = parseInt(div.find('.input-quantity').val());
+            div.find('.input-quantity').val('');
+            let precio_compra = parseFloat(div.find('.input-buy-price').val());
+            div.find('.input-buy-price').val('');
+            let precio_venta = parseFloat(div.find('.input-sell-price').val());
+            div.find('.input-sell-price').val('');
+            let importe_total = parseInt(div.find(".importe_total").val());
             let tr = $('<tr>');
             let td1 = $('<td>', {
                 text: text_producto
@@ -223,6 +202,7 @@ $(document).ready(function(){
             let hidden1 = $('<input>', {
                 type: "hidden",
                 class: "id_producto_table",
+                name: "id_producto[]",
                 value: id_producto
             });
             hidden1.attr('data-text', text_producto);
@@ -234,6 +214,7 @@ $(document).ready(function(){
             let hidden2 = $('<input>', {
                 type: "hidden",
                 class: "id_unidad_medida_table",
+                name: "id_unidad_de_medida[]",
                 value: id_unidad_medida
             });
             hidden2.attr('data-text', text_unidad_medida);
@@ -245,30 +226,36 @@ $(document).ready(function(){
             let hidden3 = $('<input>', {
                 type: "hidden",
                 class: "cantidad_producto_table",
+                name: "cantidad[]",
                 value: cantidad
             });
             td3.append(hidden3);
             tr.append(td3);
+
             let td4 = $('<td>', {
-                text: precio_compra
+                text: precio_venta
             });
             let hidden4 = $('<input>', {
                 type: "hidden",
-                class: "precio_compra_producto_table",
-                value: precio_compra
+                class: "precio_venta_producto_tabla",
+                name: "precio_venta[]",
+                value: precio_venta
             });
             td4.append(hidden4);
             tr.append(td4);
+
             let td5 = $('<td>', {
-                text: precio_venta
+                text: precio_compra
             });
             let hidden5 = $('<input>', {
                 type: "hidden",
-                class: "precio_venta_producto_tabla",
-                value: precio_venta
+                class: "precio_compra_producto_table",
+                name: "precio_compra[]",
+                value: precio_compra
             });
             td5.append(hidden5);
             tr.append(td5);
+
             let td6 = $('<td>');
             let button_remove = $('<a>',{
                 class: 'btn-remove-product'
@@ -279,15 +266,16 @@ $(document).ready(function(){
             button_remove.append(i);
             td6.append(button_remove);
             tr.append(td6);
-            $('#table-add-products > tbody').append(tr);
-            $('#btn_add_products').removeAttr('disabled');
+            div.find('.table-add-products > tbody').append(tr);
+            div.find(".importe_total").val(importe_total+precio_compra);
+            div.find(".text_importe_total").text(importe_total+precio_compra);
         }else{
             alert('Por favor complete los campos');
         }
     });
 
     $(document).on('click', '#open-modal-create-compra', function(){
-        $('#form_to_add_products').val('#products-create');
+        $('#table-add-products > tbody').empty();
     });
 
     $(document).on('click', '#btn_add_products', function(){
@@ -341,7 +329,6 @@ $(document).ready(function(){
         });
         if($('#form_to_add_products').val() == '#products-create'){
             $('#importe_total_compra').text("$" + importe_total);
-            $("#btn_create_buy").removeAttr('disabled');
         }else{
             $('#importe_total_compra_edit').text("$" + importe_total);
             $("#btn_edit_buy").removeAttr('disabled');
@@ -351,15 +338,16 @@ $(document).ready(function(){
 
     $(document).on('click', '.btn-remove-product', function(){
         let tr = $(this).parents('tr');
-        $("#select-product-compra").append($('<option>', {
+        let table = $(this).parents('table');
+        table.find(".select-product-compra").append($('<option>', {
             value : tr.find('.id_producto_table').val(),
             text: tr.find('.id_producto_table').data('text')
         }));
+        let precio_compra = parseInt(tr.find('.precio_compra_producto_table').val());
+        let total = parseInt(table.find('.importe_total').val());
+        table.find('.importe_total').val(total - precio_compra);
+        table.find('.text_importe_total').text(total - precio_compra);
         tr.remove();
-        if($('#table-add-products > tbody').text() == ''){
-            $('#btn_add_products').attr('disabled', 'disabled');
-            $("#btn_create_buy").removeAttr('disabled');
-        }
     });
 
     $(document).on('click', '.btn_show_edit_compra', function(){
@@ -371,10 +359,11 @@ $(document).ready(function(){
         $('#fecha_vencimiento_compra_edit').val($(this).data('fecha-vencimiento'));
         $('#no_comprobante_compra_edit').val($(this).data('no-comprobante'));
         $('#id_proveedor_compra_edit').val($(this).data('id-proveedor'));
-        $('#edit-product-form input[value="' + $(this).data('razon-social-proveedor') + '"]').attr("checked", true);
-        $('#edit-product-form input[value="' + $(this).data('compra-o-gasto') + '"]').attr("checked", true);
+        $('#edit-buy-form input[value="' + $(this).data('razon-social-proveedor') + '"]').attr("checked", true);
         $('#descuentos_iva_compra_edit').val($(this).data('descuentos-iva'));
-        $('#importe_total_compra_edit').text('$' + $(this).data('importe-total'));
+        let importe_total = $(this).data('importe-total');
+        $('#edit-buy-form .text_importe_total').text(importe_total);
+        $('#edit-buy-form .importe_total').val(importe_total);
         $('#condiciones_id_compra_edit').val($(this).data('condiciones-id'));
         loadProductOptions();
         $.ajax({
@@ -386,17 +375,25 @@ $(document).ready(function(){
             timeout: 600000,
             headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
             success: function(data, textStatus, xhr){
-                $('#table-add-products > tbody').empty();
+                $('#edit-buy-form .table-add-products > tbody').empty();
                 if(data.length != 0){
                     $.each(data, function(i, det_comp_prod){
                         let text_unidad_medida = det_comp_prod.unidad_de_medida.nombre + " (" + det_comp_prod.unidad_de_medida.abreviatura + ")";
                         let tr = $('<tr>');
                         let td1 = $('<td>', {
-                            text: det_comp_prod.producto.nombre
+                            text: det_comp_prod.producto.nombre + " (" + det_comp_prod.producto.tipo_producto.descripcion + ")"
                         });
+                        let hidden0 = $('<input>', {
+                            type: "hidden",
+                            class: "id_detalle_compra_producto_table",
+                            name: "id_detalle_compra_producto[]",
+                            value: det_comp_prod.id
+                        });
+                        td1.append(hidden0);
                         let hidden1 = $('<input>', {
                             type: "hidden",
                             class: "id_producto_table",
+                            name: "id_producto[]",
                             value: det_comp_prod.producto.id
                         });
                         hidden1.attr('data-text', det_comp_prod.producto.nombre);
@@ -408,6 +405,7 @@ $(document).ready(function(){
                         let hidden2 = $('<input>', {
                             type: "hidden",
                             class: "id_unidad_medida_table",
+                            name: "id_unidad_de_medida[]",
                             value: det_comp_prod.unidad_de_medida.id
                         });
                         hidden2.attr('data-text', text_unidad_medida);
@@ -419,27 +417,30 @@ $(document).ready(function(){
                         let hidden3 = $('<input>', {
                             type: "hidden",
                             class: "cantidad_producto_table",
+                            name: "cantidad[]",
                             value: det_comp_prod.cantidad
                         });
                         td3.append(hidden3);
                         tr.append(td3);
                         let td4 = $('<td>', {
-                            text: det_comp_prod.precio_compra
+                            text: det_comp_prod.precio_venta
                         });
                         let hidden4 = $('<input>', {
                             type: "hidden",
-                            class: "precio_compra_producto_table",
-                            value: det_comp_prod.precio_compra
+                            class: "precio_venta_producto_tabla",
+                            name: "precio_venta[]",
+                            value: det_comp_prod.precio_venta
                         });
                         td4.append(hidden4);
                         tr.append(td4);
                         let td5 = $('<td>', {
-                            text: det_comp_prod.precio_venta
+                            text: det_comp_prod.precio_compra
                         });
                         let hidden5 = $('<input>', {
                             type: "hidden",
-                            class: "precio_venta_producto_tabla",
-                            value: det_comp_prod.precio_venta
+                            class: "precio_compra_producto_table",
+                            name: "precio_compra[]",
+                            value: det_comp_prod.precio_compra
                         });
                         td5.append(hidden5);
                         tr.append(td5);
@@ -453,16 +454,11 @@ $(document).ready(function(){
                         });
                         button_remove.append(i2);
                         td6.append(button_remove);
-                        tr.append(td6);
-                        $('#table-add-products > tbody').append(tr);
-                        $('#select-product-compra > option[value="' + det_comp_prod.producto.id + '"]').remove();
+                        //tr.append(td6);
+                        $('#edit-buy-form .table-add-products > tbody').append(tr);
+                        $('#edit-buy-form .select-product-compra > option[value="' + det_comp_prod.producto.id + '"]').remove();
                     });
-                    $('#btn_add_products').removeAttr('disabled');
-                }else{
-                    $('#btn_add_products').attr('disabled', true);
-                    $('#btn_edit_buy').attr('disabled', true);
                 }
-                $('#form_to_add_products').val('#products-edit');
             }
         });
     });

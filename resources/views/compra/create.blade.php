@@ -34,43 +34,20 @@
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="no_comprobante_compra">No. Comprobante:</label>
                                 <input type="text" id="no_comprobante_compra" name="no_comprobante" class="form-control text-uppercase" placeholder="Ingrese el No. comprobante de la compra" required>
                             </div>
-                            <div class="col-lg-3">
-                                <label for="compra_o_gasto_compra">Compra&nbsp;o&nbsp;gasto:</label>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-check">
-                                            <input type="radio" name="compra_o_gasto" id="compra_o_gasto1" value="Compra" class="form-check-input" required @if (!old('compra_o_gasto') || (old('compra_o_gasto') && old('compra_o_gasto') != 'compra')) checked="true" @endif>
-                                            <label for="compra_o_gasto1">Compra</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-check">
-                                            <input type="radio" name="compra_o_gasto" id="compra_o_gasto0" value="Gasto" class="form-check-input" required @if (old('compra_o_gasto') && old('compra_o_gasto') == 'Gasto') checked="true" @endif>
-                                            <label for="compra_o_gasto0">Gasto</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="descuentos_iva_compra">Descuento IVA:</label>
-                                <input type="text" id="descuentos_iva_compra" name="descuentos_iva" class="form-control text-uppercase" placeholder="Ingrese el descuento IVA de la compra" required>
+                                <input type="number" id="descuentos_iva_compra" name="descuentos_iva" class="form-control text-uppercase" placeholder="Ingrese el descuento IVA de la compra" required>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="condiciones_id_compra" class="control-label">Condiciones&nbsp;:</label>
-                                <select class="custom-select select-condiciones" name="condiciones_id" id="condiciones_id_compra">
-                                    <option>Seleccione condicion</option>
+                                <select class="custom-select select-condiciones" name="condiciones_id" id="condiciones_id_compra" required>
+                                    <option value="">Seleccione condicion</option>
                                 </select>
                                 <input type="hidden" id="select-condicion-data-url" value="{{ route('condiciones.index') }}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <label>Importe total:</label>
-                                <label id="importe_total_compra">$0</label>
                             </div>
                         </div>
                         <div class="container p-1">
@@ -103,14 +80,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="products-create"></div>
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_add_products">Productos</button>
-                        </div>
+                        <input type="hidden" id="select-unit-measurement-data-url" value="{{ route('unidad-de-medida.index') }}">
+                        <input type="hidden" id="select-product-data-url" value="{{ route('producto.data') }}">
+                        @include('compra.addProducts')
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" id="btn_create_buy" class="btn btn-success" disabled>Guardar</button>
+                        <button type="submit" id="btn_create_buy" class="btn btn-success">Guardar</button>
                     </div>
                 </fieldset>
             </form>

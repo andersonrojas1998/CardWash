@@ -33,15 +33,14 @@ class StoreCompra extends FormRequest
             'no_comprobante' => 'required',
             'id_proveedor' => 'required',
             'razon_social_proveedor' => 'required',
-            'compra_o_gasto' => 'required',
             'descuentos_iva' => 'required',
             'importe_total' => 'required',
             'condiciones_id' => 'required',
             'id_producto' => 'required',
-            'id_unidad_medida' => 'required',
-            'cantidad_producto' => 'required',
-            'precio_compra_producto' => 'required',
-            'precio_venta_producto' => 'required'
+            'id_unidad_de_medida' => 'required',
+            'cantidad' => 'required',
+            'precio_compra' => 'required',
+            'precio_venta' => 'required'
         ];
     }
 
@@ -55,7 +54,6 @@ class StoreCompra extends FormRequest
             'no_comprobante.required' => 'El No. de comprobante es requerido',
             'id_proveedor.required' => 'El id proveedor es requerido',
             'razon_social_proveedor.required' => 'La razon social del proveedor es requerida',
-            'compra_o_gasto.required' => 'La compra o gasto es requerida',
             'descuentos_iva.required' => 'El descuento del iva son requeridos',
             'importe_total.required' => 'El importe total es requerido',
             'condiciones_id.required' => 'Las condiciones son requeridas',

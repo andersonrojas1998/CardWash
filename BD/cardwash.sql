@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `unidad_de_medida` (
   `nombre` varchar(45) DEFAULT NULL,
   `abreviatura` varchar(45) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_marca`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -259,9 +259,9 @@ INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`)
 
 DROP TABLE IF EXISTS `servicio`;
 CREATE TABLE IF NOT EXISTS `servicio` (
-  `id_servicio` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_servicio`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -477,7 +477,7 @@ ALTER TABLE `compra`
 ALTER TABLE `detalle_compra_productos`
   ADD CONSTRAINT `fk_producto_has_compra_compra1` FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id_compra`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_producto_has_compra_producto1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto_has_compra_unidad_de_medida1` FOREIGN KEY (`id_unidad_de_medida`) REFERENCES `unidad_de_medida` (`id_unidad_de_medida`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_producto_has_compra_unidad_de_medida1` FOREIGN KEY (`id_unidad_de_medida`) REFERENCES `unidad_de_medida` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `detalle_venta_productos`
@@ -509,7 +509,7 @@ ALTER TABLE `producto`
 -- Filtros para la tabla `servicio_tipo_vehiculo`
 --
 ALTER TABLE `servicio_tipo_vehiculo`
-  ADD CONSTRAINT `fk_servicio_tipo_vehiculo_servicio1` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id_servicio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_servicio_tipo_vehiculo_servicio1` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_servicio_tipo_vehiculo_tipo_vehiculo1` FOREIGN KEY (`id_tipo_vehiculo`) REFERENCES `tipo_vehiculo` (`id_tipo_vehiculo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
