@@ -2,12 +2,12 @@
 @section('content')
 <div class="card">
 <div class="p-4  bg-light text-center">        
-        <h4 class="mb-0">Administraci&oacute;n de Docentes</h4>        
+        <h4 class="mb-0">Administraci&oacute;n de Usuarios</h4>        
 </div>
     <div class="card-body">    
     <div class="d-flex flex-row-reverse bd-highlight mb-5">
             <div class="p-2 bd-highlight">
-                <a href="/docentes/creacion" data-toggle="tooltip" data-placement="top" data-title="Creacion de Personal" class="btn btn-primary" >Creaci&oacute;n <i class="mdi mdi-account-circle icon-lg" ></i> </a>
+                <a href="/usuarios/creacion" data-toggle="tooltip" data-placement="top" data-title="Creacion de Personal" class="btn btn-primary" >Creaci&oacute;n <i class="mdi mdi-account-circle icon-lg" ></i> </a>
             </div>            
         </div>
     <div class="table-responsive">
@@ -18,7 +18,7 @@
                         <th>Identificacion</th>
                         <th>Nombre</th>                    
                         <th>Celular</th>                        
-                        <th>Sede</th>
+                        <th>Genero</th>
                         <th>Cargos</th>   
                         <th>Estado</th> 
                         <th></th>                
@@ -140,8 +140,6 @@
 </div>    
 @endsection
 @push('style') 
-<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css" media="screen" />-->
 @endpush
 @push('custom-scripts') 
     <script src="{{ asset('/js/validate.min.js')}}"></script>

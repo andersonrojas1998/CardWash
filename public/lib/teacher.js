@@ -4,7 +4,7 @@ $(document).ready(function() {
     $(document).on("click","#btn_show_user",function(){  
         let id=$(this).attr('data-id');
         $.ajax({
-            url:"/docentes/show/"+id,
+            url:"/usuarios/show/"+id,
             type:"GET",
             dataType:"JSON",
             success:function(data){
@@ -33,7 +33,7 @@ $(document).ready(function() {
                 let formData = new FormData($('#form_updateUser')[0]);
                 formData.append('id_user',id);
                 $.ajax({
-                    url:"/docentes/update",
+                    url:"/usuarios/update",
                     type:"POST",
                     data:formData,
                     processData: false,
@@ -81,7 +81,7 @@ $(document).ready(function() {
                 let dni=$('input[name="identificacion"]').val();
                 let formData = new FormData($('#form_createUser')[0]);
                 $.ajax({
-                    url:"/docentes/create",
+                    url:"/usuarios/create",
                     type:"POST",
                     data:formData,
                     processData: false,
@@ -92,7 +92,7 @@ $(document).ready(function() {
                    success:function(data){
                        if(data==1){
                         sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
-                        setTimeout(function(){ window.location.replace('/docentes/inicio') },1000) ;   
+                        setTimeout(function(){ window.location.replace('/usuarios/inicio') },1000) ;   
                        }else{
                         sweetMessage('\u00A1Atenci\u00f3n!', 'El usuario con identificacion '+ dni +'  ya se encuentra registrado en la Base de datos. ', 'warning');
                        }
@@ -136,10 +136,10 @@ var dt_teacher=function(){
                 { "data": "dni" , render(data){return '<a class="text-primary">'+data+'</a>';}},
                 { "data": "name",render(data,type,row){ return '<div class="text-info">'+  data +'</div>'; }},
                 { "data": "celular"},
-                { "data": "sede"},
+                { "data": "genero"},
                 {"data": "cargo"},                 
                 {"data": "estado", render(data){ let st=(data)? 'Activo':'Inactivo'; let color=(data)? 'success':'danger'; return  '<label class="badge text-white badge-'+color+' ">'+ st  +'</label>'; }},
-                {"data": "actions", 
+                {"data": "", 
                     render(data,ps,d){ 
                         let button;
                         button='<div id="btn_show_user"  data-id='+d.id+'><i data-toggle="modal" data-target="#mdl_editUser" class="mdi mdi-pencil-box-outline text-primary" style="font-size:30px;"></i></div>';                        

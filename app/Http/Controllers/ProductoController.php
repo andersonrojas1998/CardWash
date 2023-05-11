@@ -42,6 +42,7 @@ class ProductoController extends Controller
 
     public function store(StoreProducto $request){
         try{
+          
             $producto = new Producto($request->all());
             $producto->save();
 

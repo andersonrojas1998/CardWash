@@ -73,15 +73,7 @@
         <h4 class="text-center p-3 text-primary">Datos Administrativos  <i class="mdi mdi-account-box"></i></h4>
 
 
-        <div class="row">
-        <div class="col-lg-4">
-        <strong>Sede : <span class="text-danger">*</span></strong>
-           <select class="form-control select2" name="sede" required>
-           <option value="1">PRINCIPAL</option>
-           <option value="2">AVENTURAS</option>
-           </select>
-           <p class="text-muted">Por favor seleccione la sede</p>
-        </div>              
+        <div class="row">                    
 
         <div class="col-lg-4">
         <strong>Cargo :  <span class="text-danger">*</span></strong>
@@ -89,13 +81,7 @@
                 <option></option>
                 @foreach($roles as $value)
                 <option value="{{$value->id}}">{{$value->name }}</option>
-                @endforeach
-                <!--<option value="Administrativo">Administrativo</option>
-                <option value="Coordinador">Coordinador</option>
-                <option value="Docente">Docente</option>
-                <option value="Rector">Rector</option>
-                <option value="Representante legal">Representante legal	</option>
-                <option value="Secretaria">Secretaria</option>                        -->
+                @endforeach                
             </select>
             <p class="text-muted">Por favor seleccione el cargo</p>
         </div>

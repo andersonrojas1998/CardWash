@@ -9,7 +9,7 @@ use Exception;
 class MarcaController extends Controller
 {
     public function index(){
-        $marcas = Marca::orderBy('id','desc')->get();
+        $marcas = Marca::all();
         $data = [
             "status" => "200",
             "marcas" => []

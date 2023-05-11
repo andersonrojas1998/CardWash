@@ -1,5 +1,5 @@
 <?php
-Route::group(['prefix' => 'docentes'], function(){
+Route::group(['prefix' => 'usuarios'], function(){
     Route::get('inicio', 'DocenteController@index');
     Route::get('creacion', 'DocenteController@index_create');
     Route::post('create', 'DocenteController@create');

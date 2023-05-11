@@ -20,10 +20,10 @@
             <table class="table table-striped table-sm" id="table-product" data-url="{{route('producto.data')}}">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
+                        <th>Nombre (Referencia)</th>
                         <th>Marca</th>
                         <th>Tipo</th>
-                        <th>Uso interno<br>o venta</th>
+                        <th>Interno<br>o venta</th>
                         <th>Cantidad</th>
                         <th>Acci&oacute;n</th>
                     </tr>

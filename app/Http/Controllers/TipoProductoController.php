@@ -10,12 +10,13 @@ use Illuminate\Http\Request;
 class TipoProductoController extends Controller
 {
     public function index(){
-        $tipos_producto = Tipo_Producto::orderBy('id','desc')->get();
+        $tipos_producto = Tipo_Producto::all();
         $data = [
             "status" => 200,
             "tipos_productos" => []
         ];
 
+        
         foreach($tipos_producto as $tipo_producto) {
             array_push($data['tipos_productos'], $tipo_producto);
         }

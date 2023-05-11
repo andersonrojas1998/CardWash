@@ -26,8 +26,8 @@ $(document).ready(function(){
             {"data": "tipo_producto.descripcion"},
             {"data": "es_de_venta", render(es_de_venta){
                 return (es_de_venta == 1)? "Producto de venta" : "Uso interno";
-            }},
-            {"data": "cantidad"},
+            }},            
+            { "data": "cantidad",render(data){ return '<h4><label class="badge text-white badge-success">'+ data  +'</label></h4>'; }},
             {"data": "actions", render(data, ps, producto){
                 let div = $('<div>');
                 let button = $("<a>", {
