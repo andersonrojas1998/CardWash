@@ -22,12 +22,13 @@ class ProductoController extends Controller
         ];
 
         foreach ($productos as $producto ) {
-
-            $producto->marca = $producto->marca();
-
+            $c=0;
+            foreach($producto->compras as $cant){
+                $c+=$cant->cantidad;                
+            }
+            $producto->marca = $producto->marca->nombre;
             $producto->tipo_producto = $producto->tipo_producto();
-
-            $producto->cantidad = $producto->cantidad();
+            $producto->cantidad = $c;
 
             array_push($data['data'], $producto);
         }

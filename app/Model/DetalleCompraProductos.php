@@ -16,8 +16,7 @@ class DetalleCompraProductos extends Model
         'precio_compra',
         'precio_venta'
     ];
-
-    public function producto()
+   public function producto()
     {
         return Producto::where('id', $this->id_producto)->first();
     }

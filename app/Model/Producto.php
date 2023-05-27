@@ -10,9 +10,13 @@ class Producto extends Model
 
     protected $fillable = ['nombre','id_marca','id_tipo_producto', 'es_de_venta'];
 
-    public function marca()
-    {
-        return Marca::where('id', $this->id_marca)->first();
+
+    public function compras(){
+    	return $this->hasMany('App\Model\DetalleCompraProductos','id_producto','id_producto');
+    }
+
+    public function marca(){
+        return $this->hasOne('App\Model\Marca','id','id_marca');        
     }
 
     public function tipo_producto()
