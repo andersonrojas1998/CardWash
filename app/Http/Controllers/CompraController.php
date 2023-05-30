@@ -16,73 +16,93 @@ class CompraController extends Controller
 
     public function dataTable()
     {
-        $compras = Compra::all();
+        $compras = Compra::get();
         $data = [
             "status" => 200,
             "data" => []
         ];
 
         foreach ($compras as $compra){
-            $compra->estado = $compra->estado();
+            $compra->estado;
 
-            $compra->condicion = $compra->condiciones();
+            $compra->condicion;
 
-            $compra->route_products = route('compra.products', ['id_compra' => $compra->id]);
+            $compra->route_edit = route('compra.edit', ['compra' => $compra->id]);
 
             array_push($data['data'], $compra);
         }
 
         return response()->json($data);
     }
+
+    public function create()
+    {
+        return view('compra.create');
+    }
     
     public function store(StoreCompra $request)
     {
         try{
-            $detalle_compra_productos = [
-                'id_producto' => $request->all()['id_producto'],
-                'id_unidad_de_medida' => $request->all()['id_unidad_de_medida'],
-                'cantidad_producto' => $request->all()['cantidad'],
-                'precio_compra_producto' => $request->all()['precio_compra'],
-                'precio_venta_producto' => $request->all()['precio_venta']
-            ];
             $compra = new Compra($request->all());
             $compra->save();
 
-            foreach($detalle_compra_productos['id_producto'] as $key => $id_producto){
-                $detalle_compra_producto = new DetalleCompraProductos();
-                $detalle_compra_producto->id_producto = $id_producto;
-                $detalle_compra_producto->id_unidad_de_medida = $detalle_compra_productos['id_unidad_de_medida'][$key];
-                $detalle_compra_producto->cantidad = $detalle_compra_productos['cantidad_producto'][$key];
-                $detalle_compra_producto->precio_compra = $detalle_compra_productos['precio_compra_producto'][$key];
-                $detalle_compra_producto->precio_venta = $detalle_compra_productos['precio_venta_producto'][$key];
-                $detalle_compra_producto->id_compra = $compra->id;
-                $detalle_compra_producto->save();
-            }
+            $detalle_compra_productos = [];
 
-            return redirect()->route('compra.index', [], 201)->with('success', 'Se ha creado la compra satisfactoriamente');
-        }catch(Exception $e){
-            return response()->json($e->getMessage(), 500);
-        }
-    }
-
-    public function update(StoreCompra $request)
-    {
-        $compra = Compra::find($request->input('id'));
-        $compra->update($request->all());
-
-        foreach ($request->all()['id_detalle_compra_producto'] as $key => $id_detalle_compra_producto) {
-            $values = [
-                "id_producto" => $request->all()['id_producto'][$key],
-                'id_compra' => $compra->id,
+            foreach($request->all()['id_producto'] as $key => $id_producto){
+                $detalle_compra_productos[$key] = [
+                'id_producto' => $id_producto,
                 'id_unidad_de_medida' => $request->all()['id_unidad_de_medida'][$key],
                 'cantidad' => $request->all()['cantidad'][$key],
                 'precio_compra' => $request->all()['precio_compra'][$key],
                 'precio_venta' => $request->all()['precio_venta'][$key],
-            ];
-            DetalleCompraProductos::where('id', $id_detalle_compra_producto)->update($values);
-        }
+                'id_compra' => $compra->id
+                ];
+            }
 
-        return redirect()->route('compra.index')->with('success', 'Se ha modificado la compra satisfactoriamente.');
+            foreach($detalle_compra_productos as $key => $detalle_compra_producto){
+                $detalle_compra_producto = new DetalleCompraProductos($detalle_compra_producto);
+                $detalle_compra_producto->save();
+            }
+
+            return redirect()->route('compra.index')->with('success', 'Se ha creado la compra satisfactoriamente');
+        }catch(Exception $e){
+            return redirect()->route('compra.index')->with('fail', 'Ha ocurrido un error al guardar<br><br>' . $e->getMessage());
+        }
+    }
+
+    public function edit(Compra $compra)
+    {
+        return view('compra.edit', compact('compra'));
+    }
+
+    public function update(StoreCompra $request)
+    {
+        try{
+            $compra = Compra::find($request->input('id'));
+            $compra->update($request->all());
+            
+            foreach ($request->all()['id_detalle_compra_producto'] as $key => $id_detalle_compra_producto) {
+                $detalle_compra_producto = $compra->detalle_compra_productos->find($id_detalle_compra_producto);
+                $values = [
+                    "id_producto" => $request->all()['id_producto'][$key],
+                    'id_compra' => $compra->id,
+                    'id_unidad_de_medida' => $request->all()['id_unidad_de_medida'][$key],
+                    'cantidad' => $request->all()['cantidad'][$key],
+                    'precio_compra' => $request->all()['precio_compra'][$key],
+                    'precio_venta' => $request->all()['precio_venta'][$key],
+                ];
+                if(!empty($detalle_compra_producto)){
+                    $detalle_compra_producto->update($values);
+                }else{
+                    $detalle_compra_producto = new DetalleCompraProductos($values);
+                    $detalle_compra_producto->save();
+                }
+            }
+
+            return redirect()->route('compra.index')->with('success', 'Se ha modificado la compra satisfactoriamente.');
+        }catch(Exception $e){
+            return redirect()->route('compra.index')->with('fail', 'Ha ocurrido un error al guardar<br><br>' . $e->getMessage());
+        }
     }
 
     public function destroy(Compra $compra)
@@ -94,11 +114,11 @@ class CompraController extends Controller
     public function getProducts(Compra $compra)
     {
         $data = [];
-        $detalleCompraProductos = DetalleCompraProductos::where('id_compra', $compra->id)->get();
-        foreach($detalleCompraProductos as $key => $detalle_compra_producto){
-            $detalle_compra_producto->producto = $detalle_compra_producto->producto();
-            $detalle_compra_producto->producto->tipo_producto = $detalle_compra_producto->producto->tipo_producto();
-            $detalle_compra_producto->unidad_de_medida = $detalle_compra_producto->unidad_de_medida();
+        foreach($compra->detalle_compra_productos as $key => $detalle_compra_producto){
+            $detalle_compra_producto->producto;
+            $detalle_compra_producto->producto->marca;
+            $detalle_compra_producto->producto->tipo_producto;
+            $detalle_compra_producto->unidad_de_medida;
             $data[$key] = $detalle_compra_producto;
         }
         return response()->json($data);

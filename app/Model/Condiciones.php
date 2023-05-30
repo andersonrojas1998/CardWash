@@ -11,4 +11,9 @@ class Condiciones extends Model
     protected $fillable = [
         'descripcion'
     ];
+
+    public function compra()
+    {
+        return $this->belongsTo('App\Model\Compra', 'id');
+    }
 }

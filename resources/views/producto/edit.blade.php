@@ -66,22 +66,6 @@
                                     <label for="es_de_venta_edit2">Producto de uso interno</label>
                                 </div>
                             </div>
-                            <!--<div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="select_unidad_medida_edit" class="control-label">Unidad de medida&nbsp;:</label>
-                                    <div class="input-group">
-                                        <select class="custom-select select-unidad-de-medida" id="select_unidad_medida_edit" name="id_unidad_de_medida">
-                                            <option>Seleccione unidad de medida</option>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" title="Agregar unidad de medida" data-toggle="modal" data-target="#modal_create_unit_measurement">
-                                                <span class="mdi mdi-plus-circle-outline mdi-24px"></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" id="select-unit-measurement-data-url" value="{ route('unidad-de-medida.index') }}">
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                     <div class="modal-footer">

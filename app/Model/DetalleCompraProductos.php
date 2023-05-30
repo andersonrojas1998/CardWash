@@ -19,11 +19,15 @@ class DetalleCompraProductos extends Model
 
     public function producto()
     {
-        return Producto::where('id', $this->id_producto)->first();
+        return $this->hasOne('App\Model\Producto', 'id', 'id_producto');
     }
 
     public function unidad_de_medida()
     {
-        return UnidadDeMedida::where('id', $this->id_unidad_de_medida)->first();
+        return $this->hasOne('App\Model\UnidadDeMedida', 'id', 'id_unidad_de_medida');
+    }
+
+    public function compra(){
+        return $this->belongsTo('App\Model\Compra', 'id');
     }
 }

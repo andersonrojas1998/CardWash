@@ -10,8 +10,8 @@
             </div>
             <div class="d-flex justify-content-end bd-highlight">
                 <div class="px-3 py-1">
-                    <a class="d-block text-body-emphasis text-decoration-none" title="Crear producto" data-toggle="modal" data-target="#modal_create_product">
-                        <span class="mdi mdi-plus-circle-outline mdi-36px"></span>
+                    <a class="d-block text-body-emphasis text-decoration-none" data-toggle="modal" data-target="#modal_create_product">
+                        <span class="mdi mdi-plus-circle-outline mdi-36px" title="Crear producto" data-toggle="tooltip"></span>
                     </a>
                 </div>
             </div>
@@ -38,6 +38,13 @@
     @include('marca.create')
     @include('tipo_producto.create')
     @include('unidad_de_medida.create')
+    @if(session('success'))
+        <input type="hidden" id="succes_message" value="{{session('success')}}">
+    @endif
+
+    @if(session('fail'))
+        <input type="hidden" id="fail_message" value="{{session('fail')}}">
+    @endif
 </div>
 @endsection
 @push('custom-scripts')

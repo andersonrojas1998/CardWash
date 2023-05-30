@@ -9,8 +9,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end bd-highlight">
-                <div class="px-3 py-1">
-                    <a class="d-block text-body-emphasis text-decoration-none" id="open-modal-create-compra" title="Crear compra" data-toggle="modal" data-target="#modal_create_buy">
+                <div class="pr-3 pt-3">
+                    <a href="{{route('compra.create')}}" class="text-body" title="Crear compra">
                         <span class="mdi mdi-plus-circle-outline mdi-36px"></span>
                     </a>
                 </div>
@@ -42,10 +42,14 @@
             </table>
         </div>
     </div>
-    @include('compra.create')
-    @include('compra.edit')
-    @include('unidad_de_medida.create')
 </div>
+@if(session('success'))
+    <input type="hidden" id="succes_message" value="{{session('success')}}">
+@endif
+
+@if(session('fail'))
+    <input type="hidden" id="fail_message" value="{{session('fail')}}">
+@endif
 @endsection
 @push('custom-scripts')
     {!! Html::script('js/validate.min.js') !!}

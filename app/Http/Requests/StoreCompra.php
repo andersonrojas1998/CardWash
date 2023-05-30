@@ -57,7 +57,7 @@ class StoreCompra extends FormRequest
             'descuentos_iva.required' => 'El descuento del iva son requeridos',
             'importe_total.required' => 'El importe total es requerido',
             'condiciones_id.required' => 'Las condiciones son requeridas',
-            'id_producto.required' => 'Agregue los productos',
+            'id_producto.required' => 'No se han agregado los productos, por favor agreguelos.',
             'id_unidad_medida.required' => 'Agregue los productos',
             'cantidad_producto.required' => 'Agregue los productos',
             'precio_compra_producto.required' => 'Agregue los productos',

@@ -28,8 +28,8 @@
                                         <select class="custom-select select-tipo-producto" name="id_tipo_producto" id="tipo-producto" aria-describedby="type_product_create_help" required>
                                             <option value="">Seleccione tipo de producto</option>
                                         </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" title="Agregar tipo de producto" data-toggle="modal" data-target="#modal_create_product_type">
+                                        <div class="input-group-append" title="Agregar tipo de producto" data-toggle="tooltip">
+                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modal_create_product_type">
                                                 <span class="mdi mdi-plus-circle-outline mdi-24px"></span>
                                             </button>
                                         </div>
@@ -54,8 +54,8 @@
                                         <select class="custom-select select-marca" name="id_marca" required>
                                             <option value="">Seleccione la marca</option>
                                         </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" title="Agregar marca" data-toggle="modal" data-target="#modal_create_brand">
+                                        <div class="input-group-append" title="Agregar marca" data-toggle="tooltip">
+                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modal_create_brand">
                                                 <span class="mdi mdi-plus-circle-outline mdi-24px"></span>
                                             </button>
                                         </div>
@@ -82,22 +82,6 @@
                                     <span class="badge badge-pill badge-danger">{{$errors->first('es_de_venta')}}</span>
                                 @endif
                             </div>
-                            <!--<div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="unidad-medida" class="control-label">Unidad de medida&nbsp;:</label>
-                                    <div class="input-group">
-                                        <select class="custom-select select-unidad-de-medida" name="id_unidad_de_medida">
-                                            <option>Seleccione unidad de medida</option>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" title="Agregar unidad de medida" data-toggle="modal" data-target="#modal_create_unit_measurement">
-                                                <span class="mdi mdi-plus-circle-outline mdi-24px"></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" id="select-unit-measurement-data-url" value="{ route('unidad-de-medida.index') }}">
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                     <div class="modal-footer">

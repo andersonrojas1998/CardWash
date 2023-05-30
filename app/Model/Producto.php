@@ -12,12 +12,12 @@ class Producto extends Model
 
     public function marca()
     {
-        return Marca::where('id', $this->id_marca)->first();
+        return $this->hasOne('App\Model\Marca', 'id', 'id_marca');
     }
 
     public function tipo_producto()
     {
-        return Tipo_Producto::where('id', $this->id_tipo_producto)->first();
+        return $this->hasOne('App\Model\Tipo_Producto', 'id', 'id_tipo_producto');
     }
 
     public function cantidad()

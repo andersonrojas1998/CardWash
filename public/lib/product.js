@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
     $('#table-product').DataTable({
         dom: 'Bfrtip',
@@ -41,8 +41,10 @@ $(document).ready(function(){
                 button.attr('data-toggle', 'modal');
                 button.attr('data-target', '#modal_edit_product');
                 let i = $("<i>", {
-                    class : "mdi mdi-pencil-box-outline text-primary mdi-24px"
+                    class : "mdi mdi-pencil-box-outline text-primary mdi-24px",
+                    title: "Editar producto"
                 });
+                i.attr('data-toggle', 'tooltip');
                 button.append(i);
                 div.append(button);
                 return div.html();
@@ -82,7 +84,7 @@ $(document).ready(function(){
                     $.each(res, function(i, value){
                         output += value + '\n';
                     });
-                    alert(output);
+                    sweetMessage('', output, 'warning');
                 }
             },
             success: function(data, textStatus, xhr){
@@ -98,7 +100,7 @@ $(document).ready(function(){
                     text: 'Seleccione la marca'
                 }));
                 $('.select-marca').val(data.marca.id);
-                alert(data.success);
+                sweetMessage('', data.success);
             }
         });
     });
@@ -134,7 +136,7 @@ $(document).ready(function(){
                     $.each( res, function(i, value){
                         output += value + '\n';
                     });
-                    alert(output);
+                    sweetMessage('', output, 'warning');
                 }
             },
             success: function(data, textStatus, xhr){
@@ -150,7 +152,7 @@ $(document).ready(function(){
                     text:'Seleccione tipo de producto'
                 });
                 $('.select-tipo-producto').val(data.tipo_producto.id);
-                alert(data.success);
+                sweetMessage('', data.success);
             }
         });
     });
@@ -183,6 +185,12 @@ $(document).ready(function(){
                 $('.select-marca').val($('#old-select-brand').val());
         }
     });
+
+    if($('#succes_message').length)
+        sweetMessage('', $('#succes_message').val());
+
+    if($('#fail_message').length)
+        sweetMessage('', $('#fail_message').val(), 'error');
 
     $.ajax({
         url: $("#select-product-type-data-url").val(),

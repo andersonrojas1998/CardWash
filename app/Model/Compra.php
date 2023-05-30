@@ -28,11 +28,16 @@ class Compra extends Model
 
     public function estado()
     {
-        return Estado::where('id', $this->id_estado)->first();
+        return $this->hasOne('App\Model\Estado', 'id', 'id_estado');
     }
 
-    public function condiciones()
+    public function condicion()
     {
-        return Condiciones::where('id', $this->condiciones_id)->first();
+        return $this->hasOne('App\Model\Condiciones', 'id', 'condiciones_id');
+    }
+
+    public function detalle_compra_productos()
+    {
+        return $this->hasMany('App\Model\DetalleCompraProductos', 'id_compra', 'id');
     }
 }
