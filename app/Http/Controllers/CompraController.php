@@ -23,7 +23,9 @@ class CompraController extends Controller
         ];
 
         foreach ($compras as $compra){
-            $compra->estado;
+            $compra->fecha_emision=date('Y-m-d',strtotime($compra->fecha_emision));
+            $compra->fecha_vencimiento=date('Y-m-d',strtotime($compra->fecha_vencimiento));
+            $compra->estado = $compra->estado();
 
             $compra->condicion;
 

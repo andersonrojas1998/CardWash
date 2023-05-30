@@ -16,8 +16,7 @@ class DetalleCompraProductos extends Model
         'precio_compra',
         'precio_venta'
     ];
-
-    public function producto()
+   public function producto()
     {
         return $this->hasOne('App\Model\Producto', 'id', 'id_producto');
     }
