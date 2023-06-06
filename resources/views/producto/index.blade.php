@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between bd-highlight mb-3">
             <div class="d-flex justify-content-start bd-highlight">
                 <div class="p-4 bg-light">
-                    <h4>PRODUCTOS</h4>
+                    <h4>PRODUCTOS EN STOCK</h4>
                 </div>
             </div>
             <div class="d-flex justify-content-end bd-highlight">

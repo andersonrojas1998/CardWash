@@ -51,7 +51,17 @@ $(function(){
                 return div.html();
             }
         }
-        ]
+        ],
+
+        rowCallback:function(row,data,index){
+            let cantidad=data.cantidad;
+            switch(true){                
+                case (parseInt(cantidad) >= 1 && parseInt(cantidad) <= 10):
+                    $('td', row).css('background-color', 'rgba(238, 249, 71, 0.35)');
+                break;                
+            }
+        }
+
     });
 
     $(document).on('click', '#save-brand', function(){
