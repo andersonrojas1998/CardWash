@@ -41,4 +41,9 @@ class User extends Authenticatable implements   HasRoleAndPermissionContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function RolesUser(){
+        return $this->hasMany('App\Model\RolesUser','user_id','id');        
+    }
+   
 }

@@ -1,5 +1,15 @@
 $(document).ready(function() {
-    dt_teacher();
+
+    if($('#dt_teacher').length){
+        dt_teacher();
+    }
+    
+    if($('#dt_sales_user').length){
+        dt_sales_user();
+    }
+
+    
+
 
     $(document).on("click","#btn_show_user",function(){  
         let id=$(this).attr('data-id');
@@ -54,8 +64,6 @@ $(document).ready(function() {
         });
 
     });
-
-
     $(document).on("click","#submit_users",function(e){                                
          $('#form_createUser').validate({            
             rules:{
@@ -103,6 +111,55 @@ $(document).ready(function() {
         });
 
     });
+
+
+    $(document).on("click","#btn_pay_sales",function(e){                                
+
+        let us=$('#id_usuario').val();
+        let totalt=$('#payPending').html();
+        Swal.fire({
+            title: '¿ Esta Seguro ?',
+            html: 'Deseas realizar el pago de los servicios prestados por valor  '+ totalt,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+          }).then((result) => {
+            if (result.value) {
+
+                
+                $.ajax({
+                    url:"/usuarios/pay_sales/",
+                    data:{'id_usuario':us,'total':totalt},
+                    type:"GET",
+                    dataType:"JSON",
+                    success:function(data){
+                            if(data==1){
+                                sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
+                                setTimeout(function () { location.reload() }, 2000);
+
+                            }
+
+                    }
+                });
+
+              
+                      
+            }
+          });
+
+    });
+    
+
+   
+
+
+    $(document).on("click","#btn_show_payPending",function(){          
+        let id=$(this).attr('data-id');
+        dt_pay_pending(id);
+    });  
+
 });
 
 
@@ -146,6 +203,84 @@ var dt_teacher=function(){
                         return button; 
                     }
                 },
+        ]
+    });
+}
+var dt_sales_user=function(){
+    $('#dt_sales_user').DataTable({        
+          dom: 'Bfrtip',
+          buttons: ['csv', 'excel', 'pdf'],      
+        ajax: {
+            url: "/usuarios/dt_sales_user",
+            method: "GET", 
+            dataSrc: function (json) {                
+                if (!json.data) {
+                    return [];
+                } else {
+                    return json.data;
+                }
+              }               
+            },
+        columnDefs: [
+            { width: '5%', targets: 0 },{"className": "text-center", "targets": "_all"},            
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 6 },           
+            { orderable: false, targets: '_all' }
+        ],       
+        columns: 
+        [       
+                { "data": "con" , render(data){return '<p class="text-muted">'+data+'</p>';}},         
+                { "data": "dni" , render(data){return '<b>'+data+'</b>';}},         
+                { "data": "name",render(data,type,row){ return data; }},                
+                {"data": "cant_servicios", render(data){  return  '<h4>'+ data +'</h4>'; }},
+                {"data": "pagos", render(data){  return  '<h4><label class="badge text-white badge-success">'+ data +'</label></h4>'; }},            
+                {"data": "pendiente", render(data){  return  '<h4><label class="badge text-black badge-warning">'+ data +'</label></h4>'; }},
+                {"data": "pend_pago", render(data){  return  '<h4> $ '+ data +'</h4>'; }},
+                {"data": "", 
+                    render(data,ps,d){ 
+                        let button;
+                        button='<div id="btn_show_payPending"  data-id='+d.id+'><i data-toggle="modal" data-target="#mdl_paySales" class="mdi mdi-cash-multiple         text-primary" style="font-size:30px;"></i></div>';                        
+                        return button; 
+                    }
+                },
+        ]
+    });
+}
+
+
+var dt_pay_pending=function(id){
+    
+    $('#dt_pay_pending').DataTable({
+         "bDestroy": true,       
+          dom: 'Bfrtip',
+          buttons: ['excel','pdf'],      
+        ajax: {
+            url: "/usuarios/dt_pay_pending/"+id,
+            method: "GET", 
+            dataSrc: function (json) {                
+                $('#payPending').html('$. ' + json.pay);
+                $('#id_usuario').val(id);
+                if (!json.data) {
+                    return [];
+                } else {
+                    return json.data;
+                }
+              }               
+            },
+            columnDefs: [
+                { width: '5%', targets: 0 },{"className": "text-center", "targets": "_all"},            
+                { orderable: true, className: 'reorder', targets: 0 },                
+                { orderable: false, targets: '_all' }
+            ],     
+        columns: 
+        [       
+                { "data": "no_venta" , render(data){return '<p class="text-muted">'+data+'</p>';}},         
+                { "data": "nombre_cliente" , render(data){return '<b>'+data+'</b>';}},         
+                { "data": "combo",render(data){ return data; }},  
+                { "data": "vehiculo",render(data){ return data; }},                
+                {"data": "precio_venta", render(data){  return  '<h4>$ '+ data +'</h4>'; }},
+                {"data": "porcentaje", render(data){  return  '<h4><label class="badge text-white badge-success">'+ data +' % </label></h4>'; }},            
+                {"data": "pago", render(data){  return  '<h4><label class="badge text-black badge-warning"> $ '+ data +'</label></h4>'; }},                
         ]
     });
 }
