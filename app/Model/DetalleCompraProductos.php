@@ -8,22 +8,19 @@ class DetalleCompraProductos extends Model
 {
     protected $table = "detalle_compra_productos";
 
+    protected $primaryKey = "id_detalle_compra";
+
     protected $fillable = [
         'id_producto',
         'id_compra',
-        'id_unidad_de_medida',
         'cantidad',
         'precio_compra',
         'precio_venta'
     ];
-   public function producto()
+
+    public function producto()
     {
         return $this->hasOne('App\Model\Producto', 'id', 'id_producto');
-    }
-
-    public function unidad_de_medida()
-    {
-        return $this->hasOne('App\Model\UnidadDeMedida', 'id', 'id_unidad_de_medida');
     }
 
     public function compra(){

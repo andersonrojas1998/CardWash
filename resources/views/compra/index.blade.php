@@ -26,10 +26,8 @@
                         <th rowspan="2">F. Vencimiento</th>
                         <th rowspan="2">No. Comprobante</th>
                         <th colspan="2" class="text-center">Proveedor</th>
-                        <th rowspan="2">Compra o<br>gasto</th>
                         <th rowspan="2">Descuento IVA</th>
                         <th rowspan="2">Importe total</th>
-                        <th rowspan="2">Condicion</th>
                         <th rowspan="2">Acci&oacute;n</th>
                     </tr>
                     <tr>

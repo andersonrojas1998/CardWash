@@ -6,26 +6,18 @@
                 <table class="table table-striped table-add-products">
                     <thead>
                         <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio de venta</th>
+                            <th>Precio de compra</th>
+                        </tr>
+                        <tr>
                             <td class="p-1">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <select class="custom-select select-product-compra select_add_products" data-url-quantity="{{route('producto.index')}}">
                                             <option value="">Seleccione producto</option>
                                         </select>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="p-1">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <select class="custom-select select-unidad-de-medida select_add_products">
-                                            <option>Seleccione unidad de medida</option>
-                                        </select>
-                                        <div class="input-group-append" title="Agregar unidad de medida" data-toggle="tooltip">
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modal_create_unit_measurement">
-                                                <span class="mdi mdi-plus-circle-outline mdi-24px"></span>
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -56,7 +48,6 @@
                         </tr>
                         <tr>
                             <th>Producto</th>
-                            <th>Unidad de medida</th>
                             <th>Cantidad</th>
                             <th>Precio de venta</th>
                             <th>Precio de compra</th>
@@ -69,11 +60,7 @@
                                     <td>
                                         {{$detalle_compra_producto->producto->nombre . ' (' . $detalle_compra_producto->producto->tipo_producto->descripcion . ')'}}
                                         <input type="hidden" class="id_producto_table" name="id_producto[]" value="{{$detalle_compra_producto->producto->id}}">
-                                        <input type="hidden" name="id_detalle_compra_producto[]" value="{{$detalle_compra_producto->id}}">
-                                    </td>
-                                    <td class="td_unit_measurement">
-                                        {{$detalle_compra_producto->unidad_de_medida->nombre . ' (' . $detalle_compra_producto->unidad_de_medida->abreviatura . ')'}}
-                                        <input type="hidden" name="id_unidad_de_medida[]" value="{{$detalle_compra_producto->unidad_de_medida->id}}">
+                                        <input type="hidden" name="id_detalle_compra_producto[]" value="{{$detalle_compra_producto->id_detalle_compra}}">
                                     </td>
                                     <td class="td_quantity">
                                         {{$detalle_compra_producto->cantidad}}
@@ -101,7 +88,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td class="font-weight-bold text-right" colspan="4">Total:<input type="hidden" name="importe_total" class="importe_total form_add_products" value="@if(isset($compra)) {{$compra->importe_total}} @else 0 @endif"></td>
+                            <td class="font-weight-bold text-right" colspan="3">Total:<input type="hidden" name="importe_total" class="importe_total form_add_products" value="@if(isset($compra)) {{$compra->importe_total}} @else 0 @endif"></td>
                             <td class="font-weight-bold td_importe_total">$<strong class="text_importe_total">@if(isset($compra)) {{$compra->importe_total}} @else 0 @endif</strong></td>
                         </tr>
                     </tfoot>
@@ -110,5 +97,4 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="select-unit-measurement-data-url" value="{{ route('unidad-de-medida.index') }}">
 <input type="hidden" id="select-product-data-url" value="{{ route('producto.data') }}">

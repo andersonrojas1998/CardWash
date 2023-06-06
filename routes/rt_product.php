@@ -1,5 +1,7 @@
 <?php
 
+    Route::get('presentacion', 'PresentacionController@index')->name('presentacion.index');
+
     Route::group(['prefix' => 'marca'], function(){
         Route::get('', 'MarcaController@index')->name('marca.index');
         Route::post('', 'MarcaController@store')->name('marca.store');

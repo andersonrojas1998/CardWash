@@ -8,11 +8,10 @@ class Producto extends Model
 {
     protected $table = 'producto';
 
-    protected $fillable = ['nombre','id_marca','id_tipo_producto', 'es_de_venta'];
-
+    protected $fillable = ['nombre','id_marca','id_tipo_producto', 'id_unidad_medida', 'id_presentacion', 'cant_stock', 'cant_stock_mov'];
 
     public function compras(){
-    	return $this->hasMany('App\Model\DetalleCompraProductos','id_producto','id_producto');
+    	return $this->hasMany('App\Model\DetalleCompraProductos','id_producto','id');
     }
 
     public function marca(){
@@ -24,22 +23,13 @@ class Producto extends Model
         return $this->hasOne('App\Model\Tipo_Producto', 'id', 'id_tipo_producto');
     }
 
-    public function cantidad()
+    public function unidad_medida()
     {
-        $compra = DetalleCompraProductos::where([
-            ['id_producto', $this->id],
-            ['compra_o_gasto', 'Compra']
-        ])->join('compra', [
-            ['compra.id','=','detalle_compra_productos.id_compra']
-            ])->sum('cantidad');
+        return $this->hasOne('App\Model\UnidadDeMedida', 'id', 'id_unidad_medida');
+    }
 
-        $gasto = DetalleCompraProductos::where([
-            ['id_producto', $this->id],
-            ['compra_o_gasto', 'Gasto']
-        ])->join('compra', [
-            ['compra.id','=','detalle_compra_productos.id_compra']
-            ])->sum('cantidad');
-
-        return $compra - $gasto;
+    public function presentacion()
+    {
+        return $this->hasOne('App\Model\Presentacion', 'id', 'id_presentacion');
     }
 }

@@ -35,9 +35,7 @@ class StoreCompra extends FormRequest
             'razon_social_proveedor' => 'required',
             'descuentos_iva' => 'required',
             'importe_total' => 'required',
-            'condiciones_id' => 'required',
             'id_producto' => 'required',
-            'id_unidad_de_medida' => 'required',
             'cantidad' => 'required',
             'precio_compra' => 'required',
             'precio_venta' => 'required'
@@ -56,9 +54,7 @@ class StoreCompra extends FormRequest
             'razon_social_proveedor.required' => 'La razon social del proveedor es requerida',
             'descuentos_iva.required' => 'El descuento del iva son requeridos',
             'importe_total.required' => 'El importe total es requerido',
-            'condiciones_id.required' => 'Las condiciones son requeridas',
             'id_producto.required' => 'No se han agregado los productos, por favor agreguelos.',
-            'id_unidad_medida.required' => 'Agregue los productos',
             'cantidad_producto.required' => 'Agregue los productos',
             'precio_compra_producto.required' => 'Agregue los productos',
             'precio_venta_producto.required' => 'Agregue los productos'

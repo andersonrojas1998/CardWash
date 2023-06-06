@@ -17,13 +17,11 @@ class Compra extends Model
         'id_proveedor',
         'razon_social_proveedor',
         'descuentos_iva',
-        'importe_total',
-        'condiciones_id'
+        'importe_total'
     ];
 
     protected $attributes = [
-        'id_estado' => 1,
-        'compra_o_gasto' => 'Compra'
+        'estado_id' => 1
     ];
 
     public function estado()

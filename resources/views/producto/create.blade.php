@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title text-uppercase text-center" >Crear producto&nbsp;<span class="mdi mdi-package"></span></h5>
+                <h5 class="modal-title text-uppercase text-center text-light" >Crear producto&nbsp;<span class="mdi mdi-package"></span></h5>
             </div>
             <form id="form_create_product" action="{{route('producto.store')}}" enctype="multipart/form-data" method="POST">
                 {{ csrf_field() }}
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row">
+                        <div class="d-flex justify-content-center">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="marca" class="control-label">Marca&nbsp;:</label>
@@ -69,18 +69,33 @@
                                     @endif
                                 </div>
                             </div>
+                        </div>    
+                        <div class="row mt-4">
                             <div class="col-lg-6">
-                                <div class="form-check">
-                                    <input type="radio" name="es_de_venta" id="es_de_venta_create1" value="1" class="form-check-input" required @if (old('es_de_venta') && old('es_de_venta') == 1) checked="true" @endif>
-                                    <label for="es_de_venta_create1">Producto de venta</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" name="es_de_venta" id="es_de_venta_create2" value="0" class="form-check-input" @if (old('es_de_venta') && old('es_de_venta') == 0) checked="true" @endif>
-                                    <label for="es_de_venta_create2">Producto de uso interno</label>
-                                </div>
-                                @if ($errors->any() && $errors->first('es_de_venta'))
-                                    <span class="badge badge-pill badge-danger">{{$errors->first('es_de_venta')}}</span>
+                                <label class="control-label">Unidad de medida&nbsp;:</label>
+                                <select class="custom-select select-unidad-de-medida" name="id_unidad_medida">
+                                    <option>Seleccione unidad de medida</option>
+                                </select>
+                                @if ($errors->any() && $errors->first('id_unidad_medida'))
+                                    <span class="badge badge-pill badge-danger">{{$errors->first('id_unidad_medida')}}</span>
                                 @endif
+                                @if (old('id_unidad_medida'))
+                                    <input type="hidden" id="old-select-unit-measurement" value="{{ old('id_unidad_medida') }}">
+                                @endif
+                                <input type="hidden" id="select-unit-measurement-data-url" value="{{ route('unidad-de-medida.index') }}">
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label">Presentacion&nbsp;:</label>
+                                <select class="custom-select select-presentation" name="id_presentacion">
+                                    <option>Seleccione la presentaci&oacute;n</option>
+                                </select>
+                                @if ($errors->any() && $errors->first('id_presentacion'))
+                                    <span class="badge badge-pill badge-danger">{{$errors->first('id_presentacion')}}</span>
+                                @endif
+                                @if (old('id_presentacion'))
+                                    <input type="hidden" id="old-select-presentation" value="{{ old('id_presentacion') }}">
+                                @endif
+                                <input type="hidden" id="select-presentation-data-url" value="{{ route('presentacion.index') }}">
                             </div>
                         </div>
                     </div>

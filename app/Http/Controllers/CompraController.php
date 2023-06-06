@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompra;
 use App\Model\Compra;
 use App\Model\DetalleCompraProductos;
+use App\Model\Producto;
 use Exception;
-use Illuminate\Http\Request;
 
 class CompraController extends Controller
 {
@@ -46,6 +46,7 @@ class CompraController extends Controller
     {
         try{
             $compra = new Compra($request->all());
+            $compra->condiciones_id = 1;
             $compra->save();
 
             $detalle_compra_productos = [];
@@ -53,7 +54,6 @@ class CompraController extends Controller
             foreach($request->all()['id_producto'] as $key => $id_producto){
                 $detalle_compra_productos[$key] = [
                 'id_producto' => $id_producto,
-                'id_unidad_de_medida' => $request->all()['id_unidad_de_medida'][$key],
                 'cantidad' => $request->all()['cantidad'][$key],
                 'precio_compra' => $request->all()['precio_compra'][$key],
                 'precio_venta' => $request->all()['precio_venta'][$key],
@@ -62,6 +62,10 @@ class CompraController extends Controller
             }
 
             foreach($detalle_compra_productos as $key => $detalle_compra_producto){
+                $producto = Producto::find($detalle_compra_producto['id_producto']);
+                $producto->cant_stock = $producto->cant_stock + $detalle_compra_producto['cantidad'];
+                $producto->update();
+
                 $detalle_compra_producto = new DetalleCompraProductos($detalle_compra_producto);
                 $detalle_compra_producto->save();
             }
@@ -84,21 +88,25 @@ class CompraController extends Controller
             $compra->update($request->all());
             
             foreach ($request->all()['id_detalle_compra_producto'] as $key => $id_detalle_compra_producto) {
-                $detalle_compra_producto = $compra->detalle_compra_productos->find($id_detalle_compra_producto);
+                $detalle_compra_producto = DetalleCompraProductos::find($id_detalle_compra_producto);
                 $values = [
                     "id_producto" => $request->all()['id_producto'][$key],
                     'id_compra' => $compra->id,
-                    'id_unidad_de_medida' => $request->all()['id_unidad_de_medida'][$key],
-                    'cantidad' => $request->all()['cantidad'][$key],
+                    'cantidad' => intval($request->all()['cantidad'][$key]),
                     'precio_compra' => $request->all()['precio_compra'][$key],
                     'precio_venta' => $request->all()['precio_venta'][$key],
                 ];
+                $producto = Producto::find($values['id_producto']);
+
                 if(!empty($detalle_compra_producto)){
+                    $producto->cant_stock = $producto->cant_stock - $detalle_compra_producto->cantidad;
                     $detalle_compra_producto->update($values);
                 }else{
                     $detalle_compra_producto = new DetalleCompraProductos($values);
                     $detalle_compra_producto->save();
                 }
+                $producto->cant_stock = $producto->cant_stock + $values['cantidad'];
+                $producto->save();
             }
 
             return redirect()->route('compra.index')->with('success', 'Se ha modificado la compra satisfactoriamente.');
@@ -120,7 +128,8 @@ class CompraController extends Controller
             $detalle_compra_producto->producto;
             $detalle_compra_producto->producto->marca;
             $detalle_compra_producto->producto->tipo_producto;
-            $detalle_compra_producto->unidad_de_medida;
+            $detalle_compra_producto->producto->presentacion;
+            $detalle_compra_producto->producto->unidad_de_medida;
             $data[$key] = $detalle_compra_producto;
         }
         return response()->json($data);

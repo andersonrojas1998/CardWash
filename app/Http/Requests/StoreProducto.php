@@ -29,7 +29,8 @@ class StoreProducto extends FormRequest
             'nombre' => 'required',
             'id_marca' => 'required',
             'id_tipo_producto' => 'required',
-            'es_de_venta' => 'required'
+            'id_unidad_medida' => 'required',
+            'id_presentacion' => 'required'
         ];
     }
 
@@ -39,7 +40,8 @@ class StoreProducto extends FormRequest
             'nombre.required' => 'El nombre es requerido',
             'id_marca.required' => 'La marca es requerida',
             'id_tipo_producto.required' => 'El tipo de producto es requerido',
-            'es_de_venta.required' => 'Seleccione si el producto es de venta o de uso interno'
+            'id_unidad_medida.required' => 'La unidad de medida es requerida',
+            'id_presentacion.required' => 'La presentaci&oacute;n es requerida'
         ];
     }
 

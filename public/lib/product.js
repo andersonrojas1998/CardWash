@@ -24,29 +24,30 @@ $(function(){
             {"data": "nombre"},
             {"data": "marca.nombre"},
             {"data": "tipo_producto.descripcion"},
-            {"data": "es_de_venta", render(es_de_venta){
-                return (es_de_venta == 1)? "Producto de venta" : "Uso interno";
-            }},            
+            {"data": "unidad_medida", render(unidad_de_medida){
+                return unidad_de_medida.nombre + " (" + unidad_de_medida.abreviatura + ")";
+            }},
+            {"data": "presentacion.nombre"},
             { "data": "cantidad",render(data){ return '<h4><label class="badge text-white badge-success">'+ data  +'</label></h4>'; }},
             {"data": "actions", render(data, ps, producto){
-                let div = $('<div>');
-                let button = $("<a>", {
-                    class: "btn_show_edit_product",
+                let div = $('<div>',{
+                    html: $("<a>", {
+                        class: "btn_show_edit_product",
+                        html:$("<i>", {
+                            class : "mdi mdi-pencil-box-outline text-primary mdi-24px",
+                            title: "Editar producto"
+                        }).attr('data-toggle', 'tooltip')
+                    }).attr({
+                        'data-id': producto.id,
+                        'data-nombre': producto.nombre,
+                        'data-id-tipo-producto': producto.id_tipo_producto,
+                        'data-id-marca': producto.id_marca,
+                        'data-id-unidad-medida': producto.id_unidad_medida,
+                        'data-id-presentacion': producto.id_presentacion,
+                        'data-toggle': 'modal',
+                        'data-target': '#modal_edit_product',
+                    })
                 });
-                button.attr('data-id', producto.id);
-                button.attr('data-nombre', producto.nombre);
-                button.attr('data-id-marca', producto.id_marca);
-                button.attr('data-id-tipo-producto', producto.id_tipo_producto);
-                button.attr('data-es-de-venta', producto.es_de_venta);
-                button.attr('data-toggle', 'modal');
-                button.attr('data-target', '#modal_edit_product');
-                let i = $("<i>", {
-                    class : "mdi mdi-pencil-box-outline text-primary mdi-24px",
-                    title: "Editar producto"
-                });
-                i.attr('data-toggle', 'tooltip');
-                button.append(i);
-                div.append(button);
                 return div.html();
             }
         }
@@ -79,7 +80,7 @@ $(function(){
             error: function(jqXHR, textStatus, errorThrown){
                 funTransitions();
                 if(jqXHR.status == 422){
-                    let res = JSON.parse(jqXHR.responseText);
+                    let res = jqXHR.responseJSON.errors;
                     let output = '';
                     $.each(res, function(i, value){
                         output += value + '\n';
@@ -163,7 +164,8 @@ $(function(){
         $("#name_product_edit").val($(this).data('nombre'));
         $('#select_tipo_producto_edit').val($(this).data('id-tipo-producto'));
         $('#select_marca_edit').val($(this).data('id-marca'));
-        $('#edit-product-form input[value="' + $(this).data('es-de-venta') + '"]').attr('checked', true);
+        $('#select-unidad-de-medida-edit').val($(this).data('id-unidad-medida'));
+        $('#select-presentation-edit').val($(this).data('id-presentacion'));
     });
 
     $.ajax({
@@ -211,4 +213,107 @@ $(function(){
                 $('.select-tipo-producto').val($('#old-select-product-type').val());
         }
     });
+
+    var loadUnitMeasurementOptions = function(){
+        $.ajax({
+            url: $("#select-unit-measurement-data-url").val(),
+            type: "GET",
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+            success: function(data, textStatus, xhr){
+                $('.select-unidad-de-medida').empty();
+                $.each(data.unidades_de_medida, function(i, unidad_de_medida){
+                    $('.select-unidad-de-medida').append($('<option>',{
+                        value: unidad_de_medida.id,
+                        text: unidad_de_medida.nombre + " (" + unidad_de_medida.abreviatura + ")"
+                    }));
+                });
+                if($('#old-select-unit-measurement').length)
+                    $('.select-unidad-de-medida').val($('#old-select-unit-measurement').val());
+            }
+        });
+    }
+
+    loadUnitMeasurementOptions();
+
+    $(document).on('click', '#save-unit-measurement', function(){
+        let funTransitions = function(){
+            if(!$('#save-unit-measurement').attr('disabled')){
+                $('#save-unit-measurement').attr('disabled', true);
+                $('#form-fields-unit-measurement').addClass('d-none');
+                $('#spinner-unit-measurement').removeClass('d-none');
+            }else{
+                $('#save-unit-measurement').attr('disabled', false);
+                $('#form-fields-unit-measurement').removeClass('d-none');
+                $('#spinner-unit-measurement').addClass('d-none');
+            }
+        }
+        funTransitions();
+        let formData = new FormData($('#create-unit-measurement-form')[0]);
+        $.ajax({
+            url: $('#create-unit-measurement-form').attr('action'),
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+            error: function(jqXHR, textStatus, errorThrown){
+                funTransitions(1);
+                if(jqXHR.status == 422){
+                    let res = JSON.parse(jqXHR.responseText);
+                    let output = '';
+                    $.each( res, function(i, value){
+                        output += value + '\n';
+                    });
+                    sweetMessage('', output, 'warning');
+                }
+            },
+            success: function(data, textStatus, xhr){
+                funTransitions(1);
+                $(':input','#create-unit-measurement-form').val('');
+                $(".select-unidad-de-medida :contains('Seleccione unidad de medida')").remove();
+                $('.select-unidad-de-medida').prepend($('<option>',{
+                    value: data.unidad_de_medida.id,
+                    text: data.unidad_de_medida.nombre + ' (' + data.unidad_de_medida.abreviatura + ')'
+                }));
+                $(".select-unidad-de-medida").prepend($("<option>",{
+                    value: '',
+                    text: 'Seleccione unidad de medida'
+                }));
+                $(".select-unidad-de-medida").val(data.unidad_de_medida.id);
+                sweetMessage('', data.success);
+            }
+        });
+    });
 });
+
+
+var loadPresentationOptions = function(){
+    $.ajax({
+        url: $("#select-presentation-data-url").val(),
+        type: "GET",
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+        success: function(data, textStatus, xhr){
+            $('.select-presentation').empty();
+            $.each(data.presentaciones, function(i, presentacion){
+                $('.select-presentation').append($('<option>',{
+                    value: presentacion.id,
+                    text: presentacion.nombre
+                }));
+            });
+            if($('#old-select-presentation').length)
+                $('.select-presentacion').val($('#old-select-presentation').val());
+        }
+    });
+}
+
+loadPresentationOptions();

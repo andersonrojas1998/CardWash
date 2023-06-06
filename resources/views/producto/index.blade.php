@@ -9,9 +9,9 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end bd-highlight">
-                <div class="px-3 py-1">
+                <div class="px-3 py-1" title="Crear producto" data-toggle="tooltip">
                     <a class="d-block text-body-emphasis text-decoration-none" data-toggle="modal" data-target="#modal_create_product">
-                        <span class="mdi mdi-plus-circle-outline mdi-36px" title="Crear producto" data-toggle="tooltip"></span>
+                        <span class="mdi mdi-plus-circle-outline mdi-36px"></span>
                     </a>
                 </div>
             </div>
@@ -23,7 +23,8 @@
                         <th>Nombre (Referencia)</th>
                         <th>Marca</th>
                         <th>Tipo</th>
-                        <th>Interno<br>o venta</th>
+                        <th>Unidad de medida</th>
+                        <th>Presentacion</th>
                         <th>Cantidad</th>
                         <th>Acci&oacute;n</th>
                     </tr>

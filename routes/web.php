@@ -146,7 +146,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     require (__DIR__ . '/rt_buy.php');
 
-    require (__DIR__ . '/rt_service.php');
+    require (__DIR__ . '/rt_package.php');
     
     require (__DIR__ . '/rt_sell.php');
 });

@@ -14,16 +14,15 @@ class CreateDetalleCompraProductosTable extends Migration
     public function up()
     {
         Schema::create('detalle_compra_productos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_detalle_compra');
             $table->integer('id_producto')->unsigned()->index();
             $table->foreign('id_producto')->references('id')->on('producto')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('id_compra')->unsigned()->index();
             $table->foreign('id_compra')->references('id')->on('compra')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('id_unidad_de_medida')->unsigned()->index();
-            $table->foreign('id_unidad_de_medida')->references('id')->on('unidad_de_medida')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('cantidad');
             $table->float('precio_compra');
             $table->float('precio_venta');
+            $table->string('referencia')->nullable();
             $table->timestamps();
         });
     }

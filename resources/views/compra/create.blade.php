@@ -40,31 +40,18 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <label for="no_comprobante_compra">No. Comprobante:</label>
                         <input type="text" id="no_comprobante_compra" name="no_comprobante" class="form-control text-uppercase" placeholder="Ingrese el No. comprobante de la compra" value="{{old('no_comprobante')}}" required>
                         @if ($errors->any() && $errors->first('no_comprobante'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('no_comprobante')}}</span>
                         @endif
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <label for="descuentos_iva_compra">Descuento IVA:</label>
                         <input type="number" id="descuentos_iva_compra" name="descuentos_iva" class="form-control text-uppercase" placeholder="Ingrese el descuento IVA de la compra" value="{{old('descuentos_iva')}}" required>
                         @if ($errors->any() && $errors->first('descuentos_iva'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('descuentos_iva')}}</span>
-                        @endif
-                    </div>
-                    <div class="col-lg-4">
-                        <label for="condiciones_id_compra" class="control-label">Condiciones&nbsp;:</label>
-                        <select class="custom-select select-condiciones" name="condiciones_id" id="condiciones_id_compra" required>
-                            <option value="">Seleccione condicion</option>
-                        </select>
-                        @if ($errors->any() && $errors->first('condiciones_id'))
-                            <span class="badge badge-pill badge-danger">{{$errors->first('condiciones_id')}}</span>
-                        @endif
-                        <input type="hidden" id="select-condicion-data-url" value="{{ route('condiciones.index') }}">
-                        @if (old('condiciones_id'))
-                            <input type="hidden" id="old-select-condicion" value="{{ old('condiciones_id') }}">
                         @endif
                     </div>
                 </div>
@@ -119,7 +106,6 @@
         </fieldset>
     </form>
 </div>
-@include('unidad_de_medida.create')
 @endsection
 @push('custom-scripts')
     {!! Html::script('js/validate.min.js') !!}

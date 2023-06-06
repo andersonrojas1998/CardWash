@@ -20,13 +20,11 @@ class ProductoController extends Controller
         ];
 
         foreach ($productos as $producto ) {
-            $c=0;
-            foreach($producto->compras as $cant){
-                $c+=$cant->cantidad;                
-            }
-            $producto->marca = $producto->marca->nombre;
-            $producto->tipo_producto = $producto->tipo_producto();
-            $producto->cantidad = $c;
+            $producto->marca;
+            $producto->tipo_producto;
+            $producto->presentacion;
+            $producto->unidad_medida;
+            $producto->cantidad = $producto->cant_stock - $producto->cant_stock_mov;
 
             array_push($data['data'], $producto);
         }
@@ -43,6 +41,8 @@ class ProductoController extends Controller
         try{
           
             $producto = new Producto($request->all());
+            $producto->cant_stock = 0;
+            $producto->cant_stock_mov = 0;
             $producto->save();
 
             return redirect()->route('producto.index')->with('success', 'Se ha creado el producto "' . $producto->nombre . '" satisfactoriamente.');

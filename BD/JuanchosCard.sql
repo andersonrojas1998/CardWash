@@ -1,4 +1,4 @@
-
+USE cardwash;
 
 -- -----------------------------------------------------
 -- Table `cardwash`.`marca`
@@ -17,7 +17,7 @@ ENGINE = InnoDB;
 -- Table `cardwash`.`tipo_producto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cardwash`.`tipo_producto` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `cardwash`.`unidad_medida` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
-  `abrevitura` VARCHAR(45) NULL,
+  `abreviatura` VARCHAR(45) NULL,
   `estado` INT NULL DEFAULT 1,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `cardwash`.`estado_venta` (
   `nombre` VARCHAR(45) NULL,
   `descripcion` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '	';
@@ -269,7 +269,7 @@ COMMENT = '	';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cardwash`.`venta` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `fecha` DATETIME NOT NULL,
+  `fecha` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `nombre_cliente` VARCHAR(80) NOT NULL,
   `placa` VARCHAR(45) NULL,
   `numero_telefono` VARCHAR(45) NULL,
@@ -357,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `cardwash`.`detalle_venta_productos` (
   `cantidad` INT NULL,
   `id_producto` INT NOT NULL,
   `precio_venta` FLOAT NULL,
-  `margen_ganacia` FLOAT NULL,
+  `margen_ganancia` FLOAT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_venta`, `id_producto`),
@@ -375,4 +375,162 @@ CREATE TABLE IF NOT EXISTS `cardwash`.`detalle_venta_productos` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+--
+-- Estructura de tabla para la tabla `users`
+--
 
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identificacion` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `estado` bigint(20) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `remember_token` varchar(255) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `identificacion`, `name`, `estado`, `password`, `remember_token`, `email`, `created_at`, `updated_at`) VALUES
+(2, '1143991688', 'Anderson David Rojas', 1, '$2y$10$odheLv9bS5EGTjxmIgFUmeaqy/GZrhT9UFn0lfUIpCX8tjc5Lo0ni', '3eUFknn3uTiY4Oeg98KHqzQBIjETvK75JD4vAeX53kYRK1QYsezMY2wf7b4P', 'rojasanderson07@gmail.com', NULL, '2021-11-02 21:57:35');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `level` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `roles_slug_unique` (`slug`)
+)  ENGINE=InnoDB;
+
+--
+-- Volcado de datos para la tabla `role`
+--
+
+INSERT INTO `roles` (`id`, `name`, `slug`) VALUE(1, 'ADMIN', 'ADMIN');
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `role_user`
+--
+
+DROP TABLE IF EXISTS `role_user`;
+CREATE TABLE IF NOT EXISTS `role_user` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `role_user_role_id_index` (`role_id`),
+  KEY `role_user_user_id_index` (`user_id`)
+)  ENGINE=InnoDB;
+
+--
+-- Volcado de datos para la tabla `role_user`
+--
+
+INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, NULL, NULL);
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `system_menu`
+--
+
+DROP TABLE IF EXISTS `system_menu`;
+CREATE TABLE IF NOT EXISTS `system_menu` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `logo` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+--
+-- Volcado de datos para la tabla `system_menu`
+--
+
+INSERT INTO `system_menu` (`id`, `nombre`, `logo`, `created_at`, `updated_at`) VALUES
+(1, 'Productos', 'mdi mdi-package', '2021-06-11 14:46:24', '2021-06-11 14:46:24'),
+(2, 'Compras', 'mdi mdi-package', '2021-06-11 14:46:42', '2021-06-11 14:46:42'),
+(3, 'Servicios', 'mdi mdi-format-list-bulleted-type', '2021-06-11 14:46:24', '2021-06-11 14:46:24'),
+(4, 'Ventas', 'mdi mdi-format-list-bulleted-type', '2021-06-11 14:46:24', '2021-06-11 14:46:24');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `system_menu_role`
+--
+
+DROP TABLE IF EXISTS `system_menu_role`;
+CREATE TABLE IF NOT EXISTS `system_menu_role` (
+  `id_role` int(10) UNSIGNED DEFAULT NULL,
+  `id_menu` int(10) UNSIGNED DEFAULT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  KEY `id_role` (`id_role`),
+  KEY `id_menu` (`id_menu`)
+) ENGINE=InnoDB;
+
+--
+-- Volcado de datos para la tabla `system_menu_role`
+--
+
+INSERT INTO `system_menu_role` (`id_role`, `id_menu`, `id`) VALUES
+(1, 1, 1),
+(1, 2, 2),
+(1, 3, 3),
+(1, 4, 4),
+(1, 5, 5),
+(1, 6, 6),
+(1, 7, 7),
+(1, 8, 8);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `system_submenu`
+--
+
+DROP TABLE IF EXISTS `system_submenu`;
+CREATE TABLE IF NOT EXISTS `system_submenu` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_menu` int(10) UNSIGNED DEFAULT NULL,
+  `nombre` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `permiso_requerido` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `logo` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id_menu` (`id_menu`),
+  KEY `permiso_requerido` (`permiso_requerido`)
+) ENGINE=InnoDB;
+
+--
+-- Volcado de datos para la tabla `system_submenu`
+--
+
+INSERT INTO `system_submenu` (`id`, `id_menu`, `nombre`, `url`, `permiso_requerido`, `logo`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Inicio', '/producto', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:31:16', '2021-10-21 04:31:16'),
+(2, 2, 'Inicio', '/compra', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:30:44', '2021-10-21 04:30:44'),
+(3, 3, 'Inicio', '/servicio', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:31:16', '2021-10-21 04:31:16'),
+(4, 4, 'Inicio', '/venta', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:31:16', '2021-10-21 04:31:16');
