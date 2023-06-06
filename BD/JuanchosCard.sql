@@ -1,7 +1,7 @@
 -- -----------------------------------------------------
--- Table `cardwash1`.`marca`
+-- Table `cardwash`.`marca`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`marca` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`marca` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `estado` INT NULL,
@@ -12,15 +12,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`tipo_producto`
+-- Table `cardwash`.`tipo_producto`
 -- -----------------------------------------------------
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS `cardwash`.`tipo_producto` (
   `id` INT NOT NULL AUTO_INCREMENT,
-=======
-CREATE TABLE IF NOT EXISTS `cardwash1`.`tipo_producto` (
-  `id` INT NOT NULL,
->>>>>>> 4ab9d91c57c19559ee533a8d023bfa09b6be89c2
   `descripcion` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -29,9 +24,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`unidad_medida`
+-- Table `cardwash`.`unidad_medida`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`unidad_medida` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`unidad_medida` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `abreviatura` VARCHAR(45) NULL,
@@ -43,9 +38,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`presentacion`
+-- Table `cardwash`.`presentacion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`presentacion` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`presentacion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(80) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -55,9 +50,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`producto`
+-- Table `cardwash`.`producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`producto` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`producto` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `id_marca` INT NOT NULL,
@@ -75,31 +70,31 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`producto` (
   INDEX `fk_producto_presentacion1_idx` (`id_presentacion` ASC) ,
   CONSTRAINT `fk_producto_marca`
     FOREIGN KEY (`id_marca`)
-    REFERENCES `cardwash1`.`marca` (`id`)
+    REFERENCES `cardwash`.`marca` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_producto_tipo_producto1`
     FOREIGN KEY (`id_tipo_producto`)
-    REFERENCES `cardwash1`.`tipo_producto` (`id`)
+    REFERENCES `cardwash`.`tipo_producto` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_producto_unidad_medida1`
     FOREIGN KEY (`id_unidad_medida`)
-    REFERENCES `cardwash1`.`unidad_medida` (`id`)
+    REFERENCES `cardwash`.`unidad_medida` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_producto_presentacion1`
     FOREIGN KEY (`id_presentacion`)
-    REFERENCES `cardwash1`.`presentacion` (`id`)
+    REFERENCES `cardwash`.`presentacion` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`estado`
+-- Table `cardwash`.`estado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`estado` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`estado` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -109,9 +104,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`condiciones`
+-- Table `cardwash`.`condiciones`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`condiciones` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`condiciones` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -121,9 +116,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`compra`
+-- Table `cardwash`.`compra`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`compra` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`compra` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `reg_op` VARCHAR(45) NULL,
   `fecha_emision` DATETIME NULL,
@@ -144,12 +139,12 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`compra` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_compra_condiciones1`
     FOREIGN KEY (`condiciones_id`)
-    REFERENCES `cardwash1`.`condiciones` (`id`)
+    REFERENCES `cardwash`.`condiciones` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_compra_estado1`
     FOREIGN KEY (`estado_id`)
-    REFERENCES `cardwash1`.`estado` (`id`)
+    REFERENCES `cardwash`.`estado` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -158,9 +153,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`detalle_compra_productos`
+-- Table `cardwash`.`detalle_compra_productos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`detalle_compra_productos` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`detalle_compra_productos` (
   `id_detalle_compra` INT NOT NULL AUTO_INCREMENT,
   `id_producto` INT NOT NULL,
   `id_compra` INT NOT NULL,
@@ -175,21 +170,21 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`detalle_compra_productos` (
   INDEX `fk_producto_has_compra_producto1_idx` (`id_producto` ASC) ,
   CONSTRAINT `fk_producto_has_compra_producto1`
     FOREIGN KEY (`id_producto`)
-    REFERENCES `cardwash1`.`producto` (`id`)
+    REFERENCES `cardwash`.`producto` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_producto_has_compra_compra1`
     FOREIGN KEY (`id_compra`)
-    REFERENCES `cardwash1`.`compra` (`id`)
+    REFERENCES `cardwash`.`compra` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`servicio`
+-- Table `cardwash`.`servicio`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`servicio` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`servicio` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -199,9 +194,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`tipo_vehiculo`
+-- Table `cardwash`.`tipo_vehiculo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`tipo_vehiculo` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`tipo_vehiculo` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(45) NULL,
   `imagen` VARCHAR(45) NULL,
@@ -213,9 +208,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`paquete`
+-- Table `cardwash`.`paquete`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`paquete` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`paquete` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `color` VARCHAR(45) NULL,
@@ -226,9 +221,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`detalle_paquete`
+-- Table `cardwash`.`detalle_paquete`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`detalle_paquete` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`detalle_paquete` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `precio_venta` INT NULL,
   `porcentaje` INT NULL,
@@ -242,21 +237,21 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`detalle_paquete` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_paquete_tipo_vehiculo1`
     FOREIGN KEY (`id_tipo_vehiculo`)
-    REFERENCES `cardwash1`.`tipo_vehiculo` (`id`)
+    REFERENCES `cardwash`.`tipo_vehiculo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_paquete_paquete1`
     FOREIGN KEY (`id_paquete`)
-    REFERENCES `cardwash1`.`paquete` (`id`)
+    REFERENCES `cardwash`.`paquete` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`estado_venta`
+-- Table `cardwash`.`estado_venta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`estado_venta` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`estado_venta` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `descripcion` VARCHAR(45) NULL,
@@ -268,9 +263,9 @@ COMMENT = '	';
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`venta`
+-- Table `cardwash`.`venta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`venta` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`venta` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `nombre_cliente` VARCHAR(80) NOT NULL,
@@ -287,21 +282,21 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`venta` (
   INDEX `fk_venta_estado_venta1_idx` (`id_estado_venta` ASC) ,
   CONSTRAINT `fk_venta_detalle_paquete1`
     FOREIGN KEY (`id_detalle_paquete`)
-    REFERENCES `cardwash1`.`detalle_paquete` (`id`)
+    REFERENCES `cardwash`.`detalle_paquete` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_venta_estado_venta1`
     FOREIGN KEY (`id_estado_venta`)
-    REFERENCES `cardwash1`.`estado_venta` (`id`)
+    REFERENCES `cardwash`.`estado_venta` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`servicio_paquete`
+-- Table `cardwash`.`servicio_paquete`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`servicio_paquete` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`servicio_paquete` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_servicio` INT NOT NULL,
   `id_paquete` INT NOT NULL,
@@ -312,21 +307,21 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`servicio_paquete` (
   INDEX `fk_servicio_tipo_vehiculo_paquete1_idx` (`id_paquete` ASC) ,
   CONSTRAINT `fk_servicio_tipo_vehiculo_servicio1`
     FOREIGN KEY (`id_servicio`)
-    REFERENCES `cardwash1`.`servicio` (`id`)
+    REFERENCES `cardwash`.`servicio` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_servicio_tipo_vehiculo_paquete1`
     FOREIGN KEY (`id_paquete`)
-    REFERENCES `cardwash1`.`detalle_paquete` (`id`)
+    REFERENCES `cardwash`.`detalle_paquete` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`egresos_concepto`
+-- Table `cardwash`.`egresos_concepto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`egresos_concepto` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`egresos_concepto` (
   `id` INT NOT NULL,
   `concepto` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -336,9 +331,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`egresos_mensuales`
+-- Table `cardwash`.`egresos_mensuales`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`egresos_mensuales` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`egresos_mensuales` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `fecha` DATE NULL,
   `id_concepto` INT NOT NULL,
@@ -347,16 +342,16 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`egresos_mensuales` (
   INDEX `fk_egresos_mensuales_egresos_concepto1_idx` (`id_concepto` ASC) ,
   CONSTRAINT `fk_egresos_mensuales_egresos_concepto1`
     FOREIGN KEY (`id_concepto`)
-    REFERENCES `cardwash1`.`egresos_concepto` (`id`)
+    REFERENCES `cardwash`.`egresos_concepto` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`detalle_venta_productos`
+-- Table `cardwash`.`detalle_venta_productos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`detalle_venta_productos` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`detalle_venta_productos` (
   `id_venta` INT NOT NULL,
   `cantidad` INT NULL,
   `id_producto` INT NOT NULL,
@@ -369,17 +364,16 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`detalle_venta_productos` (
   INDEX `fk_detalle_venta_productos_producto1_idx` (`id_producto` ASC) ,
   CONSTRAINT `fk_venta_has_detalle_compra_productos_venta1`
     FOREIGN KEY (`id_venta`)
-    REFERENCES `cardwash1`.`venta` (`id`)
+    REFERENCES `cardwash`.`venta` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_detalle_venta_productos_producto1`
     FOREIGN KEY (`id_producto`)
-    REFERENCES `cardwash1`.`producto` (`id`)
+    REFERENCES `cardwash`.`producto` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-<<<<<<< HEAD
 --
 -- Estructura de tabla para la tabla `users`
 --
@@ -539,12 +533,11 @@ INSERT INTO `system_submenu` (`id`, `id_menu`, `nombre`, `url`, `permiso_requeri
 (2, 2, 'Inicio', '/compra', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:30:44', '2021-10-21 04:30:44'),
 (3, 3, 'Inicio', '/servicio', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:31:16', '2021-10-21 04:31:16'),
 (4, 4, 'Inicio', '/venta', NULL, 'mdi mdi-chevron-double-right', '2021-10-21 04:31:16', '2021-10-21 04:31:16');
-=======
 
 -- -----------------------------------------------------
--- Table `cardwash1`.`movimiento_pagos`
+-- Table `cardwash`.`movimiento_pagos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cardwash1`.`movimiento_pagos` (
+CREATE TABLE IF NOT EXISTS `cardwash`.`movimiento_pagos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `fecha_pago` DATE NULL,
   `valor_pago` FLOAT NULL,
@@ -556,11 +549,10 @@ CREATE TABLE IF NOT EXISTS `cardwash1`.`movimiento_pagos` (
   INDEX `fk_movimiento_pagos_venta1_idx` (`venta_id` ASC) ,
   CONSTRAINT `fk_movimiento_pagos_venta1`
     FOREIGN KEY (`venta_id`)
-    REFERENCES `cardwash1`.`venta` (`id`)
+    REFERENCES `cardwash`.`venta` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 COMMENT = '	';
 
 
->>>>>>> 4ab9d91c57c19559ee533a8d023bfa09b6be89c2
