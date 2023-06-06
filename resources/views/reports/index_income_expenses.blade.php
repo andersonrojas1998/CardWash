@@ -36,6 +36,10 @@
       <div class="card-body d-flex">
         <canvas class="my-auto" id="chart_income_service" height="130"></canvas>
       </div>
+      <div class="card-footer">
+        <label>Total Ingresos : <h3 id="total_income"></h3></label>
+      
+      </div>
     </div>
   </div>
 
