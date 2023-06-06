@@ -8,21 +8,16 @@ use Request;
 class DocenteController extends Controller
 {
     public function index(){
-        return view('docentes.index_docentes');
+        return view('empleados.index_docentes');
     }
     public function index_create(){
         $roles=DB::SELECT("SELECT id,name FROM roles");
-        return view('docentes.index_created',compact('roles'));
+        return view('empleados.index_created',compact('roles'));
     }
-   /* public function showTeacher($status=1){
-        $dataUs=DB::select("SELECT tb1.id,tb1.name FROM users as tb1  
-                            INNER JOIN role_user AS tb2 on tb1.id=tb2.user_id
-                            INNER JOIN roles as tb3 on tb2.role_id=tb3.id
-                            WHERE tb1.estado='$status' AND  tb3.slug='docente' ");        
-        return json_encode($dataUs);
-    }*/
-
-    public function dt_user(){
+    public function sales(){
+        return view('empleados.index_sales');
+    }
+   public function dt_user(){
         $dataUs=User::All();        
         $data=[];
         foreach($dataUs as $key => $us)
@@ -32,32 +27,69 @@ class DocenteController extends Controller
             $data['data'][$key]['dni']=$us->identificacion;
             $data['data'][$key]['name']=$us->name;   
             $data['data'][$key]['celular']=$us->celular;
-            $data['data'][$key]['genero']=$us->genero;           
-            $cargos=DB::SELECT("SELECT tb3.name FROM role_user AS tb2 INNER JOIN roles as tb3 on tb2.role_id=tb3.id WHERE  tb2.user_id='$us->id' ");            
+            $data['data'][$key]['genero']=$us->genero;                         
             $name=[];
-            foreach($cargos as $i=>$v){
-                $name[]=$v->name;
-            }            
-            $data['data'][$key]['cargo']= implode($name,' - ');
+            foreach($us->RolesUser as $i=>$v){
+                $name[]=$v->rol->name;
+            }         
+            $data['data'][$key]['cargo']=  implode($name,' - ');
             $data['data'][$key]['estado']=$us->estado;            
+        }      
+        return json_encode($data);          
+    }
+
+    public function dt_sales_user(){
+        $dataUs=DB::SELECT("CALL sp_salesxuser()");        
+        $data=[];
+        foreach($dataUs as $key => $us)
+        {                            
+            $data['data'][$key]['con']=$key;   
+            $data['data'][$key]['id']=$us->id_user;
+            $data['data'][$key]['dni']=$us->identificacion;
+            $data['data'][$key]['name']=$us->name; 
+            $data['data'][$key]['cant_servicios']=$us->cant_servicios;
+            $data['data'][$key]['pagos']=($us->cant_servicios-$us->pendiente); 
+            $data['data'][$key]['pendiente']=$us->pendiente; 
+            $data['data'][$key]['pend_pago']= (is_null($us->pend_pago))? 0:$us->pend_pago;
+           
+                       
         }
         return json_encode($data);          
     }
-    /*public function gradeAssignments(){        
-        $idTeacher = Auth::user()->id;
-        $gradesAll=DB::SELECT("SELECT distinct A.id_grado, concat(A.grupo,'  ',C.nombre) as grupo FROM  grado as A
-                    inner join curso AS B ON A.id_grado=B.id_grado
-                    inner join jornada as C ON A.id_jornada=C.id_jornada         
-                    where B.id_docente='$idTeacher' ");
-        return json_encode($gradesAll);
-    }*/
-   /* public function assignmentCourseTeacher(){
-        $res=Request::all();             
-        $teacher=$res['idTeacher'];
-        $grade=$res['idgrade'];
-        $course=DB::SELECT("SELECT A.id_asignatura,A.nombre from asignatura as A inner join curso AS B ON A.id_asignatura=B.id_materia where B.id_docente='$teacher' AND B.id_grado='$grade' ");
-        return json_encode($course);
-    }*/
+
+    public function dt_pay_pending($idUser){
+        $dataUs=DB::SELECT("CALL sp_cant_sales_user('$idUser')");        
+        $data=[];
+        $total=0;
+        foreach($dataUs as $key => $us)
+        {                            
+            $data['data'][$key]['no_venta']=$us->no_venta;   
+            $data['data'][$key]['nombre_cliente']=$us->nombre_cliente;
+            $data['data'][$key]['combo']=$us->combo;
+            $data['data'][$key]['vehiculo']= $us->vehiculo;
+            $data['data'][$key]['precio_venta']=$us->precio_venta; 
+            $data['data'][$key]['porcentaje']=$us->porcentaje;
+            $data['data'][$key]['pago']=  round($us->precio_venta*$us->porcentaje/100);
+           $total+=round($us->precio_venta*$us->porcentaje/100);;
+        }
+        $data['pay']=$total;
+        return json_encode($data);          
+    }
+
+    public function pay_sales(){
+        DB::table('venta')
+                ->where('id_usuario', intval(Request::input('id_usuario')))
+                ->where('id_estado_venta', 1)
+                ->whereNotNull('id_detalle_paquete')
+                ->update([
+                    'id_estado_venta' =>2,
+                    'fecha_pago' =>date('Y-m-d')                    
+                    ]
+            );
+            return 1;
+    }
+    
+
     public function create(){
 
         $user=User::where('identificacion',Request::input('identificacion'))->get();

@@ -141,6 +141,7 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {    
     Route::get('/home', 'HomeController@index')->name('home');                    
     require (__DIR__ . '/rt_teacher.php');
+    require (__DIR__ . '/rt_reports.php');
 
     require (__DIR__ . '/rt_product.php');
 
