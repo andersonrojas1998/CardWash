@@ -70,8 +70,9 @@ class ReportsController extends Controller
         $service=DB::SELECT("CALL sp_incomexservice()  ");            
         
         $data=[];
-        $data['product']= is_null($product[0]->gananciasxproducto)? 0:$product[0]->gananciasxproducto;
-        $data['service']=is_null($service[0]->gananciasxservicio)? 0:$service[0]->gananciasxservicio;
+        $data['product']= is_null($product[0]->gananciasxproducto)? 0:floatval($product[0]->gananciasxproducto);
+        $data['service']=is_null($service[0]->gananciasxservicio)? 0: floatval($service[0]->gananciasxservicio);
+        $data['total']=number_format(floatval($service[0]->gananciasxservicio)+floatval($product[0]->gananciasxproducto));
               
        return json_encode($data);
      }
@@ -86,7 +87,7 @@ class ReportsController extends Controller
         foreach($expenses as $key=> $v){
             $data['data'][$key]['no']=$i++;
             $data['data'][$key]['concepto']= $v->concepto;
-            $data['data'][$key]['valor']=$v->egreso;
+            $data['data'][$key]['valor']=number_format($v->egreso);
         }
         return json_encode($data);
        

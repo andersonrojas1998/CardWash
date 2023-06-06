@@ -384,6 +384,7 @@ if ($("#chart_income_service").length) {
         type:"GET",
         success:function(data){
             let d= JSON.parse(data);
+            $('#total_income').html('$ ' + d.total);
 
             var pieChartCanvas = $("#chart_income_service")
             .get(0)
