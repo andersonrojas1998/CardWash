@@ -14,7 +14,7 @@ class DetallePaqueteController extends Controller
 {
     public function index()
     {
-        $paquetes_carro = Paquete::select('paquete.*','tv.descripcion')->join(
+        $paquetes_carro = Paquete::select('paquete.*')->join(
             'detalle_paquete AS dp',
             'dp.id_paquete',
             'paquete.id')
@@ -25,8 +25,8 @@ class DetallePaqueteController extends Controller
             ->where(
                 'tv.nomenclatura',
                 'C')
-            ->orderBy('tv.descripcion', 'desc')
             ->orderBy('paquete.nombre')
+            ->groupBy('paquete.id')
             ->paginate(4);
 
         $paquetes_moto = Paquete::select('paquete.*')->join(
@@ -41,6 +41,7 @@ class DetallePaqueteController extends Controller
                 'tv.nomenclatura',
                 'M')
             ->orderBy('paquete.nombre')
+            ->groupBy('paquete.id')
             ->paginate('4');
 
         return view('detalle-paquete.index', compact('paquetes_carro', 'paquetes_moto'));
