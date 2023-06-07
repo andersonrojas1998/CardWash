@@ -69,8 +69,8 @@ $(function(){
                 $.each(data.data, function(i, producto){
                     $('.select-product-compra').append($('<option>',{
                         value: producto.id,
-                        //text: producto.nombre + " (" + producto.presentacion.nombre + ")"
-                        text: producto.nombre + " (presentaci\u00f3n)"
+                        text: producto.nombre + " (" + producto.presentacion.nombre + ")"
+                        //text: producto.nombre + " (presentaci\u00f3n)"
                     }));
                 });
                 $('.id_producto_table').each(function(){
