@@ -21,18 +21,17 @@
             <div class="card-deck m-3">
         @endif
         @foreach($paquetes_carro as $key => $paquete)
-            <div class="card border border-dark text-center text-light" style="border-radius: 1em; overflow:hidden;">
-                <div class="card-header bg-dark px-2">
-                    <h4><strong>{{$paquete->nombre}}</strong></h4>
+            <div class="card border border-dark text-center text-light text-uppercase" style="border-radius: 1em; overflow:hidden; max-width:205.938px;">
+                <div class="card-header px-2 py-0" style="background-color: black;">
+                    <h1 class="m-0"><strong>{{$paquete->nombre}}</strong></h1>
                 </div>
                 <div class="card-body px-2 py-3" style="background: linear-gradient({{explode(',', $paquete->color)[0]}}, #a8a4a4); color: {{explode(',', $paquete->color)[1]}};">
                     @foreach($paquete->detalle_paquete->where('tipo_vehiculo.nomenclatura', 'C') as $detalle_paquete)
-                        <strong>{{$detalle_paquete->tipo_vehiculo->descripcion}}</strong>
-                        <br>
-                        <strong>$ {{$detalle_paquete->precio_venta}}</strong>
-                        <hr>
+                        <h2 class="m-0"><strong>{{$detalle_paquete->tipo_vehiculo->descripcion}}</strong></h2>
+                        <h2 class="m-0"><strong>$ {{$detalle_paquete->precio_venta}}</strong></h2>
+                        <hr class="my-1">
                     @endforeach
-                    <strong class="card-title" style="color: {{explode(',', $paquete->color)[2]}}">
+                    <strong class="card-title" style="color: #fff;  text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;">
                         @php $servicios_paquete = $paquete->detalle_paquete->where('tipo_vehiculo.nomenclatura', 'C')->first()->servicio_paquete; @endphp
                         @foreach($servicios_paquete as $key => $servicio_paquete)
                             {{$servicio_paquete->servicio->nombre}}
@@ -54,23 +53,21 @@
         <!-- Fin listar paquetes para carro -->
 
         <!-- Listar paquetes para moto -->
-
         @if(count($paquetes_moto) != 0)
         <div class="card-deck m-3">
         @endif
         @foreach($paquetes_moto as $paquete)
-            <div class="card border border-dark text-center text-light" style="border-radius: 1em; overflow:hidden;">
-                <div class="card-header bg-dark px-2">
-                    <h4><strong>{{$paquete->nombre}}</strong></h4>
+            <div class="card border border-dark text-center text-light text-uppercase" style="border-radius: 1em; overflow:hidden; max-width:205.938px;">
+                <div class="card-header px-2" style="background-color: black;">
+                    <h1 class="m-0"><strong>{{$paquete->nombre}}</strong></h1>
                 </div>
                 <div class="card-body px-2 py-3" style="background: linear-gradient({{explode(',', $paquete->color)[0]}}, #a8a4a4); color:{{explode(',', $paquete->color)[1]}}">
                     @foreach($paquete->detalle_paquete->where('tipo_vehiculo.nomenclatura', 'M') as $detalle_paquete)
-                        <strong>{{$detalle_paquete->tipo_vehiculo->descripcion}}</strong>
-                        <br>
-                        <strong>$ {{$detalle_paquete->precio_venta}}</strong>
+                        <h2 class="m-0"><strong>{{$detalle_paquete->tipo_vehiculo->descripcion}}</strong></h2>
+                        <h2 class="m-0"><strong>$ {{$detalle_paquete->precio_venta}}</strong></h2>
                     @endforeach
-                    <hr>
-                    <strong class="card-title" style="color: {{explode(',', $paquete->color)[2]}}">
+                    <hr class="my-1">
+                    <strong class="card-title" style="color: #fff; text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;">
                         @php $servicios_paquete = $paquete->detalle_paquete->where('tipo_vehiculo.nomenclatura', 'M')->first()->servicio_paquete; @endphp
                         @foreach($servicios_paquete as $key => $servicio_paquete)
                             {{$servicio_paquete->servicio->nombre}}
@@ -89,23 +86,25 @@
         @if(count($paquetes_moto) != 0)
         </div>
         @endif
+        
     <!-- Fin listar paquetes para moto -->
 
     <!-- Botones de paginado-->
     <div class="d-flex justify-content-center mt-5">
         @if($paquetes_carro->count() >= $paquetes_moto->count())
             {!!$paquetes_carro->links()!!}
-        @else
+        @else if($paquetes_moto->count() >= 0)
             {!!$paquetes_moto->links()!!}
         @endif
     </div>
     <!-- Fin botones de paginado-->
+    </div>
     @if(session('success'))
-        <input type="hidden" id="succes_message" value="{{session('success')}}">
+    <input type="hidden" id="succes_message" value="{{session('success')}}">
     @endif
 
     @if(session('fail'))
-        <input type="hidden" id="fail_message" value="{{session('fail')}}">
+    <input type="hidden" id="fail_message" value="{{session('fail')}}">
     @endif
 </div>
 @endsection

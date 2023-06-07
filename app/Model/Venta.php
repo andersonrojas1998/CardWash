@@ -13,11 +13,8 @@ class Venta extends Model
         'placa',
         'numero_telefono',
         'id_detalle_paquete',
-        'id_usuario'
-    ];
-
-    protected $attributes = [
-        "id_estado_venta" => 1
+        'id_usuario',
+        "id_estado_venta"
     ];
 
     public function detalle_venta_productos()

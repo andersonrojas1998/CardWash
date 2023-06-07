@@ -26,6 +26,7 @@ class StoreDetallePaquete extends FormRequest
         return [
             'id_paquete' => 'required',
             'precio_venta' => 'required',
+            'porcentaje' => 'required',
             'id_tipo_vehiculo' => 'required'
         ];
     }
@@ -35,6 +36,7 @@ class StoreDetallePaquete extends FormRequest
         return [
             'id_paquete.required' => 'El combo es requerido',
             'precio_venta.required' => 'El precio de venta es requerido',
+            'porcentaje.required' => 'El porcentaje para el trabajador es requerido',
             'id_tipo_vehiculo.required' => 'El tipo de vehiculo es requerido'
         ];
     }

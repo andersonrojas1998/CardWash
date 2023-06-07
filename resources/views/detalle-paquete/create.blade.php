@@ -30,6 +30,14 @@
                         </button>
                     </div>
                 @endif
+                @if($errors->any() && $errors->first('porcentaje'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>¡Advertencia!</strong> {{$errors->first('porcentaje')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <div class="d-flex justify-content-around mb-3">
                     <div class="col-lg-4">
                         <label class="control-label" >Combos:</label>

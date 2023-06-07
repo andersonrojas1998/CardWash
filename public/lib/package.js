@@ -1,10 +1,12 @@
 $(function () {
 
-    if ($('#succes_message').length)
+    if ($('#succes_message').length){
         sweetMessage('', $('#succes_message').val());
+    }
 
-    if ($('#fail_message').length)
+    if ($('#fail_message').length){
         sweetMessage('', $('#fail_message').val(), 'error');
+    }
 
     $('.checkbox_vehicle_type').removeClass('disabled');
 

@@ -104,13 +104,13 @@
                                 @endif
                                 @foreach($venta->detalle_venta_productos as $detalle_venta_producto)
                                     @php
-                                    $total += $detalle_venta_producto->precio_venta;
+                                    $total += $detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad;
                                     @endphp
                                     <tr>
                                         <td>{{$detalle_venta_producto->producto->nombre.' - '.$detalle_venta_producto->producto->presentacion->nombre}}</td>
-                                        <td>{{$detalle_venta_producto->precio_venta / $detalle_venta_producto->cantidad}}</td>
-                                        <td>{{$detalle_venta_producto->cantidad}}</td>
                                         <td>{{$detalle_venta_producto->precio_venta}}</td>
+                                        <td>{{$detalle_venta_producto->cantidad}}</td>
+                                        <td>{{$detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

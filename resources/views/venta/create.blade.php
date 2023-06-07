@@ -43,18 +43,25 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center mb-3 pb-3">
+                <div class="d-flex justify-content-around mb-3 pb-3">
                     <div class="col-lg-4">
-                        <label>Estado&nbsp;:</label>
-                        <select class="select2" name="id_estado_venta" style="width: 100%">
-                            @foreach($estados_venta as $estado_venta)
-                            <option value="{{$estado_venta->id}}">{{$estado_venta->nombre}}</option>
+                        <label>¿Quien presta el servicio?&nbsp;:</label>
+                        <select class="select2" name="id_usuario" style="width: 100%">
+                            @foreach($usuarios as $usuario)
+                            <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="type-sale">Tipo de venta</label>
+                        <select class="custom-select" name="id_estado_venta" id="type-sale">
+                            <option value="1">Servicio</option>
+                            <option value="3">Productos</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" id="card-vehicle-type">
                     <div class="card-header text-center">
                         Seleccione el tipo de vehiculo al que aplica el servicio (Opcional)
                     </div>
@@ -82,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card mt-4" id="card-products" style="display: none">
                     <div class="card-header text-center">
                         Agregar productos a la venta
                     </div>
@@ -95,7 +102,7 @@
                                         @if(count($productos) != 0)
                                         <option value="">Seleccione el producto...</option>
                                         @foreach($productos as $producto)
-                                            <option value="{{$producto->id}}" data-price="{{$producto->compras->last()->precio_venta}}" data-quantity="{{$producto->cantidad}}" data-text="{{$producto->nombre.' - '.$producto->presentacion->nombre}}">{{$producto->nombre.' - '.$producto->presentacion->nombre.' - $ '.$producto->compras->last()->precio_venta}}</option>
+                                            <option value="{{$producto->id}}" data-price="{{$producto->compras->last()->precio_venta}}" data-buy-price="{{$producto->compras->last()->precio_compra}}" data-quantity="{{$producto->cantidad}}" data-text="{{$producto->nombre.' - '.$producto->presentacion->nombre}}">{{$producto->nombre.' - '.$producto->presentacion->nombre.' - $ '.$producto->compras->last()->precio_venta}}</option>
                                         @endforeach
                                     @else
                                     <option value="">Existencias agotadas</option>
@@ -149,7 +156,6 @@
                         </table>
                     </div>
                 </div>
-                
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">

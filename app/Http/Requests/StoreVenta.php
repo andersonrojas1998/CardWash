@@ -25,7 +25,7 @@ class StoreVenta extends FormRequest
     {
         return [
             "nombre_cliente" => "required",
-            "id_estado_venta" => "required"
+            "id_usuario" => "required"
         ];
     }
 }
