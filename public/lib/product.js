@@ -1,3 +1,5 @@
+
+
 $(function(){
 
     $('#table-product').DataTable({
@@ -55,8 +57,9 @@ $(function(){
 
         rowCallback:function(row,data,index){
             let cantidad=data.cantidad;
+            console.log(cantidad);
             switch(true){                
-                case (parseInt(cantidad) >= 1 && parseInt(cantidad) <= 10):
+                case (parseInt(cantidad) >= 0 && parseInt(cantidad) <= 5):
                     $('td', row).css('background-color', 'rgba(238, 249, 71, 0.35)');
                 break;                
             }
