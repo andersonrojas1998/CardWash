@@ -5,4 +5,6 @@ Route::group(['prefix' => 'reports'], function(){
     Route::get('Ingreso-Egreso', 'ReportsController@index_income_expeses'); 
     Route::get('dt_expenses_month', 'ReportsController@dt_expenses_month'); 
     Route::get('chart_income_service', 'ReportsController@chart_income_service'); 
+    Route::post('add_expenses', 'ReportsController@add_expenses'); 
+    Route::get('concept_expenses', 'ReportsController@concept_expenses'); 
 });
