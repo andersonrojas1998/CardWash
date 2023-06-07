@@ -24,6 +24,8 @@
                         <th>Cliente</th>
                         <th>Placa</th>
                         <th># Telefono</th>
+                        <th>Tipo vehiculo</th>
+                        <th>Atendido por</th>
                         <th>Acci&oacute;n</th>
                     </tr>
                 </thead>
@@ -33,8 +35,25 @@
                     <tr>
                         <td>{{$venta->fecha}}</td>
                         <td>{{$venta->nombre_cliente}}</td>
-                        <td>{{$venta->placa}}</td>
-                        <td>{{$venta->numero_telefono}}</td>
+                        <td>@if($venta->placa)
+                            <label>{{$venta->placa}}</label>
+                        @else
+                            <label>Sin registro</label>
+                        @endif</td>
+                        <td>@if($venta->numero_telefono)
+                            {{$venta->numero_telefono}}
+                        @else
+                            Sin registro
+                        @endif</td>
+                        <td>
+                            @if($venta->detalle_paquete != null)
+                                {{$venta->detalle_paquete->tipo_vehiculo->descripcion}}
+                            @else
+                                No aplica
+                            @endif
+                        </td>
+                        <td>{{$venta->user->name}}</td>
+                        <td>{{$venta->estado_venta->nombre}}</td>
                         <td>
                             <a href="{{route('venta.edit',[$venta->id])}}" title="Editar venta" data-toggle="tooltip">
                                 <i class="mdi mdi-pencil-box-outline text-primary mdi-24px"></i>

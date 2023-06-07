@@ -140,7 +140,8 @@ $(function(){
         if($("#select-product").val() != '' && $("#input-quantity-product").val() != ""){
             if($("#input-quantity-product").val() != 0){
                 if(parseInt($("#input-quantity-product").val()) <= parseInt($("#input-quantity-available-product").val())){
-                    let total = $("#select-product :selected").data("price") * $("#input-quantity-product").val()
+                    let total = parseFloat($("#select-product :selected").data("price")) * parseFloat($("#input-quantity-product").val());
+                    let margen_ganancia = parseFloat($("#select-product :selected").data("price")) - parseFloat($("#select-product :selected").data("buy-price"));
                     $("#table-products tbody").append(
                         $("<tr>", {
                             html: [
@@ -161,6 +162,11 @@ $(function(){
                                             type: "hidden",
                                             name: "precio_venta[]",
                                             value: $("#select-product :selected").data("price"),
+                                        }),
+                                        $("<input>", {
+                                            type: "hidden",
+                                            name: "margen_ganancia[]",
+                                            value: margen_ganancia,
                                         })
                                     ]
                                 }),
@@ -225,5 +231,15 @@ $(function(){
         $("#importe_total").val(parseFloat($("#importe_total").val()) - parseFloat($(this).data("total")));
         $("#text_importe_total").text($("#importe_total").val());
         tr.remove();
+    });
+
+    $(document).on("change", "#type-sale", function(){
+        if($(this).val() == 1){
+            $("#card-vehicle-type").toggle();
+            $("#card-products").toggle();
+        }else{
+            $("#card-vehicle-type").toggle();
+            $("#card-products").toggle();
+        }
     });
 });

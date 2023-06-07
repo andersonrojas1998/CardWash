@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVenta;
 use App\Model\DetalleVentaProductos;
-use App\Model\EstadoVenta;
 use App\Model\Producto;
 use App\Model\TipoVehiculo;
+use App\Model\users;
 use App\Model\Venta;
 use Carbon\Carbon;
 use Exception;
@@ -28,15 +28,14 @@ class VentaController extends Controller
         $date = Carbon::now();
         $date->setTimezone('America/Bogota');
         $productos = Producto::select(DB::raw("producto.*, (producto.cant_stock-producto.cant_stock_mov) AS cantidad"))->get()->where('cantidad', '>', 0);
-        $estados_venta = EstadoVenta::all();
-        return view('venta.create', compact('tipos_vehiculo', 'date', 'productos', 'estados_venta'));
+        $usuarios = users::all();
+        return view('venta.create', compact('tipos_vehiculo', 'date', 'productos', 'usuarios'));
     }
 
     public function store(StoreVenta $request)
     {
         try{
             $venta = new Venta($request->all());
-            $venta->id_usuario = Auth::user()->id;
             $venta->save();
 
             if(isset($request->all()['id_producto'])){
@@ -46,6 +45,7 @@ class VentaController extends Controller
                         "id_venta" => $venta->id,
                         "cantidad" => $request->all()['cantidad'][$key],
                         "precio_venta" => $request->all()['precio_venta'][$key],
+                        "margen_ganancia" => $request->all()['margen_ganancia'][$key],
                     ]);
                     $detalle_venta_producto->save();
                     $producto = $detalle_venta_producto->producto;
