@@ -111,6 +111,43 @@ $(document).ready(function() {
         });
     });
 
+    
+
+
+    $(document).on("click","#btn_add_ex",function(){ 
+        let id_concepto=$('#id_concepto').val();
+       let total_egreso=$('#total_egreso').val();
+       console.log(id_concepto);
+       console.log(total_egreso);
+       
+        $.ajax({
+            url:'/reports/add_expenses',
+            type: "POST",
+            data:{'id_concepto':id_concepto,'total_egreso':total_egreso},
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},            
+            success:function(data){
+                if(data==1){
+                    sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
+                    setTimeout(function () { location.reload() }, 2000)
+                   }
+            }
+
+        })
+    });
+
+    $(document).on("click","#btn_createdExpense",function(){ 
+        $.ajax({ url:"/reports/concept_expenses",type:"GET",success:function(data){
+            let arr=JSON.parse(data);
+            console.log(arr);
+            for(let i=0;i<arr.length;i++){                    
+                $('#id_concepto').append('<option   value="'+arr[i].id+'" >'+ firstLetter(arr[i].concepto.toLowerCase())  +'</option>');            
+            }
+            $('#id_concepto').select2();            
+        }
+        });
+    });
+
+    
     if ($("#chart_salesxmonth").length) {
 
          $.ajax({ 
@@ -369,15 +406,10 @@ $(document).ready(function() {
       
         
     }
-
-
     if ($("#dt_expenses_month").length){
-        dt_expenses_month();
-
+        dt_expenses_month(); 
     } 
 
-
-    
 if ($("#chart_income_service").length) {
     $.ajax({ 
         url:'/reports/chart_income_service', 
@@ -446,27 +478,15 @@ if ($("#chart_income_service").length) {
 
         }
     });
-
-    
 }
-
-    
-
-        
-
-       
-       
-    
-
-
 
 });
 
 
 var dt_expenses_month=function(){
 
-    $('#dt_expenses_month').DataTable({                  
-        ajax: {
+    $('#dt_expenses_month').DataTable({         
+         ajax: {
             url: "/reports/dt_expenses_month",
             method: "GET", 
             dataSrc: function (json) {                
@@ -485,7 +505,7 @@ var dt_expenses_month=function(){
             { "data": "no" , render(data){return '<p class="text-muted">'+data+'</p>';}},         
             { "data": "concepto" , render(data){return '<b>'+data+'</b>';}},         
             { "data": "valor",render(data,type,row){ return data; }},                                
-        ]
+        ],       
     });
 }
 

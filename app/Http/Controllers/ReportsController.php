@@ -3,7 +3,10 @@ namespace App\Http\Controllers;
 use DB;
 use DateTime;
 use Auth;
-use Illuminate\Http\Request;
+use Request;
+use App\Model\EgresosMensuales;
+use App\Model\EgresosConcepto;
+
 
 class ReportsController extends Controller
 {
@@ -47,8 +50,6 @@ class ReportsController extends Controller
         }      
         return json_encode($data);
     }
-
-
     public function getSalesxDay(){                
         $lastDay=date('d',strtotime('last day of this month', time()));
         $data=[];
@@ -72,25 +73,39 @@ class ReportsController extends Controller
         $data=[];
         $data['product']= is_null($product[0]->gananciasxproducto)? 0:floatval($product[0]->gananciasxproducto);
         $data['service']=is_null($service[0]->gananciasxservicio)? 0: floatval($service[0]->gananciasxservicio);
-        $data['total']=number_format(floatval($service[0]->gananciasxservicio)+floatval($product[0]->gananciasxproducto));
+        $data['total']=number_format(floatval($service[0]->gananciasxservicio)+floatval($product[0]->gananciasxproducto),0,',','.');
               
        return json_encode($data);
      }
 
-     public function dt_expenses_month(){
-        
-        $expenses=DB::SELECT("CALL sp_expenses()  "); 
-        
-        
+     public function dt_expenses_month(){        
+        $expenses=DB::SELECT("CALL sp_expenses()  ");                 
         $data=[];
         $i=0;
         foreach($expenses as $key=> $v){
             $data['data'][$key]['no']=$i++;
             $data['data'][$key]['concepto']= $v->concepto;
-            $data['data'][$key]['valor']=number_format($v->egreso);
+            $data['data'][$key]['valor']=number_format($v->egreso,0,',','.');
         }
-        return json_encode($data);
-       
+        return json_encode($data);       
      }
+     public function add_expenses(){
+
+     
+        $obj= new EgresosMensuales();
+        $obj->fecha=date('Y-m-d');
+        $obj->id_concepto= intval(Request::input('id_concepto'));
+        $obj->total_egreso=intval(Request::input('total_egreso'));        
+        $obj->save();
+        return 1;
+     }
+
+    public function concept_expenses(){
+
+        return json_encode(EgresosConcepto::all());
+    }
+
+     
+
      
 }
