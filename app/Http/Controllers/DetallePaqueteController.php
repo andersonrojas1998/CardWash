@@ -168,7 +168,7 @@ class DetallePaqueteController extends Controller
         ];
 
         foreach ($tipos_vehiculo as $tipo_vehiculo ) {
-            $tipo_vehiculo->img_url = asset($tipo_vehiculo->imagen);
+            $tipo_vehiculo->img_url = $tipo_vehiculo->imagen;
             array_push($data['tipos_vehiculo'], $tipo_vehiculo);
         }
 
