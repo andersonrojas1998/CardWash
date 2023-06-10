@@ -12,12 +12,10 @@
                             <th>Precio de compra</th>
                         </tr>
                         <tr>
-                            <td class="p-1">
+                            <td class="w-25 p-1">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <select class="custom-select select-product-compra select_add_products" data-url-quantity="{{route('producto.index')}}">
-                                            <option value="">Seleccione producto</option>
-                                        </select>
+                                        <select class="select2 select-product-compra select_add_products" data-url-quantity="{{route('producto.index')}}" style="width: 100%"></select>
                                     </div>
                                 </div>
                             </td>

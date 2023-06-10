@@ -1,92 +1,66 @@
 @extends('layout.master')
 @section('content')
 <div class="card">
-    <div class="card-header"><h1>Factura No. {{$venta->id}}</h1></div>
+    <div class="card-header pt-5 pl-5" style="
+        background-image: url('/storage/top_left_corner.png');
+        background-repeat: no-repeat;
+        background-size: 20%;
+    ">
+        <div class="d-flex justify-content-between mb-3">
+            <div class="col-6">
+                <h1 class="mt-3 ml-3"><strong>Factura</strong></h1>
+                <div class="d-block">
+                    <strong class="ml-3"># de orden&nbsp;:&nbsp;</strong><label>{{$venta->id}}</label>
+                </div>
+                <strong class="ml-3">Fecha&nbsp;:&nbsp;</strong><label>{{$venta->fecha}}</label>
+            </div>
+            <div class="col-3" style="
+                background-image: url('/icon.jpg');
+                background-repeat: no-repeat;
+                background-size: 54%;
+                background-position: center;"></div>
+        </div>
+    </div>
     
-            <div class="card-body">
+            <div class="card-body pb-5" style="
+            background-image: url('/storage/bottom_right_corner.png');
+            background-repeat: no-repeat;
+            background-position: bottom right;
+            background-size: 20%;
+        ">
                 <div class="d-flex justify-content-around mb-3">
                     <div class="col-lg-4">
-                        <div class="row pl-2">
-                            <label>Cliente&nbsp;:</label>
-                        </div>
-                        <div class="row pl-2">
-                            <label>{{$venta->nombre_cliente}}</label>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="row pl-2">
-                            <label>Fecha&nbsp;:</label>
-                        </div>
-                        <div class="row pl-2">
-                            <label>{{$venta->fecha}}</label>
-                        </div>
-                    </div>
-                    
-                </div>
-
-                <div class="d-flex justify-content-around mb-3 pb-3">
-                    <div class="col-lg-4">
-                        <div class="row pl-2">
-                            <label>Placa&nbsp;:</label>
-                        </div>
-                        <div class="row pl-2">
-                            @if($venta->placa)
-                                <label>{{$venta->placa}}</label>
-                            @else
-                                <label>Sin registro</label>
-                            @endif
-                        </div>
+                        <h4 class="mb-3"><strong>Comprador&nbsp;:</strong></h4>
+                        <label class="d-block">{{$venta->nombre_cliente}}</label>
+                        @if($venta->placa)
+                            <label class="d-block"><strong>Placa&nbsp;:&nbsp;</strong>{{$venta->placa}}</label>
+                        @endif
+                        @if($venta->numero_telefono)
+                            <label class="d-block"><strong>Tel&nbsp;:&nbsp;</strong>{{$venta->numero_telefono}}</label>
+                        @endif
+                        @if($venta->detalle_paquete != null)
+                            <label class="d-block">
+                                <strong>Tipo vehiculo&nbsp;:&nbsp;</strong>
+                                {{$venta->detalle_paquete->tipo_vehiculo->descripcion}}</label>
+                        @endif
                     </div>
                     <div class="col-lg-4">
-                        <div class="row pl-2">
-                            <label>Telefono&nbsp;:</label>
-                        </div>
-                        <div class="row pl-2">
-                            @if($venta->numero_telefono)
-                                <label>{{$venta->numero_telefono}}</label>
-                            @else
-                                <label>Sin registro</label>
-                            @endif
-                        </div>
+                        <h4 class="mb-3"><strong>Atendido por&nbsp;:</strong></h4>
+                        <label>{{$venta->user->name}}</label>
+                        <h4 class="mt-3"><strong>Estado&nbsp;:</strong></h4>
+                        <label>{{$venta->estado_venta->nombre}}</label>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-around mb-3 pb-3">
-                    <div class="col-lg-4">
-                        <div class="row pl-2">
-                            <label>Estado&nbsp;:</label>
-                        </div>
-                        <div class="row pl-2">
-                            <label>{{$venta->estado_venta->nombre}}</label>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="row pl-2">
-                            <label>Tipo vehiculo&nbsp;:</label>
-                        </div>
-                        <div class="row pl-2">
-                            @if($venta->detalle_paquete != null)
-                                <label>{{$venta->detalle_paquete->tipo_vehiculo->descripcion}}</label>
-                            @else
-                                <label>No aplica</label>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pb-2 pt-5">
+                <div class="mb-3 pt-2 px-5">
                     <div class="table-responsive">
                         <table class="table align-middle table-nowrap table-centered text-center mb-0" id="table-products">
                             <thead>
                                 <tr>
-                                    <th colspan="4">Detalle venta</th>
-                                </tr>
-                                <tr>
-                                    <th>Productos/Servicios</th>
-                                    <th>Precio unitario</th>
-                                    <th>Cantidad</th>
-                                    <th>Total</th>
+                                    <th style="background-color: black; color: white;">Productos/Servicios</th>
+                                    <th style="background-color: black; color: white;">Precio unitario</th>
+                                    <th style="background-color: black; color: white;">Cantidad</th>
+                                    <th style="background-color: black; color: white;">Total</th>
                                 </tr>
                             </thead>
                             <tbody>

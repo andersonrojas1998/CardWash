@@ -23,11 +23,11 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="tipo-producto" class="control-label">Tipo de producto&nbsp;:</label>
+                                    <label class="control-label">Tipo de producto&nbsp;:</label>
                                     <div class="input-group">
-                                        <select class="custom-select select-tipo-producto" name="id_tipo_producto" id="tipo-producto" aria-describedby="type_product_create_help" required>
-                                            <option value="">Seleccione tipo de producto</option>
+                                        <select class="select2-create select-tipo-producto" name="id_tipo_producto" id="select-tipo-producto" style="width: 90%;" required>
                                         </select>
+                                        
                                         <div class="input-group-append" title="Agregar tipo de producto" data-toggle="tooltip">
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modal_create_product_type">
                                                 <span class="mdi mdi-plus-circle-outline mdi-24px"></span>
@@ -49,11 +49,11 @@
                         <div class="d-flex justify-content-center">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="marca" class="control-label">Marca&nbsp;:</label>
+                                    <label class="control-label">Marca&nbsp;:</label>
                                     <div class="input-group">
-                                        <select class="custom-select select-marca" name="id_marca" required>
-                                            <option value="">Seleccione la marca</option>
+                                        <select class="select2-create select-marca" name="id_marca" id="select-marca" required style="width: 90%">
                                         </select>
+
                                         <div class="input-group-append" title="Agregar marca" data-toggle="tooltip">
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modal_create_brand">
                                                 <span class="mdi mdi-plus-circle-outline mdi-24px"></span>
@@ -73,7 +73,7 @@
                         <div class="row mt-4">
                             <div class="col-lg-6">
                                 <label class="control-label">Unidad de medida&nbsp;:</label>
-                                <select class="custom-select select-unidad-de-medida" name="id_unidad_medida">
+                                <select class="select2-create select-unidad-de-medida" name="id_unidad_medida" style="width: 100%">
                                     <option>Seleccione unidad de medida</option>
                                 </select>
                                 @if ($errors->any() && $errors->first('id_unidad_medida'))
@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label">Presentacion&nbsp;:</label>
-                                <select class="custom-select select-presentation" name="id_presentacion">
+                                <select class="select2-create select-presentation" name="id_presentacion" style="width: 100%">
                                     <option>Seleccione la presentaci&oacute;n</option>
                                 </select>
                                 @if ($errors->any() && $errors->first('id_presentacion'))

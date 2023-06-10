@@ -22,10 +22,9 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="select_tipo_producto_edit" class="control-label">Tipo de producto&nbsp;:</label>
+                                    <label class="control-label">Tipo de producto&nbsp;:</label>
                                     <div class="input-group">
-                                        <select class="custom-select select-tipo-producto" id="select_tipo_producto_edit" name="id_tipo_producto" aria-describedby="type_product_edit_help">
-                                            <option>Seleccione tipo de producto</option>
+                                        <select class="select2-edit select-tipo-producto" id="select_tipo_producto_edit" name="id_tipo_producto" required style="width: 90%;">
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary" type="button" title="Agregar tipo de producto" data-toggle="modal" data-target="#modal_create_product_type">
@@ -41,10 +40,9 @@
                         <div class="d-flex justify-content-center">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="select_marca_edit" class="control-label">Marca&nbsp;:</label>
+                                    <label class="control-label">Marca&nbsp;:</label>
                                     <div class="input-group">
-                                        <select class="custom-select select-marca" id="select_marca_edit" name="id_marca">
-                                            <option>Seleccione la marca</option>
+                                        <select class="select2-edit select-marca" id="select_marca_edit" name="id_marca" style="width:90%">
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary" type="button" title="Agregar marca" data-toggle="modal" data-target="#modal_create_brand">
@@ -59,8 +57,7 @@
                         <div class="row mt-4">
                             <div class="col-lg-6">
                                 <label class="control-label">Unidad de medida&nbsp;:</label>
-                                <select class="custom-select select-unidad-de-medida" id="select-unidad-de-medida-edit" name="id_unidad_medida">
-                                    <option>Seleccione unidad de medida</option>
+                                <select class="select2-edit select-unidad-de-medida" id="select-unidad-de-medida-edit" name="id_unidad_medida" style="width:100%">
                                 </select>
                                 @if ($errors->any() && $errors->first('id_unidad_medida'))
                                     <span class="badge badge-pill badge-danger">{{$errors->first('id_unidad_medida')}}</span>
@@ -72,8 +69,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label">Presentacion&nbsp;:</label>
-                                <select class="custom-select select-presentation" id="select-presentation-edit" name="id_presentacion">
-                                    <option>Seleccione la presentaci&oacute;n</option>
+                                <select class="select2-edit select-presentation" id="select-presentation-edit" name="id_presentacion" style="width:100%">
                                 </select>
                                 @if ($errors->any() && $errors->first('id_presentacion'))
                                     <span class="badge badge-pill badge-danger">{{$errors->first('id_presentacion')}}</span>

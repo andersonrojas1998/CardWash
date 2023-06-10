@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProducto;
 use App\Model\Producto;
+use App\Model\Tipo_Producto;
 use Exception;
 
 class ProductoController extends Controller

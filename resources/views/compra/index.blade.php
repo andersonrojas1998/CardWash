@@ -42,7 +42,7 @@
     </div>
 </div>
 @if(session('success'))
-    <input type="hidden" id="succes_message" value="{{session('success')}}">
+    <input type="hidden" id="success_message" value="{{session('success')}}">
 @endif
 
 @if(session('fail'))

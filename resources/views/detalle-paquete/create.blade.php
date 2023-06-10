@@ -42,9 +42,9 @@
                     <div class="col-lg-4">
                         <label class="control-label" >Combos:</label>
                         <div class="input-group">
-                            <select class="custom-select disabled-elements" id="select-package" name="id_paquete" disabled>
+                            <select class="select2 disabled-elements" id="select-package" name="id_paquete" disabled style="width: 80%">
+                                <option value="">Seleccione...</option>
                                 @if(count($paquetes_sin_parametrizar) != 0)
-                                    <option value="">Seleccione...</option>
                                     @foreach($paquetes_sin_parametrizar as $paquete)
                                         <option value="{{$paquete->id}}" data-url="{{route('detalle-paquete.unrelatedVehicleType',[$paquete->id])}}">{{$paquete->nombre}}</option>
                                     @endforeach

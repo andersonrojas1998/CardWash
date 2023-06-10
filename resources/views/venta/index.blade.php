@@ -35,16 +35,22 @@
                     <tr>
                         <td>{{$venta->fecha}}</td>
                         <td>{{$venta->nombre_cliente}}</td>
-                        <td>@if($venta->placa)
-                            <label>{{$venta->placa}}</label>
-                        @else
-                            <label>Sin registro</label>
-                        @endif</td>
-                        <td>@if($venta->numero_telefono)
-                            {{$venta->numero_telefono}}
-                        @else
-                            Sin registro
-                        @endif</td>
+                        <td>
+                            @if($venta->placa)
+                                <div class="bg-warning py-2 px-1 text-center border border-dark rounded text-light">
+                                    {{$venta->placa}}
+                                </div>
+                            @else
+                                Sin registro
+                            @endif
+                        </td>
+                        <td>
+                            @if($venta->numero_telefono)
+                                {{$venta->numero_telefono}}
+                            @else
+                                Sin registro
+                            @endif
+                        </td>
                         <td>
                             @if($venta->detalle_paquete != null)
                                 {{$venta->detalle_paquete->tipo_vehiculo->descripcion}}

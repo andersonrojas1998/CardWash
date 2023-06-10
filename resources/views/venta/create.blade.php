@@ -45,7 +45,7 @@
 
                 <div class="d-flex justify-content-around mb-3 pb-3">
                     <div class="col-lg-4">
-                        <label>¿Quien presta el servicio?&nbsp;:</label>
+                        <label>¿Qui&eacute;n presta el servicio?&nbsp;:</label>
                         <select class="select2" name="id_usuario" style="width: 100%">
                             @foreach($usuarios as $usuario)
                             <option value="{{$usuario->id}}">{{$usuario->name}}</option>
@@ -55,7 +55,7 @@
                     <div class="col-lg-4">
                         <label for="type-sale">Tipo de venta</label>
                         <select class="custom-select" name="id_estado_venta" id="type-sale">
-                            <option value="1">Servicio</option>
+                            <option value="1">Servicio y productos</option>
                             <option value="3">Productos</option>
                         </select>
                     </div>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mt-4" id="card-products" style="display: none">
+                <div class="card mt-4" id="card-products">
                     <div class="card-header text-center">
                         Agregar productos a la venta
                     </div>

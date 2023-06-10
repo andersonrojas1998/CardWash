@@ -49,8 +49,8 @@ $(function(){
         ]
     });
 
-    if($("#succes_message").length)
-        sweetMessage('\u00A1Advertencia!', $("#succes_message").val());
+    if($("#success_message").length)
+        sweetMessage('\u00A1Exitoso!', $("#success_message").val());
 
     if($("#fail_message").length)
         sweetMessage('\u00A1Advertencia!', $("#fail_message").val(), 'error');

@@ -74,12 +74,29 @@ class DetallePaqueteController extends Controller
             $detalle_paquete = new DetallePaquete($input);
             $detalle_paquete->save();
 
-            foreach($input['id_servicio'] as $key => $id_servicio){
-                $servicio = new ServicioPaquete([
-                    'id_servicio' => $id_servicio,
-                    "id_paquete" => $detalle_paquete->id
-                ]);
-                $servicio->save();
+            $detalles_paquete = DetallePaquete::select("detalle_paquete.*")->join(
+                "tipo_vehiculo AS tv",
+                "id_tipo_vehiculo",
+                "tv.id"
+            )->where([
+                ["id_paquete", $detalle_paquete->id_paquete],
+                ["nomenclatura", $detalle_paquete->tipo_vehiculo->nomenclatura]
+            ])->get();
+
+            foreach($detalles_paquete as $det_paquete){
+                foreach ($det_paquete->servicio_paquete as $servicio_paquete) {
+                    $servicio_paquete->delete();
+                }
+            }
+
+            foreach($detalles_paquete as $det_paquete){
+                foreach($input['id_servicio'] as $id_servicio){
+                    $servicio = new ServicioPaquete([
+                        'id_servicio' => $id_servicio,
+                        "id_paquete" => $det_paquete->id
+                    ]);
+                    $servicio->save();
+                }
             }
 
             return redirect()->route('detalle-paquete.index')->with('success', 'Se ha creado el combo/servicio ' . $detalle_paquete->paquete->nombre . ' satisfactoriamente.');
@@ -88,52 +105,46 @@ class DetallePaqueteController extends Controller
         }
     }
 
-    public function edit(Paquete $paquete)
+    public function edit(DetallePaquete $detalle_paquete)
     {
-        return view('paquete.edit', compact('paquete'));
+        $servicios = Servicio::all();
+        return view('detalle-paquete.edit', compact('detalle_paquete', 'servicios'));
     }
 
     public function update(StoreDetallePaquete $request, DetallePaquete $detalle_paquete)
     {
         try{
             $input = $request->all();
-            //$paquete->update($input);
+            $detalle_paquete->update($input);
+            
+            $detalles_paquete = DetallePaquete::select("detalle_paquete.*")->join(
+                "tipo_vehiculo AS tv",
+                "id_tipo_vehiculo",
+                "tv.id"
+            )->where([
+                ["id_paquete", $detalle_paquete->id_paquete],
+                ["nomenclatura", $detalle_paquete->tipo_vehiculo->nomenclatura]
+            ])->get();
 
-            $detalles_paquete = [];
-
-            foreach($input['id_tipo_vehiculo'] as $key => $id_tipo_vehiculo){
-                $detalles_paquete[$key] = [
-                    'id_detalle_paquete' => $input['id_detalle_paquete'][$key],
-                    'precio_venta' => $input['precio_venta'][$key],
-                    'porcentaje' => ($input['porcentaje'][$key] == 'null')? null : $input['porcentaje'][$key],
-                    'id_tipo_vehiculo' => $id_tipo_vehiculo,
-                    'id_paquete' => $input['id_paquete'][$key]
-                ];
-
-                foreach($input['id_servicio'][$key] as $key2 => $id_servicio){
-                    $detalles_paquete[$key]['servicios'][$key2] = [
-                        'id_servicio_paquete' => ($input['id_servicio_paquete'][$key][$key2] == 'null')? null : $input['id_servicio_paquete'][$key][$key2],
-                        'id_servicio' => ($id_servicio == 'null')? null : $id_servicio,
-                        'id_paquete' => $input['id_detalle_paquete'][$key]
-                    ];
+            foreach($detalles_paquete as $det_paquete){
+                foreach ($det_paquete->servicio_paquete as $servicio_paquete) {
+                    $servicio_paquete->delete();
                 }
             }
 
-            /*foreach($paquete->detalle_paquete as $detalle_paquete_input){
-                $detalle_paquete = DetallePaquete::find($detalle_paquete_input['id_detalle_paquete']);
-                $detalle_paquete->update($detalle_paquete);
-
-                foreach($detalle_paquete_input['servicios'] as $servicio_paquete_input){
-                    if($servicio_paquete_input['id_servicio_paquete'] != null){
-                        $servicio_paquete = ServicioPaquete::find($servicio_paquete_input['id_servicio_paquete']);
-                        $servicio_paquete->update($servicio_paquete_input);
-                    }
+            foreach($detalles_paquete as $det_paquete){
+                foreach($input['id_servicio'] as $id_servicio){
+                    $servicio = new ServicioPaquete([
+                        'id_servicio' => $id_servicio,
+                        "id_paquete" => $det_paquete->id
+                    ]);
+                    $servicio->save();
                 }
-            }*/
+            }
 
-            redirect()->route('paquete.index')->with('success', 'Se ha modificado el combo/servicio ' . $detalle_paquete->paquete->nombre . ' satisfactoriamente.');
+            return redirect()->route('detalle-paquete.index')->with('success', 'Se ha modificado el combo/servicio ' . $detalle_paquete->paquete->nombre . ' satisfactoriamente.');
         }catch(Exception $e){
-            redirect()->route('paquete.index')->with('fail', 'Ha ocurrido un error al guardar<br><br>' . $e->getMessage());
+            return redirect()->route('detalle-paquete.index')->with('fail', 'Ha ocurrido un error al guardar<br><br>' . $e->getMessage());
         }
     }
 

@@ -62,10 +62,10 @@ $(function () {
 
             $("#nav-add-services").append($('<li>', {
                 class: 'nav-item',
-                id: "nav-services-" + $(this).data('key'),
+                id: "nav-services-" + $(this).val(),
                 html: $('<a>', {
                     class: 'nav-link active',
-                    href: "#tab-services-" + $(this).data('key'),
+                    href: "#tab-services-" + $(this).val(),
                     text: $(this).data('name')
                 }).attr('data-toggle', 'tab')
             }));
@@ -73,7 +73,7 @@ $(function () {
             $("#tab-add-services").html(
                 $("<div>", {
                     class: "tab-pane container active",
-                    id: "tab-services-" + $(this).data('key'),
+                    id: "tab-services-" + $(this).val(),
                     html: [
                         $("<div>", {
                             class: "d-flex justify-content-around mt-3",
@@ -87,7 +87,7 @@ $(function () {
                                         $("<input>", {
                                             type: "number",
                                             class: "form-control",
-                                            id: "sell_price_" + $(this).data('key'),
+                                            id: "sell_price_" + $(this).val(),
                                             name: "precio_venta"
                                         })
                                     ]
@@ -101,7 +101,7 @@ $(function () {
                                         $("<input>", {
                                             type: "number",
                                             class: "form-control",
-                                            id: "worker_percentage_" + $(this).data('key'),
+                                            id: "worker_percentage_" + $(this).val(),
                                             name: "porcentaje"
                                         })
                                     ]
@@ -138,7 +138,7 @@ $(function () {
                                                 id: 'button-add-services',
                                                 class: 'btn btn-success button-add-services',
                                                 text: 'Agregar'
-                                            }).attr('data-key', $(this).data('key'))
+                                            }).attr('data-key', $(this).val())
                                         })
                                     ]
                                 })
@@ -161,6 +161,7 @@ $(function () {
                     ]
                 })
             );
+            $("#select_service").select2();
         }
     });
 
@@ -168,6 +169,7 @@ $(function () {
         if($("#select_service").val() != null){
             let id_servicio = $("#select_service").val();
             let text_servicio = $("#select_service :selected").text();
+            $("#removed-services input[value='" + id_servicio + "']").remove();
             $("#select_service :selected").remove();
             $("#table-services tbody").append(
                 $("<tr>",{
@@ -201,13 +203,23 @@ $(function () {
 
     $(document).on('click', '.btn-remove-service', function(){
         let tr = $(this).parents('tr');
+
         $("#select_service").prepend(
-            $('<option>', {
-                value : $(this).data("id"),
-                text: $(this).data('text')
+            $("<option>", {
+                text: $(this).data('text'),
+                value: $(this).data("id")
             })
         );
         $("#select_service").val($(this).data('id'));
+        $("#select_service").trigger('change.select2');
+
+        $("#removed-services").append(
+            $("<input>", {
+                type: "hidden",
+                name: "id_servicio_removed[]",
+                value: $(this).data('id')
+            })
+        );
         tr.remove();
     });
 

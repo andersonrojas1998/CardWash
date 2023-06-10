@@ -57,7 +57,6 @@ $(function(){
 
         rowCallback:function(row,data,index){
             let cantidad=data.cantidad;
-            console.log(cantidad);
             switch(true){                
                 case (parseInt(cantidad) >= 0 && parseInt(cantidad) <= 5):
                     $('td', row).css('background-color', 'rgba(238, 249, 71, 0.35)');
@@ -114,6 +113,7 @@ $(function(){
                     text: 'Seleccione la marca'
                 }));
                 $('.select-marca').val(data.marca.id);
+                $('.select-marca').trigger('change.select2');
                 sweetMessage('', data.success);
             }
         });
@@ -166,6 +166,7 @@ $(function(){
                     text:'Seleccione tipo de producto'
                 });
                 $('.select-tipo-producto').val(data.tipo_producto.id);
+                $('.select-tipo-producto').trigger('change.select2');
                 sweetMessage('', data.success);
             }
         });
@@ -179,6 +180,7 @@ $(function(){
         $('#select_marca_edit').val($(this).data('id-marca'));
         $('#select-unidad-de-medida-edit').val($(this).data('id-unidad-medida'));
         $('#select-presentation-edit').val($(this).data('id-presentacion'));
+        $('.select2-edit').trigger('change.select2');
     });
 
     $.ajax({
@@ -191,13 +193,13 @@ $(function(){
         headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
         success: function(data, textStatus, xhr){
             $.each(data.marcas, function(i, marca){
-                $('.select-marca').append($('<option>',{
-                    value: marca.id,
-                    text: marca.nombre
-                }));
+                var newOption = new Option(marca.nombre, marca.id, false, false);
+                $('.select-marca').append(newOption).trigger('change');
             });
-            if($('#old-select-brand').length)
+            if($('#old-select-brand').length){
                 $('.select-marca').val($('#old-select-brand').val());
+                $('.select-marca').trigger('change.select2');
+            }
         }
     });
 
@@ -206,6 +208,14 @@ $(function(){
 
     if($('#fail_message').length)
         sweetMessage('', $('#fail_message').val(), 'error');
+
+    $('.select2-create').select2({
+        dropdownParent: $('#modal_create_product')
+    });
+
+    $('.select2-edit').select2({
+        dropdownParent: $('#modal_edit_product')
+    });
 
     $.ajax({
         url: $("#select-product-type-data-url").val(),
@@ -217,13 +227,13 @@ $(function(){
         headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
         success: function(data, textStatus, xhr){
             $.each(data.tipos_productos, function(i, tipo_producto){
-                $('.select-tipo-producto').append($('<option>',{
-                    value: tipo_producto.id,
-                    text: tipo_producto.descripcion
-                }));
+                var newOption = new Option(tipo_producto.descripcion, tipo_producto.id, false, false);
+                $('.select-tipo-producto').append(newOption).trigger('change');
             });
-            if($('#old-select-product-type').length)
+            if($('#old-select-product-type').length){
                 $('.select-tipo-producto').val($('#old-select-product-type').val());
+                $('.select-tipo-producto').trigger('change.select2');
+            }
         }
     });
 

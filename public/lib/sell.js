@@ -30,7 +30,7 @@ $(function(){
                     $("#div-buttons-package").append([
                         $("<label>", {
                             class: "btn btn-outline-primary",
-                            style: "min-width:240.938px;",
+                            //style: "min-width:240.938px;",
                             html: [
                                 $("<input>", {
                                     type: "radio",
@@ -44,27 +44,23 @@ $(function(){
                                 }),
                                 $("<div>", {
                                     class: "card border border-dark text-center text-light",
-                                    style: "border-radius: 1em; overflow:hidden;",
+                                    style: "border-radius: 1em; overflow:hidden; max-width:205.938px;",
                                     html: [
                                         $("<div>", {
-                                            class: "card-header bg-dark px-2",
-                                            html: "<h4><strong>" + paquete.nombre + "</strong></h4>"
+                                            class: "card-header px-2",
+                                            style: "background-color: black;",
+                                            html: "<h1 class='m-0 text-uppercase'><strong>" + paquete.nombre + "</strong></h1>"
                                         }),
                                         $("<div>", {
                                             class: "card-body px-2 py-3",
                                             style: "background: linear-gradient(" + paquete.color.split(',')[0] + ", #a8a4a4); color: " + paquete.color.split(',')[1] + ";",
                                             html: [
-                                                $('<strong>', {
-                                                    text: paquete.tipo_vehiculo.descripcion
-                                                }),
-                                                '<br><br>',
-                                                $('<strong>', {
-                                                    text: "$ " + paquete.precio
-                                                }),
-                                                '<hr>',
+                                                '<h2 class="m-0"><strong>' + paquete.tipo_vehiculo.descripcion + '</strong></h2>',
+                                                '<h2 class="m-0"><strong>$ ' + paquete.precio + '</strong></h2>',
+                                                '<hr class="my-3">',
                                                 $("<strong>", {
                                                     class: "card-title",
-                                                    style: "color: " + paquete.color.split(',')[2],
+                                                    style: "color: #fff; text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;",
                                                     id: "servicios-" + paquete.id,
                                                 })
                                             ]
@@ -236,10 +232,8 @@ $(function(){
     $(document).on("change", "#type-sale", function(){
         if($(this).val() == 1){
             $("#card-vehicle-type").toggle();
-            $("#card-products").toggle();
         }else{
             $("#card-vehicle-type").toggle();
-            $("#card-products").toggle();
         }
     });
 });

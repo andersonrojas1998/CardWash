@@ -12,8 +12,8 @@ class Servicio extends Model
         'nombre'
     ];
 
-    public function detalle_paquete()
+    public function servicio_paquete()
     {
-        return $this->belongsTo('App\Model\DetallePaquete', 'id', 'id_servicio');
+        return $this->belongsTo('App\Model\ServicioPaquete', 'id', 'id_servicio');
     }
 }

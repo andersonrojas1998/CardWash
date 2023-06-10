@@ -24,7 +24,7 @@
                         <th>Marca</th>
                         <th>Tipo</th>
                         <th>Unidad de medida</th>
-                        <th>Presentacion</th>
+                        <th>Presentaci&oacute;n</th>
                         <th>Cantidad</th>
                         <th>Acci&oacute;n</th>
                     </tr>
