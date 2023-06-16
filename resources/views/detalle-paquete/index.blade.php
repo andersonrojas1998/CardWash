@@ -30,8 +30,8 @@
         <!-- Listar paquetes para carro -->
         @if(count($paquetes_carro) != 0)
             <div class="card">
-                <div class="card-header border-0 py-5" style="background-image: url(/storage/carwash.jpg); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
-                <div class="card-body pt-0" style="background-image: url(/storage/bubbles.png); background-size: cover;">
+                <div class="card-header border-0 py-5" style="background-image: url(/images/carwash.jpg); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <div class="card-body pt-0" style="background-image: url(/images/bubbles.png); background-size: cover;">
                     <div class="card-deck m-3">
         @endif
         @foreach($paquetes_carro as $key => $paquete)
@@ -103,8 +103,8 @@
         <!-- Listar paquetes para moto -->
         @if(count($paquetes_moto) != 0)
         <div class="card mt-5" >
-            <div class="card-header border-0 py-5" style="background-image: url(/storage/motowash.jpg); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
-            <div class="card-body" style="background-image: url(/storage/bubbles.png); background-size: cover;">
+            <div class="card-header border-0 py-5" style="background-image: url(/images/motowash.jpg); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+            <div class="card-body" style="background-image: url(/images/bubbles.png); background-size: cover;">
                 <div class="card-deck m-3">
         @endif
         @foreach($paquetes_moto as $paquete)

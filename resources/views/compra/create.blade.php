@@ -8,14 +8,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4">
-                        <label for="reg_op_compra">Reg op&nbsp;:</label>
-                        <input type="text" id="reg_op_compra" name="reg_op" class="form-control text-uppercase" placeholder="Ingrese el Reg op de la compra" value="{{old('reg_op')}}" required>
+                        <label for="reg_op_compra"># de Factura&nbsp;:</label>
+                        <input type="text" id="reg_op_compra" name="reg_op" class="form-control text-uppercase" placeholder="Ingrese el # de Factura de la compra" value="{{old('reg_op')}}" required>
                         @if ($errors->any() && $errors->first('reg_op'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('reg_op')}}</span>
                         @endif
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-4">
                         <label for="fecha_emision_compra">Fecha&nbsp;de&nbsp;emisi&oacute;n&nbsp;:</label>
                         <input type="date" id="fecha_emision_compra" name="fecha_emision" class="form-control text-uppercase" placeholder="Ingrese la fecha de emision de la compra" value="{{old('fecha_emision')}}" required>
                         @if ($errors->any() && $errors->first('fecha_emision'))
@@ -24,17 +24,10 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <label for="compracol" class="control-label">Compracol&nbsp;:</label>
-                        <input type="text" id="compracol" name="compracol" class="form-control text-uppercase" placeholder="Ingrese la compracol de la compra" value="{{old('compracol')}}" required>
+                        <label for="compracol" class="control-label">Descripci&oacute;n&nbsp;:</label>
+                        <input type="text" id="compracol" name="compracol" class="form-control text-uppercase" placeholder="Ingrese la Descripci&oacute;n de la compra" value="{{old('compracol')}}" required>
                         @if ($errors->any() && $errors->first('compracol'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('compracol')}}</span>
-                        @endif
-                    </div>
-                    <div class="col-lg-2">
-                        <label for="fecha_vencimiento_compra">Fecha&nbsp;de&nbsp;vencimiento:</label>
-                        <input type="date" id="fecha_vencimiento_compra" name="fecha_vencimiento" class="form-control text-uppercase" placeholder="Ingrese la fecha de vencimiento de la compra" value="{{old('fecha_vencimiento')}}" required>
-                        @if ($errors->any() && $errors->first('fecha_vencimiento'))
-                            <span class="badge badge-pill badge-danger">{{$errors->first('fecha_vencimiento')}}</span>
                         @endif
                     </div>
                 </div>
