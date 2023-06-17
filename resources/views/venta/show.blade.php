@@ -57,10 +57,10 @@
                         <table class="table align-middle table-nowrap table-centered text-center mb-0" id="table-products">
                             <thead>
                                 <tr>
-                                    <th style="background-color: black; color: white;">Productos/Servicios</th>
-                                    <th style="background-color: black; color: white;">Precio unitario</th>
-                                    <th style="background-color: black; color: white;">Cantidad</th>
-                                    <th style="background-color: black; color: white;">Total</th>
+                                    <th style="background-color: black !important; color: white !important;">Productos/Servicios</th>
+                                    <th style="background-color: black !important; color: white !important;">Precio unitario</th>
+                                    <th style="background-color: black !important; color: white !important;">Cantidad</th>
+                                    <th style="background-color: black !important; color: white !important;">Total</th>
                                 </tr>
                             </thead>
                             <tbody>

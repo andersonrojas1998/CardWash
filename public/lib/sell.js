@@ -14,6 +14,9 @@ $(function(){
     if($('#fail_message').length)
         sweetMessage('', $('#fail_message').val(), 'error');
 
+
+    $(".navbar, #sidebar, .main-panel>footer").addClass("d-print-none");
+
     $('.radio-btn-vehicle-type').on('change', function(){
         $.ajax({
             url: $(this).data('url'),

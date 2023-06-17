@@ -62,9 +62,9 @@
                         <td>{{$venta->user->name}}</td>
                         <td>{{$venta->estado_venta->nombre}}</td>
                         <td>
-                            <a href="{{route('venta.edit',[$venta->id])}}" title="Editar venta" data-toggle="tooltip">
+                            <!--<a href="{{route('venta.edit',[$venta->id])}}" title="Editar venta" data-toggle="tooltip">
                                 <i class="mdi mdi-pencil-box-outline text-primary mdi-24px"></i>
-                            </a>
+                            </a>-->
                             <a href="{{route('venta.show',[$venta->id])}}" title="Ver detalle" data-toggle="tooltip">
                                 <i class="mdi mdi-point-of-sale text-warning mdi-24px"></i>
                             </a>
