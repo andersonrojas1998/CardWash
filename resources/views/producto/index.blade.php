@@ -8,6 +8,13 @@
                     <h4>PRODUCTOS EN STOCK</h4>
                 </div>
             </div>
+
+           
+
+
+
+
+
             <div class="d-flex justify-content-end bd-highlight">
                 <div class="px-3 py-1" title="Crear producto" data-toggle="tooltip">
                     <a class="d-block text-body-emphasis text-decoration-none" data-toggle="modal" data-target="#modal_create_product">
@@ -16,8 +23,19 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="row">
+                <div class="col-lg-4">
+                    <label for="area">Area: </label>
+                    <select class="form-control select-area select2" id="sel_area_option"></select>
+                    <p class="text-muted">Por favor seleccione el area.</p>
+                </div>
+        </div>            
+    <br>
+
         <div class="table-responsive">
-            <table class="table table-striped table-sm" id="table-product" data-url="{{route('producto.data')}}">
+            <table class="table table-striped table-sm" id="table-product" >
                 <thead>
                     <tr>
                         <th>Nombre (Referencia)</th>

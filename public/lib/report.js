@@ -1,6 +1,9 @@
 
 $(document).ready(function() {
 
+    var ingreso=0,egresos=0;    
+
+
     $(document).on("click","#btn_showChartApproved",function(){ 
         
         let period=$("#sel_periodScore").val();
@@ -110,17 +113,10 @@ $(document).ready(function() {
         }
         });
     });
-
-    
-
-
     $(document).on("click","#btn_add_ex",function(){ 
         let id_concepto=$('#id_concepto').val();
-       let total_egreso=$('#total_egreso').val();
-       console.log(id_concepto);
-       console.log(total_egreso);
-       
-        $.ajax({
+        let total_egreso=$('#total_egreso').val();
+       $.ajax({
             url:'/reports/add_expenses',
             type: "POST",
             data:{'id_concepto':id_concepto,'total_egreso':total_egreso},
@@ -134,7 +130,6 @@ $(document).ready(function() {
 
         })
     });
-
     $(document).on("click","#btn_createdExpense",function(){ 
         $.ajax({ url:"/reports/concept_expenses",type:"GET",success:function(data){
             let arr=JSON.parse(data);
@@ -146,8 +141,6 @@ $(document).ready(function() {
         }
         });
     });
-
-    
     if ($("#chart_salesxmonth").length) {
 
          $.ajax({ 
@@ -282,13 +275,10 @@ $(document).ready(function() {
     }
     if ($("#chart_salesxday").length) {
 
-
         $.ajax({ 
             url:'/reports/getSalesxDay/',  
             type:"GET",
-            success:function(data){
-                
-                
+            success:function(data){                            
                 let arr=JSON.parse(data); 
                 console.log( Object.values(arr.label));
                 var lineData = {
@@ -304,7 +294,6 @@ $(document).ready(function() {
                         }
                     ]
                 };
-
                 var lineOptions = {
                     responsive: true,
                     maintainAspectRatio: true,
@@ -313,10 +302,7 @@ $(document).ready(function() {
                             propagate: false
                         }
                     },
-
-                    
-
-                   scales: {
+                    scales: {
                         xAxes: [
                             {
                                 display: true,
@@ -390,96 +376,214 @@ $(document).ready(function() {
                 document.getElementById(
                     "line-traffic-legend"
                 ).innerHTML = lineChart.generateLegend();
-
-
-
             }
-        
-        
-        
-        
-        
-        
         });
-
-
-      
         
     }
     if ($("#dt_expenses_month").length){
-        dt_expenses_month(); 
+        dt_expenses_month();      
     } 
+    if ($("#chart_income_service").length) {
+        $.ajax({ 
+            url:'/reports/chart_income_service', 
+            type:"GET",
+            success:function(data){
+                let d= JSON.parse(data);
+                
+                $('#product_income').html('$ ' + d.product);
+                $('#service_income').html('$ ' + d.service);
+                $('#total_income').html('$ ' + d.total);
+                $('#inp_hd_total_inc').val(d.product+d.service);          
+               var pieChartCanvas = $("#chart_income_service")
+                .get(0)
+                .getContext("2d");
+            var pieChart = new Chart(pieChartCanvas, {
+                type: "pie",
+                data: {
+                    datasets: [
+                        {
+                            data:  [d.service,d.product],
+                            backgroundColor: [
+                                ChartColor[0],
+                                ChartColor[1],                            
+                            ],
+                            borderColor: [
+                                ChartColor[0],
+                                ChartColor[1],                            
+                            ]
+                        }
+                    ],
+                    labels: ["Servicios", "Productos"]
+                },
+                options: {
+                    responsive: true,
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    },
+                    legend: {
+                        display: false
+                    },
+                    legendCallback: function(chart) {
+                        var text = [];
+                        text.push('<div class="chartjs-legend"><ul>');
+                        for (
+                            var i = 0;
+                            i < chart.data.datasets[0].data.length;
+                            i++
+                        ) {
+                            text.push(
+                                '<li><span style="background-color:' +
+                                    chart.data.datasets[0].backgroundColor[i] +
+                                    '">'
+                            );
+                            text.push("</span>");
+                            if (chart.data.labels[i]) {
+                                text.push(chart.data.labels[i]);
+                            }
+                            text.push("</li>");
+                        }
+                        text.push("</div></ul>");
+                        return text.join("");
+                    }
+                }
+            });
+            document.getElementById(
+                "pie-chart-legend"
+            ).innerHTML = pieChart.generateLegend();
+            var e=$('#inp_hd_total_exp').val();
+            var i=$('#inp_hd_total_inc').val();
+            $('#total_op').html('$ ' + new Intl.NumberFormat().format(i-e)); 
 
-if ($("#chart_income_service").length) {
-    $.ajax({ 
-        url:'/reports/chart_income_service', 
-        type:"GET",
-        success:function(data){
+            
+
+            }
+        });
+    }
+    if ($("#char_utility_month").length) {
+
+
+
+        $.ajax({ 
+            url:'/reports/getUtilityMonth', 
+            type:"GET",
+            success:function(data){
             let d= JSON.parse(data);
-            $('#total_income').html('$ ' + d.total);
-
-            var pieChartCanvas = $("#chart_income_service")
+        console.log(d);
+            var stackedbarChartCanvas = $("#char_utility_month")
             .get(0)
             .getContext("2d");
-        var pieChart = new Chart(pieChartCanvas, {
-            type: "pie",
-            data: {
+        var char_utility_month = new Chart(stackedbarChartCanvas, {
+            type: "bar",
+            data: {                
+                labels: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Agos","Sep","Oct","Nov","Dic"],
                 datasets: [
                     {
-                        data:  [d.service,d.product],
-                        backgroundColor: [
-                            ChartColor[0],
-                            ChartColor[1],                            
-                        ],
-                        borderColor: [
-                            ChartColor[0],
-                            ChartColor[1],                            
-                        ]
+                        label: "Ingresos",
+                        backgroundColor: ChartColor[1],
+                        borderColor: ChartColor[1],
+                        borderWidth: 1,
+                        data: Object.values(d.income)
+                    },
+                    {
+                        label: "Egresos",
+                        backgroundColor: ChartColor[2],
+                        borderColor: ChartColor[2],
+                        borderWidth: 1,
+                        data: Object.values(d.expenses)
                     }
-                ],
-                labels: ["Servicios", "Productos"]
+                ]
             },
             options: {
                 responsive: true,
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
+                maintainAspectRatio: true,
+                legend: false,
+                categoryPercentage: 0.5,
+                stacked: true,
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
                 },
-                legend: {
-                    display: false
-                },
+                scales: {
+                    xAxes: [
+                        {
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Total de Ingreso y Egresos",
+                                fontColor: chartFontcolor,
+                                fontSize: 12,
+                                lineHeight: 2
+                            },
+                            ticks: {
+                                fontColor: chartFontcolor,
+                                stepSize: 50,                                
+                                autoSkip: true,
+                                autoSkipPadding: 15,
+                                maxRotation: 0,
+                                maxTicksLimit: 12
+                            },
+                            gridLines: {
+                                display: false,
+                                drawBorder: false,
+                                color: chartGridLineColor,
+                                zeroLineColor: chartGridLineColor
+                            }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Valor en pesos",
+                                fontColor: chartFontcolor,
+                                fontSize: 12,
+                                lineHeight: 2
+                            },                         
+                        }
+                    ]
+                },               
                 legendCallback: function(chart) {
                     var text = [];
                     text.push('<div class="chartjs-legend"><ul>');
-                    for (
-                        var i = 0;
-                        i < chart.data.datasets[0].data.length;
-                        i++
-                    ) {
+                    for (var i = 0; i < chart.data.datasets.length; i++) {
+                        console.log(chart.data.datasets[i]); // see what's inside the obj.
+                        text.push("<li>");
                         text.push(
-                            '<li><span style="background-color:' +
-                                chart.data.datasets[0].backgroundColor[i] +
-                                '">'
+                            '<span style="background-color:' +
+                                chart.data.datasets[i].backgroundColor +
+                                '">' +
+                                "</span>"
                         );
-                        text.push("</span>");
-                        if (chart.data.labels[i]) {
-                            text.push(chart.data.labels[i]);
-                        }
+                        text.push(chart.data.datasets[i].label);
                         text.push("</li>");
                     }
-                    text.push("</div></ul>");
+                    text.push("</ul></div>");
                     return text.join("");
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
                 }
             }
         });
         document.getElementById(
-            "pie-chart-legend"
-        ).innerHTML = pieChart.generateLegend();
+            "stacked-bar-traffic-legend"
+        ).innerHTML = char_utility_month.generateLegend();
 
-        }
-    });
-}
+            }
+        });    
 
+
+
+        
+    }
 });
 
 
@@ -489,7 +593,11 @@ var dt_expenses_month=function(){
          ajax: {
             url: "/reports/dt_expenses_month",
             method: "GET", 
-            dataSrc: function (json) {                
+            async: false,
+            dataSrc: function (json) { 
+              
+                $('#inp_hd_total_exp').val(json.total);          
+                $('#total_exp').html('$  ' + new Intl.NumberFormat().format(json.total));          
                 if (!json.data) {
                     return [];
                 } else {
@@ -497,6 +605,7 @@ var dt_expenses_month=function(){
                 }
               }               
             },
+        "lengthMenu": [ 6, 14, 21, "All" ],
         columnDefs: [                  
             { orderable: false, targets: '_all' }
         ],       
@@ -504,7 +613,7 @@ var dt_expenses_month=function(){
         [       
             { "data": "no" , render(data){return '<p class="text-muted">'+data+'</p>';}},         
             { "data": "concepto" , render(data){return '<b>'+data+'</b>';}},         
-            { "data": "valor",render(data,type,row){ return data; }},                                
+            { "data": "valor",render(data,type,row){ return  '$. ' + data; }},                                
         ],       
     });
 }

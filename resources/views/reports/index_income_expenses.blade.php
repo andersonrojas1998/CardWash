@@ -11,7 +11,7 @@
     <div class="col-lg-6 grid-margin stretch-card">            
         <div class="card">
             <div class="card-body">
-            <div class="p-4 pr-5 border-bottom bg-light d-sm-flex justify-content-between">
+            <div class="p-4 pr-5 border-bottom bg-light  text-center">
         <h4 class="card-title mb-0 text-center">Egresos Registrados   <button  id="btn_createdExpense" type="button" data-toggle="modal" data-target="#mdl_createdExpense" class="btn btn-xs btn-success">Agregar <i class="mdi mdi-clipboard-plus"></i></button></h4>        
        </div>            
              <div class="table-responsive pt-5">
@@ -24,7 +24,13 @@
                 </thead>                 
             </table>
             </div>
-            </div>           
+            </div> 
+            <div class="card-footer">
+            <input type="hidden" id="inp_hd_total_inc">
+              <input type="hidden" id="inp_hd_total_exp">
+              
+            <label>Total Egresos : <h3 class="text-danger" id="total_exp"></h3></label>
+            </div>          
         </div>
     </div>
     <div class="col-lg-6 grid-margin stretch-card">
@@ -37,22 +43,32 @@
         <canvas class="my-auto" id="chart_income_service" height="130"></canvas>
       </div>
       <div class="card-footer">
-        <label>Total Ingresos : <h3 id="total_income"></h3></label>
-      
+        <div class="row">
+          <div class="col-lg-6"><label>Utilidad bruta por Servicio:    <h3 id="service_income"> </h3></label></div>
+          <div class="col-lg-6"><label>Ganancia por Productos :    <h3 id="product_income"></h3></label></div>
+        </div>
+        <div class="row">
+        <div class="col-lg-6 col-offset-4">
+            <label>Total Ingresos : <h3 class="text-success" id="total_income"></h3></label>
+        </div>
+        </div>
       </div>
     </div>
   </div>
-    </div>    
+ </div>    
+ <div class="row">
+ <div class="col-lg-6">
+ <div class="card" style="border-radius:15px;border:outset;">
+<div class="card-body">
+    <h4><label class="text-uppercase">Utilidad operacional: </label>    <b id="total_op"></b></h4>
+</div>
+ </div>
+</div>
+</div>
     </div>  
     </div>
 
-
-
-
-
-
-
-    <div class="modal fade" id="mdl_createdExpense" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="mdl_createdExpense" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header bg-success d-block">
