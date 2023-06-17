@@ -2,7 +2,7 @@
 @section('content')
 <div class="card">
     <div class="card-header pt-5 pl-5" style="
-        background-image: url('/storage/top_left_corner.png');
+        background-image: url('/images/top_left_corner.png');
         background-repeat: no-repeat;
         background-size: 20%;
     ">
@@ -23,7 +23,7 @@
     </div>
     
             <div class="card-body pb-5" style="
-            background-image: url('/storage/bottom_right_corner.png');
+            background-image: url('/images/bottom_right_corner.png');
             background-repeat: no-repeat;
             background-position: bottom right;
             background-size: 20%;

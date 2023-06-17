@@ -1,8 +1,30 @@
+var minDate, maxDate;
+ 
+// Custom filtering function which will search data in column four between two values
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = new Date(minDate.val());
+        var max = new Date(maxDate.val());
+        var date = new Date( data[1] );
+ 
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
+        ) {
+            return true;
+        }
+        return false;
+    }
+);
+
 $(function(){
 
-    $('.btn_save_edit_product_values').toggle();
+    minDate = $('#min');
+    maxDate = $('#max');
 
-    $('#table-compra').DataTable({
+    var table = $('#table-compra').DataTable({
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -27,7 +49,6 @@ $(function(){
             {"data": "reg_op"},
             {"data": "fecha_emision"},
             {"data": "compracol"},
-            {"data": "fecha_vencimiento"},
             {"data": "no_comprobante"},
             {"data": "id_proveedor"},
             {"data": "razon_social_proveedor"},
@@ -48,6 +69,13 @@ $(function(){
         }
         ]
     });
+
+    // Refilter the table
+    $('#min, #max').on('change', function () {
+        table.draw();
+    });
+
+    $('.btn_save_edit_product_values').toggle();
 
     if($("#success_message").length)
         sweetMessage('\u00A1Exitoso!', $("#success_message").val());
@@ -81,6 +109,12 @@ $(function(){
     }
 
     loadProductOptions();
+
+    $(document).on("keyup", ".input-quantity, .input-sell-price, .input-buy-price", function(){
+        if($(this).val() < 0){
+            $(this).val("");
+        }
+    });
 
     $(document).on('click', ".btn_add_product", function(){
         let form = $(this).parents('form');
@@ -194,7 +228,8 @@ $(function(){
         tr.find('.td_quantity').html($('<input>', {
             type:"number",
             class:"form-control input-quantity",
-            value: quantity
+            value: quantity,
+            min: quantity
         }));
         tr.find('.td_quantity').css('width', '130px');
         tr.find('.td_quantity').css('display', 'inline-block');
@@ -214,44 +249,53 @@ $(function(){
     });
 
     $('.btn_save_edit_product_values').click(function(){
-        $(this).toggle();
         let tr = $(this).parents('tr');
-        tr.find('.btn_edit_product_values').toggle();
-        let quantity = tr.find('.td_quantity > input').val();
-        let sell_price = tr.find('.td_sell_price > input').val();
-        let buy_price = tr.find('.td_buy_price > input').val();
-        tr.find('.td_quantity').text(quantity);
-        tr.find('.td_quantity').append($('<input>', {
-            type:"hidden",
-            name:"cantidad[]",
-            value: quantity
-        }));
-        tr.find('.td_sell_price').text(sell_price);
-        tr.find('.td_sell_price').append($('<input>', {
-            type:"hidden",
-            name:"precio_venta[]",
-            value: sell_price
-        }));
-        tr.find('.td_buy_price').text(buy_price);
-        tr.find('.td_buy_price').append($('<input>', {
-            type:"hidden",
-            class:"precio_compra_producto_table",
-            name: "precio_compra[]",
-            value: buy_price
-        }));
-        let importe_total = parseFloat("0");
-        $('.precio_compra_producto_table').each(function(){
-            importe_total += parseFloat($(this).val());
-        });
-        $(".importe_total").val(importe_total);
-        $(".text_importe_total").text(importe_total);
+        if(tr.find('.td_quantity > input').val() != "" && tr.find('.td_sell_price > input').val() != "" && tr.find('.td_buy_price > input').val() != ""){
+            if(tr.find('.td_quantity > input').val() >= tr.find('.td_quantity > input').attr("min")){
+                $(this).toggle();
+                tr.find('.btn_edit_product_values').toggle();
+                let quantity = tr.find('.td_quantity > input').val();
+                let sell_price = tr.find('.td_sell_price > input').val();
+                let buy_price = tr.find('.td_buy_price > input').val();
+                tr.find('.td_quantity').text(quantity);
+                tr.find('.td_quantity').append($('<input>', {
+                    type:"hidden",
+                    name:"cantidad[]",
+                    value: quantity
+                }));
+                tr.find('.td_sell_price').text(sell_price);
+                tr.find('.td_sell_price').append($('<input>', {
+                    type:"hidden",
+                    name:"precio_venta[]",
+                    value: sell_price
+                }));
+                tr.find('.td_buy_price').text(buy_price);
+                tr.find('.td_buy_price').append($('<input>', {
+                    type:"hidden",
+                    class:"precio_compra_producto_table",
+                    name: "precio_compra[]",
+                    value: buy_price
+                }));
+                let importe_total = parseFloat("0");
+                $('.precio_compra_producto_table').each(function(){
+                    importe_total += parseFloat($(this).val());
+                });
+                $(".importe_total").val(importe_total);
+                $(".text_importe_total").text(importe_total);
 
-        let table = $(this).parents('table');
-        console.log(table.find('.input-quantity').length);
-        if(table.find('.input-quantity').length == 1){
-            $("#btn_save_edit_buy").removeAttr('disabled');
-            $("#btn_save_edit_buy").removeClass('btn-danger');
-            $("#btn_save_edit_buy").addClass('btn-success');
+                let table = $(this).parents('table');
+                console.log(table.find('.input-quantity').length);
+                if(table.find('.input-quantity').length == 1){
+                    $("#btn_save_edit_buy").removeAttr('disabled');
+                    $("#btn_save_edit_buy").removeClass('btn-danger');
+                    $("#btn_save_edit_buy").addClass('btn-success');
+                }
+            }else{
+                sweetMessage("¡Advertencia!", "No se puede editar la cantidad por menos de " + tr.find('.td_quantity > input').attr("min"), "warning");
+                tr.find('.td_quantity > input').val(tr.find('.td_quantity > input').attr("min"));
+            }
+        }else{
+            sweetMessage("¡Advertencia!", "Por favor complete los campos", "warning");
         }
     });
 

@@ -21,14 +21,23 @@
                 </div>
             </div>
         </div>
+        <table cellspacing="5" cellpadding="5">
+            <tbody><tr>
+                <td>Fecha inicial:</td>
+                <td><input type="text" id="min" name="min" value="06-01-2023" placeholder="MM-DD-AAAA"></td>
+            </tr>
+            <tr>
+                <td>Fecha fin:</td>
+                <td><input type="text" id="max" name="max" value="{{date('m-d-Y')}}" placeholder="MM-DD-AAAA"></td>
+            </tr>
+        </tbody></table>
         <div class="table-responsive">
             <table class="table table-striped table-sm" id="table-compra" data-url="{{route('compra.data')}}" style="width:100%">
                 <thead>
                     <tr>
-                        <th rowspan="2">Reg_op</th>
+                        <th rowspan="2"># de Factura</th>
                         <th rowspan="2">F. Emision</th>
-                        <th rowspan="2">Compracol</th>
-                        <th rowspan="2">F. Vencimiento</th>
+                        <th rowspan="2">Descripci&oacute;n</th>
                         <th rowspan="2">No. Comprobante</th>
                         <th colspan="2" class="text-center">Proveedor</th>
                         <th rowspan="2">Descuento IVA</th>
