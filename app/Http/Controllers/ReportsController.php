@@ -27,6 +27,12 @@ class ReportsController extends Controller
         return view('reports.index_income_expenses');
     }
 
+    public function index_sales_month_day(){        
+        return view('reports.index_sales_month_day');
+    }
+    public function index_month_utility(){        
+        return view('reports.index_month_utility');
+    }
     public function getReportApproved($period,$grade){
 
         $readTmp=DB::SELECT("CALL sp_missedSubjects('$period','$grade')  ");
@@ -63,12 +69,30 @@ class ReportsController extends Controller
      }
 
 
+     public function getUtilityMonth(){
 
-     
+        $data=[];
+         for ($i=1;$i<=12;$i++){
+             $readTmp=DB::SELECT("CALL sp_expenses_month('$i')  ");
+             $tt=floatval($readTmp[0]->egreso+$readTmp[0]->nomina);
+             
+             $e=is_null($tt)? 0: $tt;  
+             $data['expenses'][$i]= $e;
+
+             
+             $service=DB::SELECT("CALL sp_incomexservice('$i')  ");              
+             $product=DB::SELECT("CALL sp_incomexproduct('$i')  "); 
+
+             $s=is_null($product[0]->gananciasxproducto)? 0:floatval($product[0]->gananciasxproducto);
+             $p=is_null($service[0]->gananciasxservicio)? 0: floatval($service[0]->gananciasxservicio);
+             $data['income'][$i]=$s+$p;
+         }      
+         return json_encode($data);
+     }
      public function chart_income_service(){
-
-        $product=DB::SELECT("CALL sp_incomexproduct()  ");            
-        $service=DB::SELECT("CALL sp_incomexservice()  ");            
+        $d=date('m');
+        $product=DB::SELECT("CALL sp_incomexproduct('$d')  ");            
+        $service=DB::SELECT("CALL sp_incomexservice('$d')  ");            
         
         $data=[];
         $data['product']= is_null($product[0]->gananciasxproducto)? 0:floatval($product[0]->gananciasxproducto);
@@ -78,15 +102,19 @@ class ReportsController extends Controller
        return json_encode($data);
      }
 
-     public function dt_expenses_month(){        
-        $expenses=DB::SELECT("CALL sp_expenses()  ");                 
+     public function dt_expenses_month(){    
+        $d=date('m');    
+        $expenses=DB::SELECT("CALL sp_expenses('$d')  ");                 
         $data=[];
         $i=0;
+        $total=0;
         foreach($expenses as $key=> $v){
             $data['data'][$key]['no']=$i++;
             $data['data'][$key]['concepto']= $v->concepto;
             $data['data'][$key]['valor']=number_format($v->egreso,0,',','.');
+            $total+=$v->egreso;
         }
+        $data['total']= $total;
         return json_encode($data);       
      }
      public function add_expenses(){

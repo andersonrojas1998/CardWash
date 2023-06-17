@@ -71,7 +71,7 @@
                             </div>
                         </div>    
                         <div class="row mt-4">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label class="control-label">Unidad de medida&nbsp;:</label>
                                 <select class="select2-create select-unidad-de-medida" name="id_unidad_medida" style="width: 100%">
                                     <option>Seleccione unidad de medida</option>
@@ -84,7 +84,7 @@
                                 @endif
                                 <input type="hidden" id="select-unit-measurement-data-url" value="{{ route('unidad-de-medida.index') }}">
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label class="control-label">Presentacion&nbsp;:</label>
                                 <select class="select2-create select-presentation" name="id_presentacion" style="width: 100%">
                                     <option>Seleccione la presentaci&oacute;n</option>
@@ -96,6 +96,19 @@
                                     <input type="hidden" id="old-select-presentation" value="{{ old('id_presentacion') }}">
                                 @endif
                                 <input type="hidden" id="select-presentation-data-url" value="{{ route('presentacion.index') }}">
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="control-label">Area :</label>
+                                <select class="select2-create select-area" name="id_area" style="width: 100%">
+                                    <option>Seleccione la Area</option>
+                                </select>
+                                @if ($errors->any() && $errors->first('id_area'))
+                                    <span class="badge badge-pill badge-danger">{{$errors->first('id_area')}}</span>
+                                @endif
+                                @if (old('id_area'))
+                                    <input type="hidden" id="old-select-presentation" value="{{ old('id_area') }}">
+                                @endif
+                                <input type="hidden" id="select-area-data-url" value="{{ route('area.index') }}">
                             </div>
                         </div>
                     </div>

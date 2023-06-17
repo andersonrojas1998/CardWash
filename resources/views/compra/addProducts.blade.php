@@ -95,4 +95,4 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="select-product-data-url" value="{{ route('producto.data') }}">
+<input type="hidden" id="select-product-data-url" value="{{ route('producto.data',[-1])}}">

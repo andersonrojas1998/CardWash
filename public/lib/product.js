@@ -2,69 +2,7 @@
 
 $(function(){
 
-    $('#table-product').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
-        ajax:{
-            url: $('#table-product').data('url'),
-            method: "GET",
-            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
-            dataSrc: function(json){
-                if(!json.data){
-                    return [];
-                } else {
-                    return json.data;
-                }
-            }
-        },
-        columnDefs: [
-            {"className": "text-center", "targets": "_all"},
-        ],
-        columns:[
-            {"data": "nombre"},
-            {"data": "marca.nombre"},
-            {"data": "tipo_producto.descripcion"},
-            {"data": "unidad_medida", render(unidad_de_medida){
-                return unidad_de_medida.nombre + " (" + unidad_de_medida.abreviatura + ")";
-            }},
-            {"data": "presentacion.nombre"},
-            { "data": "cantidad",render(data){ return '<h4><label class="badge text-white badge-success">'+ data  +'</label></h4>'; }},
-            {"data": "actions", render(data, ps, producto){
-                let div = $('<div>',{
-                    html: $("<a>", {
-                        class: "btn_show_edit_product",
-                        html:$("<i>", {
-                            class : "mdi mdi-pencil-box-outline text-primary mdi-24px",
-                            title: "Editar producto"
-                        }).attr('data-toggle', 'tooltip')
-                    }).attr({
-                        'data-id': producto.id,
-                        'data-nombre': producto.nombre,
-                        'data-id-tipo-producto': producto.id_tipo_producto,
-                        'data-id-marca': producto.id_marca,
-                        'data-id-unidad-medida': producto.id_unidad_medida,
-                        'data-id-presentacion': producto.id_presentacion,
-                        'data-toggle': 'modal',
-                        'data-target': '#modal_edit_product',
-                    })
-                });
-                return div.html();
-            }
-        }
-        ],
-
-        rowCallback:function(row,data,index){
-            let cantidad=data.cantidad;
-            switch(true){                
-                case (parseInt(cantidad) >= 0 && parseInt(cantidad) <= 5):
-                    $('td', row).css('background-color', 'rgba(238, 249, 71, 0.35)');
-                break;                
-            }
-        }
-
-    });
+   
 
     $(document).on('click', '#save-brand', function(){
         let funTransitions = function(){
@@ -118,6 +56,12 @@ $(function(){
             }
         });
     });
+
+    $(document).on('change', '#sel_area_option', function(){
+        let val=$(this).val();
+        dt_product(val);       
+    });
+
 
     $(document).on('click', '#save-product-type', function(){
         let funTransitions = function(){
@@ -339,4 +283,95 @@ var loadPresentationOptions = function(){
     });
 }
 
+var loadAreaOptions = function(){
+    $.ajax({
+        url: $("#select-area-data-url").val(),
+        type: "GET",
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+        success: function(data, textStatus, xhr){
+            $('.select-area').empty();
+            $.each(data.presentaciones, function(i, presentacion){
+                $('.select-area').append($('<option>',{
+                    value: presentacion.id,
+                    text: presentacion.nombre
+                }));
+            });
+            //if($('#old-select-presentation').length)
+             //   $('.select-presentacion').val($('#old-select-presentation').val());
+        }
+    });
+}
+ function dt_product(area){
+
+    $('#table-product').DataTable({
+        dom: 'Bfrtip',
+        destroy:true,
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        ajax:{
+            url:  '/producto/data/'+area,
+            method: "GET",
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+            dataSrc: function(json){
+                if(!json.data){
+                    return [];
+                } else {
+                    return json.data;
+                }
+            }
+        },
+        columnDefs: [
+            {"className": "text-center", "targets": "_all"},
+        ],
+        columns:[
+            {"data": "producto"},
+            {"data": "marca"},
+            {"data": "tipo_producto"},
+            {"data": "unidad_medida", render(unidad_de_medida){
+                return unidad_de_medida;
+            }},
+            {"data": "presentacion"},
+            { "data": "cantidad_stock",render(data){ return '<h4><label class="badge text-white badge-success">'+ data  +'</label></h4>'; }},
+            {"data": "actions", render(data, ps, producto){
+                let div = $('<div>',{
+                    html: $("<a>", {
+                        class: "btn_show_edit_product",
+                        html:$("<i>", {
+                            class : "mdi mdi-pencil-box-outline text-primary mdi-24px",
+                            title: "Editar producto"
+                        }).attr('data-toggle', 'tooltip')
+                    }).attr({
+                        'data-id': producto.id,
+                        'data-nombre': producto.producto,
+                        'data-id-tipo-producto': producto.id_tipo_producto,
+                        'data-id-marca': producto.id_marca,
+                        'data-id-unidad-medida': producto.id_unidad_medida,
+                        'data-id-presentacion': producto.id_presentacion,
+                        'data-toggle': 'modal',
+                        'data-target': '#modal_edit_product',
+                    })
+                });
+                return div.html();
+            }
+        }
+        ],
+
+        rowCallback:function(row,data,index){
+            let cantidad=data.cantidad;
+            switch(true){                
+                case (parseInt(cantidad) >= 0 && parseInt(cantidad) <= 5):
+                    $('td', row).css('background-color', 'rgba(238, 249, 71, 0.35)');
+                break;                
+            }
+        }
+
+    });
+ }
+ dt_product(1);
 loadPresentationOptions();
+loadAreaOptions();

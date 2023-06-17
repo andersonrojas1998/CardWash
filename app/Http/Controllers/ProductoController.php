@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use App\Http\Requests\StoreProducto;
 use App\Model\Producto;
 use App\Model\Tipo_Producto;
@@ -13,21 +13,24 @@ class ProductoController extends Controller
         return view('producto.index');
     }
 
-    public function dataTable(){
-        $productos = Producto::all();
-        $data = [
+    public function dataTable($area){
+  
+        $products=[];
+       if(intval($area) == -1){
+            $products=Producto::all();
+        }else{
+            $products=DB::SELECT("CALL sp_products('$area')  ");
+        }
+       $data = [
             "status" => "200",
             "data" => []
         ];
+        foreach ($products as $producto ) {
 
-        foreach ($productos as $producto ) {
-            $producto->marca;
-            $producto->tipo_producto;
-            $producto->presentacion;
-            $producto->unidad_medida;
-            $producto->cantidad = $producto->cant_stock - $producto->cant_stock_mov;
-
-            array_push($data['data'], $producto);
+            if(intval($area) == -1){
+                $producto->presentacion;
+            }
+           array_push($data['data'], $producto);
         }
 
         return response()->json($data);
@@ -41,9 +44,7 @@ class ProductoController extends Controller
     public function store(StoreProducto $request){
         try{
           
-            $producto = new Producto($request->all());
-            $producto->cant_stock = 0;
-            $producto->cant_stock_mov = 0;
+            $producto = new Producto($request->all());               
             $producto->save();
 
             return redirect()->route('producto.index')->with('success', 'Se ha creado el producto "' . $producto->nombre . '" satisfactoriamente.');
