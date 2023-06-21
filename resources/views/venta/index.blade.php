@@ -11,7 +11,12 @@
             <div class="d-flex justify-content-end bd-highlight">
                 <div class="pr-3 pt-3" title="Registrar venta" data-toggle="tooltip">
                     <a href="{{route('venta.create')}}" class="text-body">
-                        <span class="mdi mdi-plus-circle-outline mdi-36px"></span>
+                        <span class="mdi mdi-car-wash mdi-36px"></span>
+                    </a>
+                </div>
+                <div class="pr-3 pt-3" title="Registrar venta de la tienda" data-toggle="tooltip">
+                    <a href="{{route('venta.create-market')}}" class="text-body">
+                        <span class="mdi mdi-shopping mdi-36px"></span>
                     </a>
                 </div>
             </div>

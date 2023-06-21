@@ -7,18 +7,28 @@
         background-size: 20%;
     ">
         <div class="d-flex justify-content-between mb-3">
-            <div class="col-6">
+            <div class="col-4">
                 <h1 class="mt-3 ml-3"><strong>Factura</strong></h1>
                 <div class="d-block">
                     <strong class="ml-3"># de orden&nbsp;:&nbsp;</strong><label>{{$venta->id}}</label>
                 </div>
                 <strong class="ml-3">Fecha&nbsp;:&nbsp;</strong><label>{{$venta->fecha}}</label>
             </div>
+            <div class="col-4 text-center">
+                <h5><strong>Lavado y Mantenimiento de<br>Vehiculos Automotores</strong></h5>
+                <h5><strong>JORGE ANDR&Eacute;S D&Iacute;AZ CRUZ</strong></h5>
+                <h6>Nit. 1.144.189.073-3</h6>
+                <h6>No Responsable del IVA</h6>
+            </div>
             <div class="col-3" style="
                 background-image: url('/icon.jpg');
                 background-repeat: no-repeat;
                 background-size: 54%;
                 background-position: center;"></div>
+        </div>
+        <div class="col-12 text-center">
+            <h5><strong>Manzana 10 Lote 77 Etapa III Poblado Campestre - Candelar&iacute;a - Valle</strong></h5>
+            <h5><strong>Cel: 311 426 4334 - 316 625 6386 / juanchoscarwash2017@hotmail.com</strong></h5>
         </div>
     </div>
     
@@ -81,7 +91,7 @@
                                     $total += $detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad;
                                     @endphp
                                     <tr>
-                                        <td>{{$detalle_venta_producto->producto->nombre.' - '.$detalle_venta_producto->producto->presentacion->nombre}}</td>
+                                        <td>{{$detalle_venta_producto->detalle_compra_productos->producto->nombre.' - '.$detalle_venta_producto->detalle_compra_productos->producto->presentacion->nombre}}</td>
                                         <td>{{$detalle_venta_producto->precio_venta}}</td>
                                         <td>{{$detalle_venta_producto->cantidad}}</td>
                                         <td>{{$detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad}}</td>

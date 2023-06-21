@@ -10,7 +10,7 @@ class DetalleVentaProductos extends Model
 
     protected $fillable = [
         'id_venta',
-        'id_producto',
+        'id_detalle_producto',
         'cantidad',
         'precio_venta',
         'margen_ganancia'
@@ -21,8 +21,8 @@ class DetalleVentaProductos extends Model
         return $this->hasOne('App\Model\Venta', 'id', 'id_venta');
     }
 
-    public function producto()
+    public function detalle_compra_productos()
     {
-        return $this->hasOne('App\Model\Producto', 'id', 'id_producto');
+        return $this->hasOne('App\Model\DetalleCompraProductos', 'id_detalle_compra', 'id_detalle_producto');
     }
 }

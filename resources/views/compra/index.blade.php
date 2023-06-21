@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <td>Fecha fin:</td>
-                <td><input type="text" id="max" name="max" value="{{date('m-d-Y')}}" placeholder="MM-DD-AAAA"></td>
+                <td><input type="text" id="max" name="max" value="{{date("m")."-".(date("d")+1)."-".date("Y")}}" placeholder="MM-DD-AAAA"></td>
             </tr>
         </tbody></table>
         <div class="table-responsive">

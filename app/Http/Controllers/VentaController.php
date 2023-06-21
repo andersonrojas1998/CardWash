@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVenta;
+use App\Model\DetalleCompraProductos;
 use App\Model\DetalleVentaProductos;
 use App\Model\Producto;
 use App\Model\TipoVehiculo;
@@ -27,9 +28,18 @@ class VentaController extends Controller
         $tipos_vehiculo = TipoVehiculo::all();
         $date = Carbon::now();
         $date->setTimezone('America/Bogota');
-        $productos = Producto::select(DB::raw("producto.*, (producto.cant_stock-producto.cant_stock_mov) AS cantidad"))->get()->where('cantidad', '>', 0);
+        $productos = DetalleCompraProductos::select(DB::raw("*, cast(if((detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto)) is null, detalle_compra_productos.cantidad, (detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto))) AS unsigned) cantidad_disponible"))->join("producto as p", "p.id", "detalle_compra_productos.id_producto")->where("id_area","!=","3")->get()->where('cantidad_disponible', '>', 0);
         $usuarios = users::all();
         return view('venta.create', compact('tipos_vehiculo', 'date', 'productos', 'usuarios'));
+    }
+
+    public function createMarket()
+    {
+        $date = Carbon::now();
+        $date->setTimezone('America/Bogota');
+        $productos = DetalleCompraProductos::select(DB::raw("*, cast(if((detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto)) is null, detalle_compra_productos.cantidad, (detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto))) AS unsigned) cantidad_disponible"))->join("producto as p", "p.id", "detalle_compra_productos.id_producto")->where("id_area","3")->get()->where('cantidad_disponible', '>', 0);
+        $usuarios = users::all();
+        return view('venta.create_market', compact('date', 'productos', 'usuarios'));
     }
 
     public function store(StoreVenta $request)
@@ -38,19 +48,18 @@ class VentaController extends Controller
             $venta = new Venta($request->all());
             $venta->save();
 
+            // *** id_producto = id_detalle_compra ***
+
             if(isset($request->all()['id_producto'])){
                 foreach($request->all()['id_producto'] as $key => $id_producto){
                     $detalle_venta_producto = new DetalleVentaProductos([
-                        "id_producto" => $id_producto,
+                        "id_detalle_producto" => $id_producto,
                         "id_venta" => $venta->id,
                         "cantidad" => $request->all()['cantidad'][$key],
                         "precio_venta" => $request->all()['precio_venta'][$key],
                         "margen_ganancia" => $request->all()['margen_ganancia'][$key],
                     ]);
                     $detalle_venta_producto->save();
-                    $producto = $detalle_venta_producto->producto;
-                    $producto->cant_stock_mov = $producto->cant_stock_mov + $request->all()['cantidad'][$key];
-                    $producto->save();
                 }
             }
 
