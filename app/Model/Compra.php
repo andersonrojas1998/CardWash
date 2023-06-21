@@ -15,6 +15,7 @@ class Compra extends Model
         'fecha_vencimiento',
         'no_comprobante',
         'id_proveedor',
+        'id_proveedor_nombre',
         'razon_social_proveedor',
         'descuentos_iva',
         'importe_total'

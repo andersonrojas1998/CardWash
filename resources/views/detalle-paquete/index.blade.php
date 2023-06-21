@@ -13,7 +13,7 @@
         <div class="d-flex justify-content-between bd-highlight mb-3">
             <div class="d-flex justify-content-start bd-highlight">
                 <div class="m-auto bg-light">
-                    <h4>COMBOS /<br>SERVICIOS</h4>
+                    <!-- <h4>COMBOS /<br>SERVICIOS</h4> -->
                 </div>
             </div>
             <div class="d-flex justify-content-center bd-highlight">

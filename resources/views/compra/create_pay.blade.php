@@ -1,8 +1,8 @@
 @extends('layout.master')
 @section('content')
 <div class="card">
-    <div class="card-header"><h3>Registrar Compra   <i class="mdi mdi-cash"></i></h3></div>
-    <form id="form_create_buy" action="{{ route('compra.store') }}" enctype="multipart/form-data" method="POST">
+    <div class="card-header "><h3>Registrar Pago  <i class="mdi mdi-cash"></i></h3> </div>
+    <form id=""    action="{{ route('pago.store')}}" enctype="multipart/form-data" method="POST">
         {{ csrf_field() }}
         <fieldset>
             <div class="card-body">
@@ -33,22 +33,31 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label for="no_comprobante_compra">No. Comprobante:</label>
                         <input type="text" id="no_comprobante_compra" name="no_comprobante" class="form-control text-uppercase" placeholder="Ingrese el No. comprobante de la compra" value="{{old('no_comprobante')}}" required>
                         @if ($errors->any() && $errors->first('no_comprobante'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('no_comprobante')}}</span>
                         @endif
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label for="descuentos_iva_compra">Descuento IVA:</label>
                         <input type="number" id="descuentos_iva_compra" name="descuentos_iva" class="form-control text-uppercase" placeholder="Ingrese el descuento IVA de la compra" value="{{old('descuentos_iva')}}" required>
                         @if ($errors->any() && $errors->first('descuentos_iva'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('descuentos_iva')}}</span>
                         @endif
                     </div>
+
+                    <div class="col-lg-4">
+                        <label for="importe_total">Total Pago:</label>
+                        <input type="number" id="importe_total" name="importe_total" class="form-control text-uppercase" placeholder="Ingrese el Total pago" value="{{old('importe_total')}}" required>
+                        @if ($errors->any() && $errors->first('importe_total'))
+                            <span class="badge badge-pill badge-danger">{{$errors->first('importe_total')}}</span>
+                        @endif
+                    </div>
                 </div>
                 <br>
+                
                 <div class="container p-1">
                     <div class="card">
                         <div class="card-header text-center header-pay" >Proveedor   <i class="mdi mdi-account"></i></div>
@@ -62,7 +71,7 @@
                                     @endif
                                 </div>
                                 <div class="col-lg-3">
-                                    <label for="id_proveedor_compra">Nombre:</label>
+                                    <label for="id_proveedor_nombre">Nombre:</label>
                                     <input type="text" id="id_proveedor_nombre" name="id_proveedor_nombre" class="form-control text-uppercase" placeholder="Ingrese el nombre de la empresa" value="{{old('id_proveedor_nombre')}}" required>
                                     @if ($errors->any() && $errors->first('id_proveedor_nombre'))
                                         <span class="badge badge-pill badge-danger">{{$errors->first('id_proveedor_nombre')}}</span>
@@ -92,31 +101,17 @@
                         </div>
                     </div>
                 </div>
-                @include('compra.addProducts')
-                @if ($errors->any() && $errors->first('id_producto'))
-                    <div class="d-flex justify-content-center" id="products-validation-message">
-                        <span class="badge badge-pill badge-danger">{{$errors->first('id_producto')}}</span>
-                    </div>
-                @endif
+            
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" id="btn_create_buy" class="btn btn-success">Guardar</button>
+                    <button type="submit"  class="btn btn-success">Guardar</button>
                 </div>
             </div>
         </fieldset>
     </form>
 </div>
 @endsection
-@push('style')    
-<style>
-.header-pay{
-    background:#c9ddeb73;
-    -webkit-text-stroke:thin;
-    border-radius:8px;
-}
-</style>
-@endpush
 @push('custom-scripts')
     {!! Html::script('js/validate.min.js') !!}
     {!! Html::script('js/validator.messages.js') !!}

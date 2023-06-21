@@ -13,6 +13,9 @@ class CompraController extends Controller
     public function index(){
         return view('compra.index');
     }
+    public function indexPay(){
+        return view('compra.create_pay');
+    }
 
     public function dataTable()
     {
@@ -44,6 +47,7 @@ class CompraController extends Controller
     public function store(StoreCompra $request)
     {
         try{
+            
             $compra = new Compra($request->all());
             $compra->condiciones_id = 1;
             $compra->save();
@@ -75,6 +79,7 @@ class CompraController extends Controller
         }
     }
 
+   
     public function edit(Compra $compra)
     {
         return view('compra.edit', compact('compra'));

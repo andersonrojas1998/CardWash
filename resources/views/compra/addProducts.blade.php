@@ -1,6 +1,6 @@
 <div class="container-fluid mx-1">
     <div class="card">
-        <div class="card-header">Agregar productos</div>
+        <div class="card-header header-pay text-center">Agregar productos   <i class="mdi  mdi-cart-plus"></i></div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-add-products">
