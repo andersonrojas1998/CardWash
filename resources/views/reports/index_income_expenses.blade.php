@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-body">
             <div class="p-4 pr-5 border-bottom bg-light  text-center">
-        <h4 class="card-title mb-0 text-center">Egresos Registrados   <button  id="btn_createdExpense" type="button" data-toggle="modal" data-target="#mdl_createdExpense" class="btn btn-xs btn-success">Agregar <i class="mdi mdi-clipboard-plus"></i></button></h4>        
+        <h4 class="card-title mb-0 text-center">Egresos Registrados   </h4>        
        </div>            
              <div class="table-responsive pt-5">
                 <table id="dt_expenses_month" class="table table-striped">

@@ -50,10 +50,11 @@ $(function(){
             {"data": "fecha_emision"},
             {"data": "compracol"},
             {"data": "no_comprobante"},
-            {"data": "id_proveedor"},
+            {"data": "id_proveedor", render(data,ps,compra){ return compra.id_proveedor + '-'+ compra.id_proveedor_nombre }},
             {"data": "razon_social_proveedor"},
             {"data": "descuentos_iva"},
             {"data": "importe_total"},
+            {"data": "estado_id", render(data){ return (data==1)? '<h4><label class="badge  badge-lg text-white badge-success">Compra</label></h4>':'<h4><label class="badge text-white badge-warning">Pago</label></h4>' }},
             {"data": "actions", render(data, ps, compra){
                 let div = $('<div>', {
                     html: $("<a>", {

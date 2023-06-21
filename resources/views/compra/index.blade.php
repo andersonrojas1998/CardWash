@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="pr-3 pt-3">
-                    <a href="{{route('compra.create')}}" class="text-body" title="Crear Pago">
+                    <a href="/pago/inicio" class="text-body" title="Crear Pago">
                         <span class="mdi mdi-alert-octagram mdi-36px"></span>
                     </a>
                 </div>
@@ -42,10 +42,11 @@
                         <th colspan="2" class="text-center">Proveedor</th>
                         <th rowspan="2">Descuento IVA</th>
                         <th rowspan="2">Importe total</th>
+                        <th rowspan="2">Estado</th>
                         <th rowspan="2">Acci&oacute;n</th>
                     </tr>
                     <tr>
-                        <th>ID</th>
+                        <th>Nit-Nombre</th>
                         <th>Raz&oacute;n social</th>
                     </tr>
                 </thead>
