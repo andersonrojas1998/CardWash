@@ -195,7 +195,7 @@ $(function(){
                 ]
             }));
             $('.precio_compra_producto_table').each(function(){
-                importe_total += parseFloat($(this).val());
+                importe_total += parseFloat($(this).val()) * $(this).parents('tr').find('.cantidad_producto_table').val();
             });
             form.find(".importe_total").val(importe_total);
             form.find(".text_importe_total").text(importe_total);
