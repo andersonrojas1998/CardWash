@@ -1,8 +1,8 @@
 @extends('layout.master')
 @section('content')
 <div class="card">
-    <div class="card-header"><h1>Editar Compra</h1></div>
-    <form id="edit-buy-form" action="{{ route('compra.update') }}" method="POST">
+    <div class="card-header"><h1>Editar pago</h1></div>
+    <form id="edit-buy-form" action="{{ route('compra.update-payment') }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('PUT') }}
         <fieldset>
@@ -26,13 +26,17 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label for="no_comprobante_compra_edit">No. Comprobante:</label>
                         <input type="text" id="no_comprobante_compra_edit" name="no_comprobante" class="form-control text-uppercase" placeholder="Ingrese el No. comprobante de la compra" value="{{$compra->no_comprobante}}" required>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label for="descuentos_iva_compra_edit">Descuento IVA:</label>
                         <input type="text" id="descuentos_iva_compra_edit" name="descuentos_iva" class="form-control text-uppercase" placeholder="Ingrese el descuento IVA de la compra" value="{{$compra->descuentos_iva}}" required>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="importe_total_compra_edit">Total pago:</label>
+                        <input type="text" id="importe_total_compra_edit" name="importe_total" class="form-control" value="{{$compra->importe_total}}" required>
                     </div>
                 </div>
                 <div class="container p-1">
@@ -69,7 +73,6 @@
                         </div>
                     </div>
                 </div>
-                @include('compra.addProducts')
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
