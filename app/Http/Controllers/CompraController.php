@@ -32,7 +32,7 @@ class CompraController extends Controller
 
             $compra->condicion;
 
-            $compra->route_edit = route('compra.edit', ['compra' => $compra->id]);
+            $compra->route_edit = ($compra->estado_id == 1)? route('compra.edit', ['compra' => $compra->id]) : route('compra.edit-payment', ['compra' => $compra->id]);
 
             array_push($data['data'], $compra);
         }
@@ -86,13 +86,18 @@ class CompraController extends Controller
         return view('compra.edit', compact('compra'));
     }
 
+    public function editPayment(Compra $compra)
+    {
+        return view('compra.edit_payment', compact('compra'));
+    }
+
     public function update(UpdateCompra $request)
     {
         try{
             $compra = Compra::find($request->input('id'));
             $compra->update($request->all());
             
-            /*foreach ($request->all()['id_detalle_compra_producto'] as $key => $id_detalle_compra_producto) {
+            foreach ($request->all()['id_detalle_compra_producto'] as $key => $id_detalle_compra_producto) {
                 $detalle_compra_producto = DetalleCompraProductos::find($id_detalle_compra_producto);
                 $values = [
                     "id_producto" => $request->all()['id_producto'][$key],
@@ -112,7 +117,19 @@ class CompraController extends Controller
                 }
                 $producto->cant_stock = $producto->cant_stock + $values['cantidad'];
                 $producto->save();
-            }*/
+            }
+
+            return redirect()->route('compra.index')->with('success', 'Se ha modificado la compra satisfactoriamente.');
+        }catch(Exception $e){
+            return redirect()->route('compra.index')->with('fail', 'Ha ocurrido un error al guardar<br><br>' . $e->getMessage());
+        }
+    }
+
+    public function updatePayment(UpdateCompra $request)
+    {
+        try{
+            $compra = Compra::find($request->input('id'));
+            $compra->update($request->all());
 
             return redirect()->route('compra.index')->with('success', 'Se ha modificado la compra satisfactoriamente.');
         }catch(Exception $e){
