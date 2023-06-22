@@ -65,7 +65,14 @@
                             @endif
                         </td>
                         <td>{{$venta->user->name}}</td>
-                        <td>{{$venta->estado_venta->nombre}}</td>
+                        <td>
+                            @php $color="danger"; 
+                            if($venta->estado_venta->id==1) 
+                                $color="primary"; 
+                             else $color="success";
+                            @endphp
+                        <label class="badge  badge-lg text-white badge-{{$color}}">{{$venta->estado_venta->nombre  }}</label>
+                        </td>
                         <td>
                             <!--<a href="{{route('venta.edit',[$venta->id])}}" title="Editar venta" data-toggle="tooltip">
                                 <i class="mdi mdi-pencil-box-outline text-primary mdi-24px"></i>

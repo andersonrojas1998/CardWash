@@ -62,7 +62,7 @@
                         <table class="table align-middle table-nowrap table-centered text-center mb-0" id="table-products">
                             <thead>
                                 <tr>
-                                    <th colspan="4">Detalle venta</th>
+                                    <th class="header-pay" colspan="4">Detalle venta</th>
                                 </tr>
                                 <tr>
                                     <th>Productos</th>
@@ -86,7 +86,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" id="btn_create_sell" class="btn btn-success">Guardar</button>
+                    <button type="submit" id="btn_create_sell" class="btn btn-success">Generar Venta  <i  class="mdi mdi-content-save-all"></i> </button>
                 </div>
             </div>
         </fieldset>
@@ -95,6 +95,15 @@
     </form>
 </div>
 @endsection
+@push('style')    
+<style>
+.header-pay{
+    background:#c9ddeb73;
+    -webkit-text-stroke:thin;
+    border-radius:8px;
+}
+</style>
+@endpush
 @push('custom-scripts')
     {!! Html::script('js/validate.min.js') !!}
     {!! Html::script('js/validator.messages.js') !!}
