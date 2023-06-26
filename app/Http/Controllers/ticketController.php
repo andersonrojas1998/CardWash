@@ -1,6 +1,8 @@
 <?php
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
+use Mike42\Escpos\CapabilityProfile;
+
 
 namespace App\Http\Controllers;
 
@@ -10,8 +12,9 @@ class ticketController extends Controller
 {
     public function ticketPrint(){
 
-        $nombreImpresora = "POSPrinter";
-        $connector = new \Mike42\Escpos\PrintConnectors\WindowsPrintConnector($nombreImpresora);
+      // $profile = \Mike42\Escpos\CapabilityProfile\CapabilityProfile::load("simple");
+       // $nombreImpresora = "POSPrinter";
+        $connector = new \Mike42\Escpos\PrintConnectors\WindowsPrintConnector("smb://computer/printer");
         $impresora = new \Mike42\Escpos\Printer($connector);        
       //  $impresora->setJustification(Printer::JUSTIFY_CENTER);
         $impresora->setTextSize(2, 2);
