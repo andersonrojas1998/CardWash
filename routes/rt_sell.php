@@ -8,4 +8,5 @@ Route::group(['prefix' => 'venta'], function(){
     Route::get('{venta}/edit', 'VentaController@edit')->name('venta.edit');
     Route::post('', 'VentaController@store')->name('venta.store');
     Route::put('{venta}', 'VentaController@update')->name('venta.update');
+    Route::get('print', 'ticketController@print');
 });
