@@ -1,6 +1,7 @@
 <?php
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -10,8 +11,8 @@ class ticketController extends Controller
     public function ticketPrint(){
 
         $nombreImpresora = "POSPrinter";
-        $connector = new WindowsPrintConnector($nombreImpresora);
-        $impresora = new Printer($connector);
+        $connector = new \Mike42\Escpos\PrintConnectors\WindowsPrintConnector($nombreImpresora);
+        $impresora = new \Mike42\Escpos\Printer($connector);        
         $impresora->setJustification(Printer::JUSTIFY_CENTER);
         $impresora->setTextSize(2, 2);
         $impresora->text("Imprimiendo\n");
