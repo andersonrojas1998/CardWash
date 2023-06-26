@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ticketController extends Controller
 {
-    public function print(){
+    public function ticketPrint(){
 
         $nombreImpresora = "POSPrinter";
         $connector = new WindowsPrintConnector($nombreImpresora);
