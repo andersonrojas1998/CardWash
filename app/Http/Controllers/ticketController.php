@@ -13,7 +13,7 @@ class ticketController extends Controller
         $nombreImpresora = "POSPrinter";
         $connector = new \Mike42\Escpos\PrintConnectors\WindowsPrintConnector($nombreImpresora);
         $impresora = new \Mike42\Escpos\Printer($connector);        
-        $impresora->setJustification(Printer::JUSTIFY_CENTER);
+      //  $impresora->setJustification(Printer::JUSTIFY_CENTER);
         $impresora->setTextSize(2, 2);
         $impresora->text("Imprimiendo\n");
         $impresora->text("ticket\n");
