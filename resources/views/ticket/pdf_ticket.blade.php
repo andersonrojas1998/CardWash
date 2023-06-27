@@ -25,11 +25,11 @@
 <div class="w3-row" >
 
 <div class="w3-col  w3-center">
-        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="150" width="150">
+        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="200" width="190">
     </div>
 
 <div class="w3-row"  >        
-    <div class="w3-col w3-center w3-xlarge "  style="margin:0;padding:0">
+    <div class="w3-col w3-center w3-xlarge " >
            <p><b class="w3-xlarge">JUANCHO'S </b> <br>
            Lavado y Mantenimiento de Vehiculos Automotores <br>
             JORGE ANDRES DIAZ CRUZ <br>          
@@ -39,10 +39,10 @@
            <p class="w3-xlarge">FACTURA DE VENTA  <b> No.  001</b> </p>
     </div>
 
-    <p class="w3-xlarge">Fecha :   <b>2023/06/04 15:22</b><br>
-            Tipo Vehiculo :   MOTO <br>
-            Placa :   NCS89E 
-        </p>
+    <p class="w3-xlarge padding-1" style="margin:0;">Fecha :   <b>2023/06/04 15:22</b></p>
+    <p class="w3-xlarge padding-1" style="margin:0;">       Tipo Vehiculo :   <b>MOTO</b></p>
+    <p class="w3-xlarge padding-1" style="margin:0;"> Placa :  <b>NCS89E</b>  </p>
+        
 </div>
 <hr>      
 
@@ -53,7 +53,7 @@
 <body> 
     
 
-<div class="w3-row padding-1">
+<div class="w3-row">
 
 
 
@@ -76,8 +76,8 @@
 </tbody>
 <tfoot>
     <tr class="w3-xlarge padding-1">
-        <th class=" w3-xlarge w3-right-align  padding-1" colspan="3">TOTAL &nbsp;</th>
-        <th class="w3-xlarge padding-1">$ 35.000</th>
+        <th class=" w3-xxlarge w3-right-align  padding-1" colspan="3">TOTAL &nbsp;</th>
+        <th class="w3-xxlarge padding-1">$ 35.000</th>
     </tr>
 </tfoot>
 </table>
@@ -85,7 +85,7 @@
 
                          
 <hr>
-    <p class="w3-xlarge w3-serif  w3-center" style="margin:10px;">¡ GRACIAS POR SU COMPRA ! </p>
+    <p class="w3-xlarge w3-serif  w3-center" style="margin:15px;">¡ GRACIAS POR SU COMPRA ! </p>
     </div>
 <!---->
 
