@@ -11,3 +11,4 @@ Route::group(['prefix' => 'venta'], function(){
 });
 
 Route::get('ticketPrint', 'ticketController@ticketPrint');
+Route::get('createPp', 'ticketController@create');

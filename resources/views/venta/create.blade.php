@@ -63,7 +63,7 @@
 
                 <div class="card" id="card-vehicle-type">
                     <div class="card-header text-center">
-                        Seleccione el tipo de vehiculo al que aplica el servicio (Opcional)
+                        Seleccione el tipo de vehiculo al que aplica el servicio
                     </div>
                     <div>
                         <div class="d-flex justify-content-center pt-4">
@@ -135,7 +135,7 @@
                         <table class="table align-middle table-nowrap table-centered text-center mb-0" id="table-products">
                             <thead>
                                 <tr>
-                                    <th  class="header-pay" colspan="4">Detalle venta</th>
+                                    <th  class="header-pay" colspan="4">Detalle venta   <i class="mdi  mdi-cart-plus" ></i></th>
                                 </tr>
                                 <tr>
                                     <th>Productos/Servicios</th>
@@ -159,7 +159,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" id="btn_create_sell" class="btn btn-success">Generar Venta <i  class="mdi mdi-content-save-all"></i></button>
+                    <button type="submit" id="btn_create_sell" class="btn btn-success">Generar Venta <i  class="mdi mdi-content-save-all mdi-18px"></i></button>
                 </div>
             </div>
         </fieldset>

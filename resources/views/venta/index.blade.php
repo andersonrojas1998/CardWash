@@ -43,7 +43,7 @@
                         <td>{{$venta->nombre_cliente}}</td>
                         <td>
                             @if($venta->placa)
-                                <div class="bg-warning py-2 px-1 text-center border border-dark rounded text-light">
+                                <div class="bg-warning py-2 px-1 text-center border border-dark rounded">
                                     {{$venta->placa}}
                                 </div>
                             @else
