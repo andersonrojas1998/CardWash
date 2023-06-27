@@ -25,26 +25,26 @@
 <div class="w3-row" >
 
 <div class="w3-col  w3-center">
-        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="120" width="120">
+        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="150" width="150">
     </div>
 
 <div class="w3-row"  >        
-    <div class="w3-col w3-center w3-tiny "  style="margin:0;padding:0">
-           <p><b class="w3-tiny">JUANCHO'S </b> <br>
+    <div class="w3-col w3-center w3-small "  style="margin:0;padding:0">
+           <p><b class="w3-small">JUANCHO'S </b> <br>
            Lavado y Mantenimiento de Vehiculos Automotores <br>
             JORGE ANDRES DIAZ CRUZ <br>          
             Nit: 1.144.189.073-3 <br>            
-           <b class="w3-tiny"> No Responsable del IVA</b>
+           <b class="w3-small"> No Responsable del IVA</b>
            </p>            
-           <p class="w3-tiny">FACTURA DE VENTA  <b> No.  001</b> </p>
+           <p class="w3-small">FACTURA DE VENTA  <b> No.  001</b> </p>
     </div>
 
-    <p class="w3-tiny">Fecha :   <b>2023/06/04 15:22</b><br>
+    <p class="w3-small">Fecha :   <b>2023/06/04 15:22</b><br>
             Tipo Vehiculo :   MOTO <br>
             Placa :   NCS89E 
         </p>
 </div>
-        
+<hr>      
 
 
 </div>
@@ -57,9 +57,9 @@
 
 
 
-<table class="w3-table w3-tiny w3-bordered   padding-1"  >
+<table class="w3-table w3-small w3-bordered   padding-1"  >
 <thead>
-<tr class="w3-tiny padding-1" >
+<tr class="w3-small padding-1" >
             <th class="w3-light-grey padding-1">CONCEPTO</th>
             <th class="w3-light-grey padding-1">CANT.</th>
             <th class="w3-light-grey  padding-1">PRECIO</th>            
@@ -67,17 +67,17 @@
         </tr>
 </thead>
 <tbody>
-    <tr class="w3-tiny  padding-1">
-        <td class="w3-tiny padding-1">COMBO 1</td>
-        <td class="w3-tiny padding-1">1</td>
-        <td class="w3-tiny padding-1">35.000</td>
-        <td class="w3-tiny padding-1">35.000</td>
+    <tr class="w3-small  padding-1">
+        <td class="w3-small padding-1">COMBO 1</td>
+        <td class="w3-small padding-1">1</td>
+        <td class="w3-small padding-1">35.000</td>
+        <td class="w3-small padding-1">35.000</td>
     </tr>
 </tbody>
 <tfoot>
-    <tr class="w3-tiny padding-1">
-        <th class=" w3-tiny w3-right-align  padding-1" colspan="3">TOTAL &nbsp;</th>
-        <th class="w3-tiny padding-1">$ 35.000</th>
+    <tr class="w3-small padding-1">
+        <th class=" w3-small w3-right-align  padding-1" colspan="3">TOTAL &nbsp;</th>
+        <th class="w3-small padding-1">$ 35.000</th>
     </tr>
 </tfoot>
 </table>
@@ -85,7 +85,7 @@
 
                          
 
-    <p class="w3-tiny w3-serif  w3-center" style="margin:5px;">¡ GRACIAS POR SU COMPRA ! </p>
+    <p class="w3-small w3-serif  w3-center" style="margin:10px;">¡ GRACIAS POR SU COMPRA ! </p>
     </div>
 <!---->
 

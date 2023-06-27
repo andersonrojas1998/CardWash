@@ -10,8 +10,9 @@ class ticketController extends Controller
 
       $title="No.";
       $GAA="Ticket-";    
-      $customPaper = array(130,150);    
-      $pdf = \PDF::loadView('ticket.pdf_ticket',compact('title'))->setPaper('b7', 'portrait')->stream($GAA.".pdf");
+      $customPaper = array(0,0,500,1000);    
+      //'b6', 'portrait'
+      $pdf = \PDF::loadView('ticket.pdf_ticket',compact('title'))->setPaper($customPaper)->stream($GAA.".pdf");
       return $pdf;
      
     }
