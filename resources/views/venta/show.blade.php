@@ -110,6 +110,7 @@
                 
             </div>
 </div>
+<button class="d-print-none" onclick="window.print()">IMPRI</button>
 
 @if(session('success'))
 <input type="hidden" id="succes_message" value="{{session('success')}}">
