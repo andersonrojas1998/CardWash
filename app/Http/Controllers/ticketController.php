@@ -13,8 +13,8 @@ class ticketController extends Controller
     public function ticketPrint(){
 
       // $profile = \Mike42\Escpos\CapabilityProfile\CapabilityProfile::load("simple");
-        $nombreImpresora = "NYXPrinter";
-        $connector = new \Mike42\Escpos\PrintConnectors\WindowsPrintConnector($nombreImpresora);
+        $nombreImpresora = "POS Printer";
+        $connector = new \Mike42\Escpos\PrintConnectors\WindowsPrintConnector("smb://juanchoscarwash.com/NYXPrinter");
         $impresora = new \Mike42\Escpos\Printer($connector);        
       //  $impresora->setJustification(Printer::JUSTIFY_CENTER);
         $impresora->setTextSize(2, 2);
