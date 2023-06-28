@@ -39,9 +39,9 @@
            <p class="w3-xlarge">FACTURA DE VENTA  <b> No.  001</b> </p>
     </div>
 
-    <p class="w3-xlarge padding-1" style="margin:0;">Fecha :   <b>2023/06/04 15:22</b></p>
-    <p class="w3-xlarge padding-1" style="margin:0;">       Tipo Vehiculo :   <b>MOTO</b></p>
-    <p class="w3-xlarge padding-1" style="margin:0;"> Placa :  <b>NCS89E</b>  </p>
+    <p class="w3-xlarge padding-1" style="margin:0;"><b>Fecha :</b>  2023/06/04 15:22</p>
+    <p class="w3-xlarge padding-1" style="margin:0;"><b>Tipo Vehiculo :</b>   MOTO</p>
+    <p class="w3-xlarge padding-1" style="margin:0;"><b>Placa : </b>  NCS89E  </p>
         
 </div>
 <hr>      
@@ -67,6 +67,12 @@
         </tr>
 </thead>
 <tbody>
+    <tr class="w3-xlarge  padding-1">
+        <td class="w3-xlarge padding-1">COMBO 1</td>
+        <td class="w3-xlarge padding-1">1</td>
+        <td class="w3-xlarge padding-1">35.000</td>
+        <td class="w3-xlarge padding-1">35.000</td>
+    </tr>
     <tr class="w3-xlarge  padding-1">
         <td class="w3-xlarge padding-1">COMBO 1</td>
         <td class="w3-xlarge padding-1">1</td>
