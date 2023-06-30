@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Ticket-001   </title>
+        <title>Ticket-{{ $venta->id}}  </title>
         <meta name="description" content="Boletin Instituto Moderno">
         <meta name="viewport" content="width=device-width, initial-scale=1">                        
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -34,12 +34,12 @@
             Nit: 1.144.189.073-3 <br>            
            <b class="w3-xlarge"> No Responsable del IVA</b>
            </p>            
-           <p class="w3-xlarge">FACTURA DE VENTA  <b> No.  001</b> </p>
+           <p class="w3-xlarge">FACTURA DE VENTA  <b> No.  {{ $venta->id}}</b> </p>
     </div>
 
-    <p class="w3-xlarge padding-1" style="margin:0;"><b>Fecha :</b>  2023/06/04 15:22</p>
-    <p class="w3-xlarge padding-1" style="margin:0;"><b>Tipo Vehiculo :</b>   MOTO</p>
-    <p class="w3-xlarge padding-1" style="margin:0;"><b>Placa : </b>  NCS89E  </p>    
+    <p class="w3-xlarge padding-1" style="margin:0;"><b>Fecha :</b>  {{ $venta->fecha }}</p>
+    <p class="w3-xlarge padding-1" style="margin:0;text-transform: uppercase;"><b>Tipo Vehiculo :</b>   {{ $venta->detalle_paquete->tipo_vehiculo->descripcion }}</p>
+    <p class="w3-xlarge padding-1" style="margin:0;text-transform: uppercase;"><b>Placa : </b> {{ $venta->placa }}  </p>    
 </div>
 <hr>    
 </div>
@@ -56,23 +56,35 @@
         </tr>
 </thead>
 <tbody>
-    <tr class="w3-xlarge  padding-1">
-        <td class="w3-xlarge padding-1">COMBO 1</td>
-        <td class="w3-xlarge padding-1">1</td>
-        <td class="w3-xlarge padding-1">35.000</td>
-        <td class="w3-xlarge padding-1">35.000</td>
-    </tr>
-    <tr class="w3-xlarge  padding-1">
-        <td class="w3-xlarge padding-1">COMBO 1</td>
-        <td class="w3-xlarge padding-1">1</td>
-        <td class="w3-xlarge padding-1">35.000</td>
-        <td class="w3-xlarge padding-1">35.000</td>
-    </tr>
+
+@php $total = 0; @endphp
+                                @if($venta->detalle_paquete)
+                                    @php
+                                    $total += $venta->detalle_paquete->precio_venta;
+                                    @endphp
+                                    <tr  class="w3-xlarge  padding-1">
+                                        <td class="w3-xlarge padding-1" style="text-transform: uppercase;" >{{$venta->detalle_paquete->paquete->nombre}}</td>
+                                        <td  class="w3-xlarge padding-1">1</td>
+                                        <td class="w3-xlarge padding-1">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>                                        
+                                        <td class="w3-xlarge padding-1">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>
+                                    </tr>
+                                @endif
+                                @foreach($venta->detalle_venta_productos as $detalle_venta_producto)
+                                    @php
+                                    $total += $detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad;
+                                    @endphp
+                                    <tr  class="w3-xlarge  padding-1">
+                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->detalle_compra_productos->producto->nombre.' - '.$detalle_venta_producto->detalle_compra_productos->producto->presentacion->nombre}}</td>
+                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->cantidad}}</td>
+                                        <td class="w3-xlarge padding-1">{{ number_format($detalle_venta_producto->precio_venta,0,',','.')}}</td>                                        
+                                        <td class="w3-xlarge padding-1">{{ number_format($detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad,0,',','.')}}</td>
+                                    </tr>
+                                @endforeach      
 </tbody>
 <tfoot>
     <tr class="w3-xlarge padding-1">
         <th class=" w3-xxlarge w3-right-align  padding-1" colspan="3">TOTAL &nbsp;</th>
-        <th class="w3-xxlarge padding-1">$ 35.000</th>
+        <th class="w3-xxlarge padding-1">$ {{ number_format($total,0,',','.')}}</th>
     </tr>
 </tfoot>
 </table>                        

@@ -260,13 +260,13 @@ $(function(){
                     link.href = window.URL.createObjectURL(blobURL);
                   //  window.open(link);
                    
-                    var printWindow = window.open(link,'popimpr');
-                    printWindow.print();
+                    var printWindow = window.open(link);
+                   printWindow.print();
                 
                     //Close window once print is finished
-                   /* printWindow.onafterprint = function(){
+                    printWindow.onafterprint = function(){
                        printWindow.close()
-                    };*/
+                    };
                     //window.location.hash = '';
 
                     sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
