@@ -264,10 +264,10 @@ $(function(){
                     printWindow.print();
                 
                     //Close window once print is finished
-                    printWindow.onafterprint = function(){
+                   /* printWindow.onafterprint = function(){
                        printWindow.close()
-                    };
-                    window.location.hash = '';
+                    };*/
+                    //window.location.hash = '';
 
                     sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
                 }
