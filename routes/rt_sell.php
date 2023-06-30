@@ -12,3 +12,4 @@ Route::group(['prefix' => 'venta'], function(){
 
 Route::get('ticketPrint/{id}', 'ticketController@ticketPrint');
 Route::get('createPp', 'ticketController@create');
+Route::get('sendMessageWpp', 'ticketController@sendMessageWpp');
