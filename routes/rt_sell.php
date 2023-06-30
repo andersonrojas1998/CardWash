@@ -10,5 +10,5 @@ Route::group(['prefix' => 'venta'], function(){
     Route::put('{venta}', 'VentaController@update')->name('venta.update');    
 });
 
-Route::get('ticketPrint', 'ticketController@ticketPrint');
+Route::get('ticketPrint/{id}', 'ticketController@ticketPrint');
 Route::get('createPp', 'ticketController@create');
