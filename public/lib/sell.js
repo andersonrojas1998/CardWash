@@ -257,16 +257,16 @@ $(function(){
                                         
                     var blobURL = new Blob([this.response], {type:'application/pdf'});
                     var link = document.createElement('a');
+                    console.log(link);
                     link.href = window.URL.createObjectURL(blobURL);
-                  //  window.open(link);
                    
                     var printWindow = window.open(link);
                    printWindow.print();
                 
                     //Close window once print is finished
-                    printWindow.onafterprint = function(){
+                   /* printWindow.onafterprint = function(){
                        printWindow.close()
-                    };
+                    };*/
                     //window.location.hash = '';
 
                     sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
