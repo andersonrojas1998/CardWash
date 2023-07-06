@@ -58,13 +58,14 @@ class DocenteController extends Controller
     }
 
     public function dt_pay_pending($idUser,$status){
-        $dataUs=DB::SELECT("CALL sp_cant_sales_user('$idUser','$status')");        
+        $dataUs=DB::SELECT("CALL sp_cant_sales_user('$idUser','$status')");         
         $data=[];
         $total=0;
         foreach($dataUs as $key => $us)
         {                            
             $data['data'][$key]['no_venta']=$us->no_venta;   
             $data['data'][$key]['nombre_cliente']=$us->nombre_cliente;
+            $data['data'][$key]['fecha_pago']=date('Y-m-d h:i A',strtotime(($status==2)? $us->fecha_pago:$us->fecha_venta));
             $data['data'][$key]['combo']=$us->combo;
             $data['data'][$key]['vehiculo']= $us->vehiculo;
             $data['data'][$key]['precio_venta']=$us->precio_venta; 
@@ -76,7 +77,7 @@ class DocenteController extends Controller
         return json_encode($data);          
     }
 
-    public function pay_sales(){
+    public function pay_sales(){        
         DB::table('venta')
                 ->where('id_usuario', intval(Request::input('id_usuario')))
                 ->where('id_estado_venta', 1)

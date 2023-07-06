@@ -34,10 +34,10 @@
    </ul>-->
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
-        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+        <!--<a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
           <i class="mdi mdi-file-outline"></i>
           <span class="count">7</span>
-        </a>
+        </a>-->
         <!--<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
           <a class="dropdown-item py-3">
             <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
@@ -71,10 +71,10 @@
        </div>-->
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+        <!--<a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
           <i class="mdi mdi-bell-outline"></i>
           <span class="count bg-success">4</span>
-        </a>
+        </a>-->
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
           <a class="dropdown-item py-3 border-bottom">
             <p class="mb-0 font-weight-medium float-left">4 new notifications </p>

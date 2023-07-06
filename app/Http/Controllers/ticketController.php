@@ -16,10 +16,10 @@ class ticketController extends Controller
     public function sendMessageWpp(){
 
   
-  $url='https://graph.facebook.com/v17.0/101314003025317/messages';
-  $token='EAAStIdXMkN4BAPxVaxIilzaUZCVzOo22u4ZBPeHxd1I9ZBxjVJCq0XNxTGInoZARKgTpr8vSNyxoACHJvGuyqrWzrTZBCUPfHw3uVOyx9mXo3l7wKc4b6kdHl7s8zkBgNZArFVPYudomrdajbMyY2x4KZBUsLZBmkP9FEnsKusE3C9jNZAXpxigbLun0NDYItsSfKcrhVNJ4pVFcRinA8zqG9';
+  $url='https://graph.facebook.com/v17.0/107778335707191/messages';
+  $token='EAAzWkO2BxG8BAJdZAqJV9dNzXoBAoUQeIEaIYvqQhcdq4LXImxZAZCmjBzI8w66ro5Ti7RPvwagjNhpdf4F7LtVNixZCQZCZAqUPUXpGKaD4pZCMrVvMPQGTBj2rQCLqoZCj6eOYSynC55f1ciVktNF4MmDNhf8fzgNGIqQY9HZAs7QjAVlSdTtfuiHcvHwB6h3Ru9pNaR7ZBOGsrZBMHEgCSEK';
   $telefono='573102086587';
-  $message=''
+  /*$message=''
   .'{'
   . '"messaging_product": "whatsapp",'
   .'"to": "'.$telefono.'", '
@@ -30,28 +30,48 @@ class ticketController extends Controller
         .'"language": { "code": "en_US" }'
       .'}' 
     .'}';
-   // dd($message);
+*/
+    $message=''
+    .'{'
+    . '"messaging_product": "whatsapp",'
+    .'"recipient_type": "individual",'
+
+    .'"to": "'.$telefono.'", '
+      .'"type": "text", '
+      .'"text": '
+        .'{ '
+          .'"preview_url": false, '
+          .'"body": "Hola , como estas  " '
+        .'}' 
+      .'}';
+
+
+
+   // dd(json_encode($message));
 
     $curl=curl_init();
 
-    $header=array("Authorization: Bearer" . $token," Content-Type: application/json");
+    $header=array("Authorization: Bearer ".$token,"Content-Type: application/json ");
+
     curl_setopt($curl,CURLOPT_URL,$url);
-    curl_setopt($curl, CURLOPT_POST, 1); // Specify the request method as POST
+    //curl_setopt($curl,CURLOPT_POST, 1); // Specify the request method as POST
     curl_setopt($curl,CURLOPT_POSTFIELDS,$message);
     curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
     curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // This will follow any redirects
 
-
+        
 
     $response=json_decode(curl_exec($curl),true);
 
-      $st=curl_getinfo($curl,CURLINFO_HTTP_CODE);
-      print_r($st);
-
+    //dd(curl_getinfo($curl));
+   
+  
     curl_close($curl);
-    return json_decode($response);
+    
+    dd($response);
 
 
 

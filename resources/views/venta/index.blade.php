@@ -39,7 +39,7 @@
                     @foreach($ventas as $venta)
 
                     <tr>
-                        <td>{{$venta->fecha}}</td>
+                        <td>{{date('Y-m-d h:i A',strtotime($venta->fecha) )}}</td>
                         <td>{{$venta->nombre_cliente}}</td>
                         <td>
                             @if($venta->placa)

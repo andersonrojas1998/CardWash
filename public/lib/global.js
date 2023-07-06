@@ -1,4 +1,29 @@
 $(document).ready(function() {
+
+
+
+
+
+  if(window.innerWidth < 768){
+
+    if($('.btn-w-all').length){
+      $('.btn-w-all').css('width','-webkit-fill-available');
+    }
+
+    $('.btn').addClass('btn-sm');
+}
+
+// Medida por defecto (Sin ningún nombre de clase)
+else if(window.innerWidth < 900){
+    $('.btn').removeClass('btn-sm');
+}
+
+// Si el ancho del navegador es menor a 1200 px le asigno la clase 'btn-lg' 
+else if(window.innerWidth < 1200){
+    $('.btn').addClass('btn-lg');
+}
+
+
   $.extend($.fn.dataTable.defaults, {
 		autoWidth : false,
 		dom : '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',

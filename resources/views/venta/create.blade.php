@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('content')
 <div class="card">
-    <div class="card-header"><h1>Registrar Venta</h1></div>
+    <div class="card-header"><h3>Registrar Venta</h3></div>
     <form id="form_create_sell" action="{{route('venta.store')}}" method="POST">
         {{ csrf_field() }}
         <fieldset>
@@ -9,7 +9,7 @@
                 <div class="d-flex justify-content-around mb-3">
                     <div class="col-lg-4">
                         <label for="input_name_customer">Cliente&nbsp;:</label>
-                        <input type="text" id="input_name_customer" name="nombre_cliente" class="form-control text-uppercase" placeholder="Ingrese el nombre del cliente" value="{{old('nombre_cliente')}}" required>
+                        <input type="text" id="input_name_customer" name="nombre_cliente" class="form-control text-uppercase" placeholder="Cliente" value="{{old('nombre_cliente')}}" required>
                         @if ($errors->any() && $errors->first('nombre_cliente'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('nombre_cliente')}}</span>
                         @endif
@@ -20,7 +20,7 @@
                             <label>Fecha&nbsp;:</label>
                         </div>
                         <div class="row pl-3">
-                            <label>{{$date->toDateTimeString()}}</label>
+                            <label>{{ date('Y-m-d h:i A')}}</label>
                         </div>
                     </div>
                     
@@ -29,14 +29,14 @@
                 <div class="d-flex justify-content-around mb-3 pb-3">
                     <div class="col-lg-4">
                         <label for="input_license_plate" class="control-label">Placa&nbsp;:</label>
-                        <input type="text" id="input_license_plate" name="placa" class="form-control text-uppercase" placeholder="Ingrese la placa del vehiculo" value="{{old('placa')}}">
+                        <input type="text" id="input_license_plate" name="placa" class="form-control text-uppercase" placeholder="Placa" value="{{old('placa')}}">
                         @if ($errors->any() && $errors->first('placa'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('placa')}}</span>
                         @endif
                     </div>
                     <div class="col-lg-4">
                         <label for="input_phone_number" class="control-label">Telefono&nbsp;:</label>
-                        <input type="text" id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Ingrese el n&uacute;mero de telefono del cliente" value="{{old('numero_telefono')}}">
+                        <input type="number" id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Telefono del cliente" value="{{old('numero_telefono')}}">
                         @if ($errors->any() && $errors->first('numero_telefono'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('numero_telefono')}}</span>
                         @endif
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center pt-4">
-                            <button type="button" class="btn btn-success" id="btn-add-products" title="Agregar" data-toggle="tooltip">Agregar&nbsp;<i class="mdi mdi-plus-circle-outline mdi-18px"></i></button>
+                            <button type="button" class="btn btn-primary" id="btn-add-products" title="Agregar" data-toggle="tooltip">Agregar&nbsp;<i class="mdi mdi-plus-circle-outline mdi-18px"></i></button>
                         </div>
                     </div>
                 </div>
@@ -158,8 +158,8 @@
                 </div>
             </div>
             <div class="card-footer">
-                <div class="d-flex justify-content-end">
-                    <button type="submit" id="btn_create_sell" class="btn btn-success">Generar Venta <i  class="mdi mdi-content-save-all mdi-18px"></i></button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" id="btn_create_sell" class="btn btn-success btn-w-all">Generar Venta <i  class="mdi mdi-content-save-all mdi-18px"></i></button>
                 </div>
             </div>
         </fieldset>

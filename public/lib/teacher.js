@@ -262,7 +262,7 @@ var dt_pay_pending=function(id,status){
         ajax: {
             url: "/usuarios/dt_pay_pending/"+id+"/"+status,
             method: "GET", 
-            dataSrc: function (json) {                
+            dataSrc: function (json) {
                 $('.payPending').html('$. ' + json.pay);
                 $('#id_usuario').val(id);
                 if (!json.data) {
@@ -278,14 +278,15 @@ var dt_pay_pending=function(id,status){
                 { orderable: false, targets: '_all' }
             ],     
         columns: 
-        [       
-                { "data": "no_venta" , render(data){return '<p class="text-muted">'+data+'</p>';}},         
-                { "data": "nombre_cliente" , render(data){return '<b>'+data+'</b>';}},         
+        [   
+                { "data": "no_venta" , render(data){return '<p class="text-muted">'+data+'</p>';}},                 
+                { "data": "fecha_pago" , render(data){return '<b>'+data+'</b>';}},         
+                { "data": "nombre_cliente" , render(data){return '<b>'+data+'</b>';}},                         
                 { "data": "combo",render(data){ return data; }},  
                 { "data": "vehiculo",render(data){ return data; }},                
                 {"data": "precio_venta", render(data){  return  '<h4>$ '+ data +'</h4>'; }},
                 {"data": "porcentaje", render(data){  return  '<h4><label class="badge text-white badge-success">'+ data +' % </label></h4>'; }},            
-                {"data": "pago", render(data){  return  '<h4><label class="badge text-black badge-warning"> $ '+ data +'</label></h4>'; }},                
+                {"data": "pago", render(data){  return  '<h4><label class="badge text-black badge-warning"> $ '+ data +'</label></h4>'; }},           
         ]
     });
 }

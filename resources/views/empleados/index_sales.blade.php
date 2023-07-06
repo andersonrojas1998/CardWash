@@ -48,6 +48,7 @@
                 <thead>
                     <tr>
                         <th> No. venta</th> 
+                        <th>Fecha venta</th>
                         <th> Nombre Cliente</th> 
                         <th> Combo</th>
                         <th>Vehiculo</th>
@@ -98,6 +99,7 @@
                 <thead>
                     <tr>
                         <th> No. venta</th> 
+                        <th>Fecha Pago</th>
                         <th> Nombre Cliente</th> 
                         <th> Combo</th>
                         <th>Vehiculo</th>
