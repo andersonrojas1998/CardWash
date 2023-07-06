@@ -32,7 +32,7 @@
                         <th>Tipo vehiculo</th>
                         <th>Atendido por</th>
                         <th>Estado</th>
-                        <th>Acci&oacute;n</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

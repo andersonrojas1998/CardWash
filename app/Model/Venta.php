@@ -17,6 +17,11 @@ class Venta extends Model
         "id_estado_venta"
     ];
 
+    public function setPlacaAttribute($value)
+    {
+        $this->attributes['placa'] = strtoupper($value);
+    }
+
     public function detalle_venta_productos()
     {
         return $this->hasMany('App\Model\DetalleVentaProductos', 'id_venta', 'id');

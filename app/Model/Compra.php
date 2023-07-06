@@ -25,6 +25,11 @@ class Compra extends Model
         'estado_id' => 1
     ];
 
+    public function setIdProveedorNombreAttribute($value)
+    {
+        $this->attributes['id_proveedor_nombre'] = strtoupper($value);
+    }
+
     public function estado()
     {
         return $this->hasOne('App\Model\Estado', 'id', 'id_estado');

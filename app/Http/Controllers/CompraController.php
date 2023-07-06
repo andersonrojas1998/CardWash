@@ -34,6 +34,8 @@ class CompraController extends Controller
 
             $compra->route_edit = ($compra->estado_id == 1)? route('compra.edit', ['compra' => $compra->id]) : route('compra.edit-payment', ['compra' => $compra->id]);
 
+            $compra->title = "Editar " . (($compra->estado_id == 1)? "compra" : "pago");
+
             array_push($data['data'], $compra);
         }
 

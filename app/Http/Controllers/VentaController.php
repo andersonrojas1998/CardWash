@@ -29,7 +29,7 @@ class VentaController extends Controller
         $date = Carbon::now();
         $date->setTimezone('America/Bogota');
         $productos = DetalleCompraProductos::select(DB::raw("*, cast(if((detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto)) is null, detalle_compra_productos.cantidad, (detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto))) AS unsigned) cantidad_disponible"))->join("producto as p", "p.id", "detalle_compra_productos.id_producto")->where("id_area","!=","3")->get()->where('cantidad_disponible', '>', 0);
-        $usuarios = users::all();
+        $usuarios = users::select("users.*")->join("roles as r", "cargo", "r.id")->where("r.slug", "Supervisor")->get();
         return view('venta.create', compact('tipos_vehiculo', 'date', 'productos', 'usuarios'));
     }
 
@@ -38,7 +38,7 @@ class VentaController extends Controller
         $date = Carbon::now();
         $date->setTimezone('America/Bogota');
         $productos = DetalleCompraProductos::select(DB::raw("*, cast(if((detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto)) is null, detalle_compra_productos.cantidad, (detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto))) AS unsigned) cantidad_disponible"))->join("producto as p", "p.id", "detalle_compra_productos.id_producto")->where("id_area","3")->get()->where('cantidad_disponible', '>', 0);
-        $usuarios = users::all();
+        $usuarios = users::select("users.*")->join("roles as r", "cargo", "r.id")->where("r.slug", "Tienda")->get();
         return view('venta.create_market', compact('date', 'productos', 'usuarios'));
     }
 
