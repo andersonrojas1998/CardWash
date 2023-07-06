@@ -99,7 +99,7 @@ $(function(){
                 $.each(data.data, function(i, producto){
                     $('.select-product-compra').append($('<option>',{
                         value: producto.id,
-                        text: producto.nombre + " (" + producto.presentacion.nombre + ")"
+                        text: producto.nombre + " - " + producto.tipo_producto.descripcion + " (" + producto.presentacion.nombre + ")"
                         //text: producto.nombre + " (presentaci\u00f3n)"
                     }));
                 });
