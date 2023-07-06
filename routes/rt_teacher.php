@@ -7,7 +7,7 @@ Route::group(['prefix' => 'usuarios'], function(){
     Route::get('show/{id}', 'DocenteController@showUser');
     Route::get('ventas', 'DocenteController@sales');
     Route::get('/dt_sales_user', 'DocenteController@dt_sales_user');
-    Route::get('/dt_pay_pending/{id}', 'DocenteController@dt_pay_pending');
+    Route::get('/dt_pay_pending/{id}/{status}', 'DocenteController@dt_pay_pending');
     Route::get('/pay_sales', 'DocenteController@pay_sales');
 });
 Route::get('/dt_user', 'DocenteController@dt_user');

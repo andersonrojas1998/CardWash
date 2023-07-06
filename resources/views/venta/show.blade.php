@@ -109,7 +109,17 @@
                 </div>
                 
             </div>
+
+            <div class="card-footer">
+            <div class="row justify-content-end">
+                    <button class="btn btn-success d-print-none" ><i class="mdi  mdi-whatsapp  text-white "></i>  Enviar Mensaje</button> &nbsp;
+                    <button class="btn  btn-primary d-print-none btn_generateTicket"  data-id="{{$venta->id}}" > <i class="mdi  mdi-cloud-print text-white "></i>  Imprimir</button>
+            </div>
+            </div>
+           
+            
 </div>
+
 
 @if(session('success'))
 <input type="hidden" id="succes_message" value="{{session('success')}}">

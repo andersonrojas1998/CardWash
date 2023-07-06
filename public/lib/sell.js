@@ -239,4 +239,41 @@ $(function(){
             $("#card-vehicle-type").toggle();
         }
     });
+
+
+    $(document).on("click",".btn_generateTicket",function(){ 
+        let venta=$(this).attr('data-id');
+        
+            let url='/ticketPrint/'+venta;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET",url);
+            xhr.responseType = 'arraybuffer';           
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+            xhr.send(null);
+            sweetMessageTimeOut('Procesando ...', '\u00A1  Su solicitud  se encuentra en ejecuci\u00F3n ! ',5000);
+            xhr.onreadystatechange = function () {
+                
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                                        
+                    var blobURL = new Blob([this.response], {type:'application/pdf'});
+                    var link = document.createElement('a');
+                    console.log(link);
+                    link.href = window.URL.createObjectURL(blobURL);
+                   
+                    var printWindow = window.open(link);
+                   printWindow.print();
+                
+                    //Close window once print is finished
+                   /* printWindow.onafterprint = function(){
+                       printWindow.close()
+                    };*/
+                    //window.location.hash = '';
+
+                    sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
+                }
+                if (this.status === 500) { sweetMessage("ERROR!", "Error al generar el pdf !", "error", "#1976D2", false); }
+            }
+                               
+    });
+
 });

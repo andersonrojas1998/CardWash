@@ -116,7 +116,7 @@ $(document).ready(function() {
     $(document).on("click","#btn_pay_sales",function(e){                                
 
         let us=$('#id_usuario').val();
-        let totalt=$('#payPending').html();
+        let totalt=$('.payPending').html();
         Swal.fire({
             title: '¿ Esta Seguro ?',
             html: 'Deseas realizar el pago de los servicios prestados por valor  '+ totalt,
@@ -153,11 +153,15 @@ $(document).ready(function() {
     
 
    
+    $(document).on("click","#btn_show_history",function(){          
+        let id=$(this).attr('data-id');
+        dt_pay_pending(id,2);
+    });  
 
 
     $(document).on("click","#btn_show_payPending",function(){          
         let id=$(this).attr('data-id');
-        dt_pay_pending(id);
+        dt_pay_pending(id,1);
     });  
 
 });
@@ -239,7 +243,8 @@ var dt_sales_user=function(){
                 {"data": "", 
                     render(data,ps,d){ 
                         let button;
-                        button='<div id="btn_show_payPending"  data-id='+d.id+'><i data-toggle="modal" data-target="#mdl_paySales" class="mdi mdi-cash-multiple         text-primary" style="font-size:30px;"></i></div>';                        
+                        button='<i id="btn_show_history"  data-id='+d.id+' data-toggle="modal" data-target="#mdl_pay_history" class="mdi mdi-history text-info" style="font-size:30px;"></i>&nbsp;';                        
+                        button+='<i id="btn_show_payPending"  data-id='+d.id+' data-toggle="modal" data-target="#mdl_paySales" class="mdi mdi-cash-multiple text-primary" style="font-size:30px;"></i>';                        
                         return button; 
                     }
                 },
@@ -248,17 +253,17 @@ var dt_sales_user=function(){
 }
 
 
-var dt_pay_pending=function(id){
+var dt_pay_pending=function(id,status){
     
-    $('#dt_pay_pending').DataTable({
+    $('.dt_pay_pending').DataTable({
          "bDestroy": true,       
           dom: 'Bfrtip',
           buttons: ['excel','pdf'],      
         ajax: {
-            url: "/usuarios/dt_pay_pending/"+id,
+            url: "/usuarios/dt_pay_pending/"+id+"/"+status,
             method: "GET", 
             dataSrc: function (json) {                
-                $('#payPending').html('$. ' + json.pay);
+                $('.payPending').html('$. ' + json.pay);
                 $('#id_usuario').val(id);
                 if (!json.data) {
                     return [];

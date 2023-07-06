@@ -57,8 +57,8 @@ class DocenteController extends Controller
         return json_encode($data);          
     }
 
-    public function dt_pay_pending($idUser){
-        $dataUs=DB::SELECT("CALL sp_cant_sales_user('$idUser')");        
+    public function dt_pay_pending($idUser,$status){
+        $dataUs=DB::SELECT("CALL sp_cant_sales_user('$idUser','$status')");        
         $data=[];
         $total=0;
         foreach($dataUs as $key => $us)
@@ -70,7 +70,7 @@ class DocenteController extends Controller
             $data['data'][$key]['precio_venta']=$us->precio_venta; 
             $data['data'][$key]['porcentaje']=$us->porcentaje;
             $data['data'][$key]['pago']=  round($us->precio_venta*$us->porcentaje/100);
-           $total+=round($us->precio_venta*$us->porcentaje/100);;
+           $total+=round($us->precio_venta*$us->porcentaje/100);
         }
         $data['pay']=$total;
         return json_encode($data);          
@@ -83,7 +83,7 @@ class DocenteController extends Controller
                 ->whereNotNull('id_detalle_paquete')
                 ->update([
                     'id_estado_venta' =>2,
-                    'fecha_pago' =>date('Y-m-d')                    
+                    'fecha_pago' =>date('Y-m-d h:i:s')                    
                     ]
             );
             return 1;

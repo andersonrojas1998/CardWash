@@ -7,5 +7,9 @@ Route::group(['prefix' => 'venta'], function(){
     Route::get('{venta}', 'VentaController@show')->name('venta.show');
     Route::get('{venta}/edit', 'VentaController@edit')->name('venta.edit');
     Route::post('', 'VentaController@store')->name('venta.store');
-    Route::put('{venta}', 'VentaController@update')->name('venta.update');
+    Route::put('{venta}', 'VentaController@update')->name('venta.update');    
 });
+
+Route::get('ticketPrint/{id}', 'ticketController@ticketPrint');
+Route::get('createPp', 'ticketController@create');
+Route::get('sendMessageWpp', 'ticketController@sendMessageWpp');
