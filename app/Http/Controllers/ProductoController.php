@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
 use App\Http\Requests\StoreProducto;
 use App\Model\Producto;
 use App\Model\Tipo_Producto;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
@@ -17,9 +17,10 @@ class ProductoController extends Controller
   
         $products=[];
        if(intval($area) == -1){
-            $products=Producto::all();
+            $products=Producto::select(DB::raw("*, CAST(if((SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id) IS NULL, 0, (SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id)) AS unsigned) cant_disponible"))->get();
         }else{
-            $products=DB::SELECT("CALL sp_products('$area')  ");
+            //$products=DB::SELECT("CALL sp_products('$area')  ");
+            $products= Producto::select(DB::raw("*, CAST(if((SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id) IS NULL, 0, (SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id)) AS unsigned) cant_disponible"))->where("id_area", $area)->get();
         }
        $data = [
             "status" => "200",
@@ -27,9 +28,12 @@ class ProductoController extends Controller
         ];
         foreach ($products as $producto ) {
 
-            if(intval($area) == -1){
-                $producto->presentacion;
-            }
+            //if(intval($area) == -1){
+            $producto->presentacion;
+            $producto->tipo_producto;
+            $producto->marca;
+            $producto->unidad_medida;
+            //}
            array_push($data['data'], $producto);
         }
 
