@@ -44,7 +44,7 @@
                         <th>Unidad de medida</th>
                         <th>Presentaci&oacute;n</th>
                         <th>Cantidad</th>
-                        <th>Acci&oacute;n</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

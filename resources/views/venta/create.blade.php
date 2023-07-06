@@ -102,7 +102,7 @@
                                         @if(count($productos) != 0)
                                         <option value="">Seleccione el producto...</option>
                                         @foreach($productos as $producto)
-                                            <option value="{{$producto->id_detalle_compra}}" data-price="{{$producto->precio_venta}}" data-buy-price="{{$producto->precio_compra}}" data-quantity="{{$producto->cantidad_disponible}}" data-text="{{$producto->producto->nombre.' - '.$producto->producto->presentacion->nombre}}">{{$producto->producto->nombre.' - '.$producto->producto->presentacion->nombre.' - $ '.$producto->precio_venta}}</option>
+                                            <option value="{{$producto->id_detalle_compra}}" data-price="{{$producto->precio_venta}}" data-buy-price="{{$producto->precio_compra}}" data-quantity="{{$producto->cantidad_disponible}}" data-text="{{$producto->producto->nombre.' - '.$producto->producto->tipo_producto->descripcion.' - '.$producto->producto->presentacion->nombre}}">{{$producto->producto->nombre.' - '.$producto->producto->tipo_producto->descripcion.' - '.$producto->producto->presentacion->nombre.' - $ '.$producto->precio_venta}}</option>
                                         @endforeach
                                     @else
                                     <option value="">Existencias agotadas</option>

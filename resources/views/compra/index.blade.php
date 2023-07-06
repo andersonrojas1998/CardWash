@@ -24,11 +24,11 @@
         <table cellspacing="5" cellpadding="5">
             <tbody><tr>
                 <td>Fecha inicial:</td>
-                <td><input type="text" id="min" name="min" value="06-01-2023" placeholder="MM-DD-AAAA"></td>
+                <td><input type="date" id="min" name="min" value="2023-06-01" placeholder="AAAA-MM-DD"></td>
             </tr>
             <tr>
                 <td>Fecha fin:</td>
-                <td><input type="text" id="max" name="max" value="{{date("m")."-".(date("d")+1)."-".date("Y")}}" placeholder="MM-DD-AAAA"></td>
+                <td><input type="date" id="max" name="max" value="{{date("Y")."-".(date("m"))."-".date("d")}}" placeholder="AAAA-MM-DD"></td>
             </tr>
         </tbody></table>
         <div class="table-responsive">
@@ -43,7 +43,7 @@
                         <th rowspan="2">Descuento IVA</th>
                         <th rowspan="2">Importe total</th>
                         <th rowspan="2">Estado</th>
-                        <th rowspan="2">Acci&oacute;n</th>
+                        <th rowspan="2"></th>
                     </tr>
                     <tr>
                         <th>Nit-Nombre</th>

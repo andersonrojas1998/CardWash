@@ -99,7 +99,7 @@
         </div>
         @endif
         <!-- Fin listar paquetes para carro -->
-
+        
         <!-- Listar paquetes para moto -->
         @if(count($paquetes_moto) != 0)
         <div class="card mt-5" >
@@ -129,7 +129,7 @@
                     </strong>
                 </div>
                 <div class="card-footer" style="background: linear-gradient(#a8a4a4, {{explode(',', $paquete->color)[0]}});">
-                    <button type="button" class="btn btn-primary rounded btn-block"><strong>Editar <i class="mdi mdi-pencil-box-outline"></i></strong></button>
+                    <a href="{{route('detalle-paquete.edit', [$paquete->detalle_paquete->where('tipo_vehiculo.nomenclatura', 'M')->first()->id])}}" class="btn btn-primary rounded btn-block"><strong>Editar <i class="mdi mdi-pencil-box-outline"></i></strong></a>
                 </div>
             </div>
         @endforeach
@@ -146,7 +146,7 @@
     <div class="d-flex justify-content-center mt-5">
         @if($paquetes_carro->count() >= $paquetes_moto->count())
             {!!$paquetes_carro->links()!!}
-        @else if($paquetes_moto->count() >= 0)
+        @elseif($paquetes_moto->count() >= 0)
             {!!$paquetes_moto->links()!!}
         @endif
     </div>

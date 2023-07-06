@@ -294,6 +294,10 @@ var loadAreaOptions = function(){
         headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
         success: function(data, textStatus, xhr){
             $('.select-area').empty();
+            $('#sel_area_option').append($('<option>',{
+                value: -1,
+                text: "Todas las \u00e1reas"
+            }));
             $.each(data.presentaciones, function(i, presentacion){
                 $('.select-area').append($('<option>',{
                     value: presentacion.id,
@@ -329,14 +333,14 @@ var loadAreaOptions = function(){
             {"className": "text-center", "targets": "_all"},
         ],
         columns:[
-            {"data": "producto"},
-            {"data": "marca"},
-            {"data": "tipo_producto"},
+            {"data": "nombre"},
+            {"data": "marca.nombre"},
+            {"data": "tipo_producto.descripcion"},
             {"data": "unidad_medida", render(unidad_de_medida){
-                return unidad_de_medida;
+                return unidad_de_medida.nombre + " (" + unidad_de_medida.abreviatura + ")";
             }},
-            {"data": "presentacion"},
-            { "data": "cantidad_stock",render(data){ return '<h4><label class="badge text-white badge-success">'+ data  +'</label></h4>'; }},
+            {"data": "presentacion.nombre"},
+            { "data": "cant_disponible",render(data){ return '<h4><label class="badge text-white badge-success">'+ data  +'</label></h4>'; }},
             {"data": "actions", render(data, ps, producto){
                 let div = $('<div>',{
                     html: $("<a>", {
@@ -372,6 +376,6 @@ var loadAreaOptions = function(){
 
     });
  }
- dt_product(1);
+ dt_product(-1);
 loadPresentationOptions();
 loadAreaOptions();

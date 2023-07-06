@@ -3,9 +3,9 @@ var minDate, maxDate;
 // Custom filtering function which will search data in column four between two values
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = new Date(minDate.val());
-        var max = new Date(maxDate.val());
-        var date = new Date( data[1] );
+        var min = (minDate.val() != "")? new Date(minDate.val() + "T00:00:00") : new Date("2023-06-01T00:00:00");
+        var max = (maxDate.val() != "")? new Date(maxDate.val() + "T23:59:59") : new Date();
+        var date = new Date( data[1]  + "T00:00:00");
  
         if (
             ( min === null && max === null ) ||
@@ -60,10 +60,11 @@ $(function(){
                     html: $("<a>", {
                         href: compra.route_edit,
                         class: "btn_show_edit_compra",
+                        title: compra.title, 
                         html: $("<i>", {
                             class : "mdi mdi-pencil-box-outline text-primary mdi-24px"
                         })
-                    })
+                    }).attr("data-toggle", "tooltip")
                 });
                 return div.html();
             }
@@ -98,7 +99,7 @@ $(function(){
                 $.each(data.data, function(i, producto){
                     $('.select-product-compra').append($('<option>',{
                         value: producto.id,
-                        text: producto.nombre + " (" + producto.presentacion.nombre + ")"
+                        text: producto.nombre + " - " + producto.tipo_producto.descripcion + " (" + producto.presentacion.nombre + ")"
                         //text: producto.nombre + " (presentaci\u00f3n)"
                     }));
                 });
@@ -111,7 +112,7 @@ $(function(){
 
     loadProductOptions();
 
-    $(document).on("keyup", ".input-quantity, .input-sell-price, .input-buy-price", function(){
+    $(document).on("keyup", ".input-quantity, .input-sell-price, .input-buy-price, #descuentos_iva_compra, #descuentos_iva_compra_edit", function(){
         if($(this).val() < 0){
             $(this).val("");
         }
