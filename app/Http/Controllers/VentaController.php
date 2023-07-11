@@ -46,6 +46,7 @@ class VentaController extends Controller
     {
         try{
             $venta = new Venta($request->all());
+            $venta->fecha=date('Y-m-d h:i:s');
             $venta->save();
 
             // *** id_producto = id_detalle_compra ***

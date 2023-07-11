@@ -37,7 +37,7 @@
            <p class="w3-xlarge">FACTURA DE VENTA  <b> No.  {{ $venta->id}}</b> </p>
     </div>
 
-    <p class="w3-xlarge padding-1" style="margin:0;"><b>Fecha :</b>  {{ date('Y-m-d h:i A',strtotime($venta->fecha)) }}</p>
+    <p class="w3-xlarge padding-1" style="margin:0;"><b>Fecha :</b>  {{ date('Y-m-d h:i',strtotime($venta->fecha)) }}</p>
     <p class="w3-xlarge padding-1" style="margin:0;text-transform: uppercase;"><b>Tipo Vehiculo :</b>   {{ $venta->detalle_paquete->tipo_vehiculo->descripcion }}</p>
     <p class="w3-xlarge padding-1" style="margin:0;text-transform: uppercase;"><b>Placa : </b> {{ $venta->placa }}  </p>    
 </div>
