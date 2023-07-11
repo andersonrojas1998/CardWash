@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('content')
 <div class="card">
-    <div class="card-header"><h1>Registrar Venta de la Tienda</h1></div>
+    <div class="card-header"><h3>Registrar Venta de la Tienda</h3></div>
     <form id="form_create_sell" action="{{route('venta.store')}}" method="POST">
         {{ csrf_field() }}
         <fieldset>
