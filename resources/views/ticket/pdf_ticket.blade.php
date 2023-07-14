@@ -3,19 +3,24 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Ticket-{{ $venta->id}}  </title>
-        <meta name="description" content="Boletin Instituto Moderno">
+        <meta name="description" content="CardWash">
         <meta name="viewport" content="width=device-width, initial-scale=1">                        
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <style type="text/css">
         .padding-1{
-            padding:1px 1px  !important;            
+            padding:0  !important;            
+            margin:0 !important;  
         }
         .padding-2{
             padding:2px 2px  !important;            
         }
+        .size-w3{
+            font-size: 26px !important;
+            margin:0;
+        }
         @page {
                 margin-top: 20px;                
-                padding:0;
+                padding:0;                
             }         
         </style> 
 </head>
@@ -24,22 +29,25 @@
 <div class="w3-row" >
 
 <div class="w3-col  w3-center">
-        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="200" width="190">
+        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="205" width="198">
     </div>
 <div class="w3-row"  >        
-    <div class="w3-col w3-center w3-xlarge " >
-           <p><b class="w3-xlarge">JUANCHO'S </b> <br>
+    <div class="w3-col w3-center size-w3 " >
+           <p><b class="size-w3">JUANCHO'S </b> <br>
            Lavado y Mantenimiento de Vehiculos Automotores <br>
             JORGE ANDRES DIAZ CRUZ <br>          
             Nit: 1.144.189.073-3 <br>            
-           <b class="w3-xlarge"> No Responsable del IVA</b>
+           <b class="size-w3"> No Responsable del IVA</b>
            </p>            
-           <p class="w3-xlarge">FACTURA DE VENTA  <b> No.  {{ $venta->id}}</b> </p>
+           <p class="size-w3">FACTURA DE VENTA  <b> No.  {{ $venta->id}}</b> </p>
     </div>
+    
 
-    <p class="w3-xlarge padding-1" style="margin:0;"><b>Fecha :</b>  {{ date('Y-m-d h:i',strtotime($venta->fecha)) }}</p>
-    <p class="w3-xlarge padding-1" style="margin:0;text-transform: uppercase;"><b>Tipo Vehiculo :</b>   {{ $venta->detalle_paquete->tipo_vehiculo->descripcion }}</p>
-    <p class="w3-xlarge padding-1" style="margin:0;text-transform: uppercase;"><b>Placa : </b> {{ $venta->placa }}  </p>    
+    <p class="size-w3 padding-1" style="margin:0;"><b>Fecha :</b>  {{ date('Y-m-d h:i',strtotime($venta->fecha)) }}</p>
+    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Tipo Vehiculo :</b>   {{ $venta->detalle_paquete->tipo_vehiculo->descripcion }}</p>
+    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Placa : </b> {{ $venta->placa }}  </p>    
+    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Cliente : </b> {{ $venta->nombre_cliente }}  </p>    
+    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Numero : </b> {{ $venta->numero_telefono }}  </p>    
 </div>
 <hr>    
 </div>
@@ -89,7 +97,7 @@
 </tfoot>
 </table>                        
 <hr>
-    <p class="w3-xlarge w3-serif  w3-center" style="margin:15px;">¡ GRACIAS POR SU COMPRA ! </p>
+    <p class="w3-xxlarge w3-serif  w3-center" style="margin:15px;">¡ GRACIAS POR SU COMPRA ! </p>
     </div> 
     </body>
 </html>

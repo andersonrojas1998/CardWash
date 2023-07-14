@@ -8,7 +8,8 @@ class ticketController extends Controller
     {
       $venta=Venta::find($id);
       $GAA="Ticket-". $id;    
-      $customPaper = array(0,0,500,850);    
+      $customPaper = array(0,0,500,900);   
+    //  return view('ticket.pdf_ticket',compact('venta')); 
       $pdf = \PDF::loadView('ticket.pdf_ticket',compact('venta'))->setPaper($customPaper)->stream($GAA.".pdf");
       return $pdf;
      
@@ -19,18 +20,6 @@ class ticketController extends Controller
   $url='https://graph.facebook.com/v17.0/107778335707191/messages';
   $token='EAAzWkO2BxG8BAJdZAqJV9dNzXoBAoUQeIEaIYvqQhcdq4LXImxZAZCmjBzI8w66ro5Ti7RPvwagjNhpdf4F7LtVNixZCQZCZAqUPUXpGKaD4pZCMrVvMPQGTBj2rQCLqoZCj6eOYSynC55f1ciVktNF4MmDNhf8fzgNGIqQY9HZAs7QjAVlSdTtfuiHcvHwB6h3Ru9pNaR7ZBOGsrZBMHEgCSEK';
   $telefono='573102086587';
-  /*$message=''
-  .'{'
-  . '"messaging_product": "whatsapp",'
-  .'"to": "'.$telefono.'", '
-    .'"type": "template", '
-    .'"template": '
-      .'{ '
-        .'"name": "hello_world", '
-        .'"language": { "code": "en_US" }'
-      .'}' 
-    .'}';
-*/
     $message=''
     .'{'
     . '"messaging_product": "whatsapp",'
