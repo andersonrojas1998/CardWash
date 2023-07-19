@@ -240,6 +240,30 @@ $(function(){
         }
     });
 
+    $(document).on("click","#btn_show_change_user",function(){ 
+        let id=$(this).attr('data-id');
+        $('#id_venta').val($(this).attr('data-venta'));
+        $('#user_service >option[value='+ id +']').attr('selected',true).trigger('change'); 
+    });
+    $(document).on("click",".btn_user_service",function(){ 
+        let id_user=$('#user_service').val();
+        let id_venta=$('#id_venta').val();
+
+        $.ajax({
+            url:'/update_user',
+            type: "POST",
+            data:{'id_user':id_user,'id_venta':id_venta},
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},            
+            success:function(data){
+                if(data==1){
+                    sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
+                    setTimeout(function () { location.reload() }, 2000)
+                   }
+            }
+
+        })
+
+    });
 
     $(document).on("click",".btn_generateTicket",function(){ 
         let venta=$(this).attr('data-id');

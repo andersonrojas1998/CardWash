@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-lg-4">
                         <label for="input_phone_number" class="control-label">Telefono&nbsp;:</label>
-                        <input type="number" id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Telefono del cliente" value="{{old('numero_telefono')}}">
+                        <input type="number" id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Telefono del cliente" value="{{old('numero_telefono')}}" required>
                         @if ($errors->any() && $errors->first('numero_telefono'))
                             <span class="badge badge-pill badge-danger">{{$errors->first('numero_telefono')}}</span>
                         @endif

@@ -64,7 +64,13 @@
                                 No aplica
                             @endif
                         </td>
-                        <td>{{$venta->user->name}}</td>
+                        <td>
+                            @if($venta->user->identificacion=="000")
+                            <label class="badge  badge-xs text-black badge-warning">{{$venta->user->name}}</label>
+                            @else
+                            {{$venta->user->name}}
+                            @endif
+                        </td>
                         <td>
                             @php $color="danger"; 
                             if($venta->estado_venta->id==1) 
@@ -74,20 +80,23 @@
                         <label class="badge  badge-lg text-white badge-{{$color}}">{{$venta->estado_venta->nombre  }}</label>
                         </td>
                         <td>
-                            <!--<a href="{{route('venta.edit',[$venta->id])}}" title="Editar venta" data-toggle="tooltip">
-                                <i class="mdi mdi-pencil-box-outline text-primary mdi-24px"></i>
-                            </a>-->
+                        @if($venta->estado_venta->id<>2 &&  $venta->estado_venta->id<>3)
+                            <a id="btn_show_change_user" data-venta="{{ $venta->id }}" data-id="{{ $venta->user->id }}" title="Cambio de Prestador" data-toggle="modal" data-target="#modal_edit_user_service"    data-toggle="tooltip">
+                                <i class="mdi mdi-account-convert text-primary mdi-24px"></i>
+                            </a>
+                        @endif                           
                             <a href="{{route('venta.show',[$venta->id])}}" title="Ver detalle" data-toggle="tooltip">
                                 <i class="mdi mdi-point-of-sale text-warning mdi-24px"></i>
                             </a>
                         </td>
                     </tr>
-
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+    @include('venta.mdl_changeUser')
+
     @if(session('success'))
         <input type="hidden" id="succes_message" value="{{session('success')}}">
     @endif
@@ -96,6 +105,10 @@
         <input type="hidden" id="fail_message" value="{{session('fail')}}">
     @endif
 </div>
+
+
+
+
 @endsection
 @push('custom-scripts')
     {!! Html::script('js/validate.min.js') !!}

@@ -10,6 +10,7 @@ Route::group(['prefix' => 'venta'], function(){
     Route::put('{venta}', 'VentaController@update')->name('venta.update');    
 });
 
+Route::post('update_user', 'VentaController@updateUser');    
 Route::get('ticketPrint/{id}', 'ticketController@ticketPrint');
 Route::get('createPp', 'ticketController@create');
 Route::get('sendMessageWpp', 'ticketController@sendMessageWpp');

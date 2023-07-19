@@ -11,6 +11,7 @@ use App\Model\users;
 use App\Model\Venta;
 use Carbon\Carbon;
 use Exception;
+use Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -19,8 +20,8 @@ class VentaController extends Controller
     public function index()
     {
         $ventas = Venta::all();
-
-        return view('venta.index', compact('ventas'));
+        $usuarios = users::select("users.*")->join("roles as r", "cargo", "r.id")->where("r.slug", "Lavador")->get();
+        return view('venta.index', compact('ventas','usuarios'));
     }
 
     public function create()
@@ -75,6 +76,22 @@ class VentaController extends Controller
         $tipos_vehiculo = TipoVehiculo::all();
         return view('venta.edit', compact('tipos_vehiculo'));
     }
+
+
+    public function updateUser(){
+       
+            DB::table('venta')
+            ->where('id', intval(Request::input('id_venta')))            
+            ->update([
+                'id_usuario' =>intval(Request::input('id_user'))                         
+                ]
+        );
+        return 1;
+
+
+
+    }
+
 
     public function update(StoreVenta $request, Venta $venta)
     {
