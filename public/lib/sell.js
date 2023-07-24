@@ -264,7 +264,7 @@ $(function(){
         })
 
     });
-
+    
     $(document).on("click",".btn_generateTicket",function(){ 
         let venta=$(this).attr('data-id');
         
@@ -284,8 +284,8 @@ $(function(){
                     console.log(link);
                     link.href = window.URL.createObjectURL(blobURL);
                    
-                    var printWindow = window.open(link);
-                   printWindow.print();
+                    var printWindow = window.open(link,"theFrame");
+                //   printWindow.print();
                 
                     //Close window once print is finished
                    /* printWindow.onafterprint = function(){
@@ -301,3 +301,10 @@ $(function(){
     });
 
 });
+
+function printIframe() {       
+    var iframe = document.getElementById('theFrame');       
+    var iframeWindow = iframe.contentWindow;       
+    iframeWindow.focus();       
+    iframeWindow.print();     
+  }

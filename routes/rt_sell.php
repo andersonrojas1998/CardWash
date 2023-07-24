@@ -12,5 +12,6 @@ Route::group(['prefix' => 'venta'], function(){
 
 Route::post('update_user', 'VentaController@updateUser');    
 Route::get('ticketPrint/{id}', 'ticketController@ticketPrint');
+Route::get('showCopy/{id}', 'VentaController@showCopy');
 Route::get('createPp', 'ticketController@create');
 Route::get('sendMessageWpp', 'ticketController@sendMessageWpp');

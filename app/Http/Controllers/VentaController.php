@@ -109,4 +109,10 @@ class VentaController extends Controller
     {
         return view("venta.show", compact('venta'));
     }
+    public function showCopy($ventas)
+    {
+        $venta = Venta::find($ventas);
+
+        return view("venta.showCopy", compact('venta'));
+    }
 }
