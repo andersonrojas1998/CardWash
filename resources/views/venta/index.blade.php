@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between bd-highlight mb-3">
             <div class="d-flex justify-content-start bd-highlight">
                 <div class="p-4 bg-light">
-                    <h4>VENTAS</h4>
+                    <h4>REGISTRO DE VENTAS</h4>
                 </div>
             </div>
             <div class="d-flex justify-content-end bd-highlight">
@@ -31,6 +31,7 @@
                         <th># Telefono</th>
                         <th>Tipo vehiculo</th>
                         <th>Atendido por</th>
+                        <th>Valor Total.</th>
                         <th>Estado</th>
                         <th></th>
                     </tr>
@@ -40,7 +41,7 @@
 
                     <tr>
                         <td>{{date('Y-m-d h:i',strtotime($venta->fecha) )}}</td>
-                        <td>{{$venta->nombre_cliente}}</td>
+                        <th class="text-primary">{{$venta->nombre_cliente}}</th>
                         <td>
                             @if($venta->placa)
                                 <div class="bg-warning py-2 px-1 text-center border border-dark rounded">
@@ -71,6 +72,7 @@
                             {{$venta->user->name}}
                             @endif
                         </td>
+                        <th class="text-danger">$ {{ number_format($venta->total_venta,0,',','.')}}</th>
                         <td>
                             @php $color="danger"; 
                             if($venta->estado_venta->id==1) 
