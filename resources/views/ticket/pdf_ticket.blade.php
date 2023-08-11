@@ -54,13 +54,13 @@
 </header>
 <body> 
 <div class="w3-row">
-<table class="w3-table w3-bordered w3-center"  >
+<table class="w3-table w3-bordered"  >
 <thead>
-<tr class="w3-xlarge" >
-            <th class="w3-light-grey padding-1" >CONCEPTO</th>
-            <th class="w3-light-grey padding-1" >CANT.</th>
-            <th class="w3-light-grey  padding-1" >PRECIO</th>            
-            <th class=" w3-light-grey  padding-1">IMPORTE</th>            
+<tr class="w3-xlarge w3-center" >
+            <th class="w3-light-grey padding-1 w3-center" >CONCEPTO</th>
+            <th class="w3-light-grey padding-1 w3-center" >CANT.</th>
+            <th class="w3-light-grey  padding-1 w3-center" >PRECIO</th>            
+            <th class=" w3-light-grey  padding-1 w3-center">IMPORTE</th>            
         </tr>
 </thead>
 <tbody>
