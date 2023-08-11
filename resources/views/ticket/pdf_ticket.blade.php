@@ -54,7 +54,7 @@
 </header>
 <body> 
 <div class="w3-row">
-<table class="w3-table w3-bordered"  >
+<table class="w3-table w3-bordered w3-center"  >
 <thead>
 <tr class="w3-xlarge" >
             <th class="w3-light-grey padding-1" >CONCEPTO</th>
