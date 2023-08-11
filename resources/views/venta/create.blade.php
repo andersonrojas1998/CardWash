@@ -48,7 +48,7 @@
                         <label>¿Qui&eacute;n presta el servicio?&nbsp;:</label>
                         <select class="select2" name="id_usuario" style="width: 100%">
                             @foreach($usuarios as $usuario)
-                            <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                            <option value="{{$usuario->id}}" {{ ($usuario->id==17)? 'selected':'' }}>{{$usuario->name}}</option>
                             @endforeach
                         </select>
                     </div>
