@@ -8,7 +8,7 @@ class Producto extends Model
 {
     protected $table = 'producto';
 
-    protected $fillable = ['nombre','id_marca','id_tipo_producto', 'id_unidad_medida', 'id_presentacion', 'id_area'];
+    protected $fillable = ['nombre','id_marca','id_tipo_producto', 'id_unidad_medida', 'id_presentacion', 'id_area','precio_venta'];
 
     public function compras(){
     	return $this->hasMany('App\Model\DetalleCompraProductos','id_producto','id');

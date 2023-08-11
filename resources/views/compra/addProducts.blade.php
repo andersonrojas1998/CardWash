@@ -1,6 +1,6 @@
 <div class="container-fluid mx-1">
     <div class="card">
-        <div class="card-header header-pay text-center">Agregar productos   <i class="mdi  mdi-cart-plus"></i></div>
+        <div class="card-header header-pay text-center header-pay">Agregar productos   <i class="mdi  mdi-cart-plus"></i></div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-add-products">
@@ -8,7 +8,7 @@
                         <tr>
                             <th>Producto</th>
                             <th>Cantidad</th>
-                            <th>Precio de venta</th>
+                            <!-- <th class="d-none">Precio de venta</th> -->
                             <th>Precio de compra</th>
                         </tr>
                         <tr>
@@ -26,13 +26,18 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="p-1">
+                            <!--  -->
+                            <!--<td class="p-1 d-none">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <input type="number" class="form-control input-sell-price input_add_products">
                                     </div>
                                 </div>
-                            </td>
+                            </td>  -->
+                            <!--  -->
+
+
+
                             <td class="p-1">
                                 <div class="form-group">
                                     <div class="input-group">
@@ -47,7 +52,7 @@
                         <tr>
                             <th>Producto</th>
                             <th>Cantidad</th>
-                            <th>Precio de venta</th>
+                            <!-- <th class="d-none">Precio de venta</th> -->
                             <th>Precio de compra</th>
                         </tr>
                     </thead>
@@ -62,12 +67,12 @@
                                     </td>
                                     <td class="td_quantity">
                                         {{$detalle_compra_producto->cantidad}}
-                                        <input type="hidden" name="cantidad[]" value="{{$detalle_compra_producto->cantidad}}">
+                                        <input type="hidden" name="cantidad[]"  class="cantidad_producto_table" value="{{$detalle_compra_producto->cantidad}}">
                                     </td>
-                                    <td class="td_sell_price">
+                                    <!--<td class="td_sell_price d-none">
                                         {{$detalle_compra_producto->precio_venta}}
                                         <input type="hidden" name="precio_venta[]" value="{{$detalle_compra_producto->precio_venta}}">
-                                    </td>
+                                    </td>-->
                                     <td class="td_buy_price">
                                         {{$detalle_compra_producto->precio_compra}}
                                         <input type="hidden" class="precio_compra_producto_table" name="precio_compra[]" value="{{$detalle_compra_producto->precio_compra}}">

@@ -62,6 +62,17 @@ $(function(){
         dt_product(val);       
     });
 
+    $(document).on('focus', '.precio_venta', function(){
+        var t=0;
+        let rr=$('#rr').val();
+        let cc=$('#cc').val();
+        console.log(parseInt(rr),parseInt(cc));
+         t = (parseInt(cc) * (100/(100-parseInt(rr))));
+        
+        $(this).val(parseInt(t));
+               
+    });
+
 
     $(document).on('click', '#save-product-type', function(){
         let funTransitions = function(){
@@ -125,6 +136,7 @@ $(function(){
         $('#select-unidad-de-medida-edit').val($(this).data('id-unidad-medida'));
         $('#select-presentation-edit').val($(this).data('id-presentacion'));
         $('.select2-edit').trigger('change.select2');
+        $("#input-price-edit").val($(this).data('precio_venta'));
     });
 
     $.ajax({
@@ -315,7 +327,7 @@ var loadAreaOptions = function(){
         dom: 'Bfrtip',
         destroy:true,
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+             'csv', 'excel', 'pdf'
         ],
         ajax:{
             url:  '/producto/data/'+area,
@@ -333,14 +345,17 @@ var loadAreaOptions = function(){
             {"className": "text-center", "targets": "_all"},
         ],
         columns:[
-            {"data": "producto"},
-            {"data": "marca"},
-            {"data": "tipo_producto"},
-            {"data": "unidad_medida", render(unidad_de_medida){
-                return unidad_de_medida;
-            }},
-            {"data": "presentacion"},
-            { "data": "cant_disponible",render(data){ return '<h4><label class="badge text-white badge-success">'+ data  +'</label></h4>'; }},
+            {"data": "imagen",render(data){ return '<img src="'+ data+'" alt="image"  width="150"  height="150">'; }},
+            {"data": "producto", render(data){ return '<b class="text-primary text-uppercase"> '+ data +'</b>' ;  }},
+            {"data": "tipo_producto", render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  } },            
+            {"data": "marca", render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  }},            
+            {"data": "unidad_medida",render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  }},
+            {"data": "presentacion" , render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  }},
+            { "data": "cant_disponible",render(data){ 
+                let color=(data<5)? 'badge-warning':'badge-success';
+                return '<h4><label class="badge text-white '+color+'">'+ data  +'</label></h4>';
+             }},
+            { "data": "precio_venta",render(data){ return  '<b class="text-danger"> '+ new Intl.NumberFormat().format(parseInt(data) )+'</b>' ; }},            
             {"data": "actions", render(data, ps, producto){
                 
                 let div = $('<div>',{
@@ -357,6 +372,7 @@ var loadAreaOptions = function(){
                         'data-id-marca': producto.id_marca,
                         'data-id-unidad-medida': producto.id_unidad_medida,
                         'data-id-presentacion': producto.id_presentacion,
+                        'data-precio_venta': producto.precio_venta,
                         'data-toggle': 'modal',
                         'data-target': '#modal_edit_product',
                     })

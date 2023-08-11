@@ -30,7 +30,9 @@ class StoreProducto extends FormRequest
             'id_marca' => 'required',
             'id_tipo_producto' => 'required',
             'id_unidad_medida' => 'required',
-            'id_presentacion' => 'required'
+            'id_presentacion' => 'required',
+            'precio_venta' => 'required'
+
         ];
     }
 

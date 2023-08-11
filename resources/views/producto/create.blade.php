@@ -112,6 +112,50 @@
                                 <input type="hidden" id="select-area-data-url" value="{{ route('area.index') }}">
                             </div>
                         </div>
+
+                   
+
+<hr>
+                    <div class="row">
+
+                    <div class="col-lg-12">
+                    <div class="card" style="border-bottom: outset; border-radius: 15px;">
+                            <div class="card-body">
+                                <h4 class="card-title">calcular precio venta :  
+                                    <p class="text-muted text-success"> P= C*(100/100-R)</p>
+                                </h4>   
+                                
+                                <div class="row">
+                                <div class="col-lg-6">
+                                        <label>C : <p class="text-muted">Costo del Producto</p></label>
+                                        <input type="number" class="form-control" id="cc">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>R : <p class="text-muted"> Rentabilidad o ganancia que se aspira a obtener con la venta del producto.</p> </label>
+                                        <input type="number" class="form-control"  id="rr">
+                                    </div>
+                                </div>
+                                <br>
+
+
+                                  
+                                    <div class="col-lg-4">
+                                        <strong class="">Precio venta :</strong>
+                                        <input type="number" class="form-control precio_venta" name="precio_venta">
+                                    </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    
+                        
+                </div>
+
+
+                    
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

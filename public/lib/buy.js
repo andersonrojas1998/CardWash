@@ -27,7 +27,7 @@ $(function(){
     var table = $('#table-compra').DataTable({
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'csv', 'excel', 'pdf'
         ],
         ajax:{
             url: $('#table-compra').data('url'),
@@ -46,13 +46,15 @@ $(function(){
             {"className": "text-center", "targets": "_all"},
         ],
         columns:[
-            {"data": "reg_op"},
+            {"data": "reg_op" , render(data){ return '<b class="text-uppercase"> '+ data +'</b>' ;  }},
             {"data": "fecha_emision"},
-            {"data": "compracol"},
+            {"data": "compracol" ,  render(data){ return '<p class="text-uppercase text-primary"> '+ data +'</p>' ;  }},
             {"data": "no_comprobante"},
-            {"data": "id_proveedor", render(data,ps,compra){ return compra.id_proveedor + '-'+ compra.id_proveedor_nombre }},
-            {"data": "razon_social_proveedor"},
-            {"data": "descuentos_iva"},
+            {"data": "id_proveedor", render(data,ps,compra){                 
+                return  '<p class="text-uppercase text-primary"> '+ compra.id_proveedor + '-'+ compra.id_proveedor_nombre +'</p>'                            
+            }},
+            {"data": "razon_social_proveedor", render(data){ return '<p class="text-default"> '+ data +'</p>' ;  }},
+            {"data": "descuentos_iva"   , render(data){ return '<p class="text-uppercase"> '+ new Intl.NumberFormat().format(parseFloat(data) ) +' %</p>' ;}},
             {"data": "importe_total"},
             {"data": "estado_id", render(data){ return (data==1)? '<h4><label class="badge  badge-lg text-white badge-success">Compra</label></h4>':'<h4><label class="badge text-white badge-warning">Pago</label></h4>' }},
             {"data": "actions", render(data, ps, compra){
@@ -121,7 +123,7 @@ $(function(){
     $(document).on('click', ".btn_add_product", function(){
         let form = $(this).parents('form');
         if(form.find(".select-product-compra :selected").val() != '' && form.find('.input-quantity').val() != '' &&
-        form.find('.input-buy-price').val() != '' && form.find('.input-sell-price').val() != ''){
+        form.find('.input-buy-price').val() != '' ){  //&& form.find('.input-sell-price').val() != ''
             $('#products-validation-message').remove();
             let id_producto = form.find(".select-product-compra :selected").val();
             let text_producto = form.find(".select-product-compra :selected").text();
@@ -130,8 +132,8 @@ $(function(){
             form.find('.input-quantity').val('');
             let precio_compra = parseFloat(form.find('.input-buy-price').val());
             form.find('.input-buy-price').val('');
-            let precio_venta = parseFloat(form.find('.input-sell-price').val());
-            form.find('.input-sell-price').val('');
+           // let precio_venta = parseFloat(form.find('.input-sell-price').val());
+           // form.find('.input-sell-price').val('');
             let importe_total = parseFloat("0");
 
             form.find('.table-add-products > tbody').append($('<tr>',{
@@ -163,7 +165,7 @@ $(function(){
                             })
                         ]
                     }),
-                    $('<td>', {
+                  /*  $('<td>', {
                         html: [
                             '$ ' + precio_venta,
                             $('<input>', {
@@ -173,7 +175,7 @@ $(function(){
                                 value: precio_venta
                             })
                         ]
-                    }),
+                    }),*/
                     $('<td>', {
                         html: [
                             '$ ' + precio_compra,
@@ -196,6 +198,10 @@ $(function(){
                 ]
             }));
             $('.precio_compra_producto_table').each(function(){
+                console.log($(this).parent('tr').find('.cantidad_producto_table').val());
+                console.log(parseFloat($(this).val()));
+
+                console.log(parseFloat($(this).val()) * $(this).parents('tr').find('.cantidad_producto_table').val());
                 importe_total += parseFloat($(this).val()) * $(this).parents('tr').find('.cantidad_producto_table').val();
             });
             form.find(".importe_total").val(importe_total);
@@ -360,7 +366,7 @@ $(function(){
                                             })
                                         ]
                                     }),
-                                    $('<td>', {
+                                  /*  $('<td>', {
                                         html: [
                                             det_comp_prod.precio_venta,
                                             $('<input>', {
@@ -370,7 +376,7 @@ $(function(){
                                                 value: det_comp_prod.precio_venta
                                             })
                                         ]
-                                    }),
+                                    }),*/
                                     $('<td>', {
                                         html: [
                                             det_comp_prod.precio_compra,

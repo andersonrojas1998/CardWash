@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="row mt-4">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label class="control-label">Unidad de medida&nbsp;:</label>
                                 <select class="select2-edit select-unidad-de-medida" id="select-unidad-de-medida-edit" name="id_unidad_medida" style="width:100%">
                                 </select>
@@ -67,7 +67,7 @@
                                 @endif
                                 <input type="hidden" id="select-unit-measurement-data-url" value="{{ route('unidad-de-medida.index') }}">
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label class="control-label">Presentacion&nbsp;:</label>
                                 <select class="select2-edit select-presentation" id="select-presentation-edit" name="id_presentacion" style="width:100%">
                                 </select>
@@ -76,6 +76,19 @@
                                 @endif
                                 @if (old('id_presentacion'))
                                     <input type="hidden" id="old-select-presentation" value="{{ old('id_presentacion') }}">
+                                @endif
+                                <input type="hidden" id="select-presentation-data-url" value="{{ route('presentacion.index') }}">
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="control-label">Precio venta:</label>
+                                <input  type="text" class="form-control" id="input-price-edit" name="precio_venta" style="width:100%">
+                                
+                                @if ($errors->any() && $errors->first('precio_venta'))
+                                    <span class="badge badge-pill badge-danger">{{$errors->first('precio_venta')}}</span>
+                                @endif
+                                @if (old('precio_venta'))
+                                    <input type="hidden" id="old-select-presentation" value="{{ old('precio_venta') }}">
                                 @endif
                                 <input type="hidden" id="select-presentation-data-url" value="{{ route('presentacion.index') }}">
                             </div>

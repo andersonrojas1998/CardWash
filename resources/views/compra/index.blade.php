@@ -40,9 +40,9 @@
                         <th rowspan="2">Descripci&oacute;n</th>
                         <th rowspan="2">No. Comprobante</th>
                         <th colspan="2" class="text-center">Proveedor</th>
-                        <th rowspan="2">Descuento IVA</th>
+                        <th rowspan="2">Descuento IVA %</th>
                         <th rowspan="2">Importe total</th>
-                        <th rowspan="2">Estado</th>
+                        <th rowspan="2">Compra/Pago</th>
                         <th rowspan="2"></th>
                     </tr>
                     <tr>

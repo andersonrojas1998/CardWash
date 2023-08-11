@@ -38,7 +38,7 @@ class StoreCompra extends FormRequest
             'id_producto' => 'required',
             'cantidad' => 'required',
             'precio_compra' => 'required',
-            'precio_venta' => 'required'
+            // 'precio_venta' => 'required'
         ];
     }
 
@@ -57,7 +57,7 @@ class StoreCompra extends FormRequest
             'id_producto.required' => 'No se han agregado los productos, por favor agreguelos.',
             'cantidad_producto.required' => 'Agregue los productos',
             'precio_compra_producto.required' => 'Agregue los productos',
-            'precio_venta_producto.required' => 'Agregue los productos'
+            // 'precio_venta_producto.required' => 'Agregue los productos'
         ];
     }
     

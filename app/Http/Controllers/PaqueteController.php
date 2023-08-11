@@ -67,6 +67,7 @@ class PaqueteController extends Controller
         foreach ($paquetes as $paquete ) {
             $paquete->precio = $paquete->detalle_paquete->where('id_tipo_vehiculo', $tipoVehiculo->id)->first()->precio_venta;
             $paquete->id_detalle_paquete = $paquete->detalle_paquete->where('id_tipo_vehiculo', $tipoVehiculo->id)->first()->id;
+            $paquete->porcentaje = $paquete->detalle_paquete->where('id_tipo_vehiculo', $tipoVehiculo->id)->first()->porcentaje;
             $paquete->tipo_vehiculo = $tipoVehiculo;
             $paquete->servicios_paquete = $paquete->detalle_paquete->where('id_tipo_vehiculo', $tipoVehiculo->id)->first()->servicio_paquete;
             foreach($paquete->servicios_paquete as $servicio_paquete){

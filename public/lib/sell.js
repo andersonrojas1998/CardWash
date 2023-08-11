@@ -29,7 +29,9 @@ $(function(){
             success: function(data, textStatus, xhr){
                 $("#div-packages").removeClass("d-none");
                 $("#div-buttons-package").empty();
+               
                 $.each(data.paquetes, function(i, paquete){
+                    console.log(paquete);
                     $("#div-buttons-package").append([
                         $("<label>", {
                             class: "btn btn-outline-primary",
@@ -44,6 +46,18 @@ $(function(){
                                     "data-price": paquete.precio,
                                     "data-id": paquete.id_detalle_paquete,
                                     "data-text" : paquete.nombre + " - " + paquete.tipo_vehiculo.descripcion
+                                }),
+                                $("<input>", {
+                                    type: "hidden",
+                                    name: "precio_venta_paquete",
+                                    value: paquete.precio,
+                                    class: "button_package"
+                                }),
+                                $("<input>", {
+                                    type: "hidden",
+                                    name: "porcentaje_paquete",
+                                    value: paquete.porcentaje,
+                                    class: "button_package"
                                 }),
                                 $("<div>", {
                                     class: "card border border-dark text-center text-light",

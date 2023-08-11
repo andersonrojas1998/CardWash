@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('content')
 <div class="card">
-    <div class="card-header"><h1>Editar Compra</h1></div>
+    <div class="card-header"><h3>Editar Compra</h3></div>
     <form id="edit-buy-form" action="{{ route('compra.update') }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('PUT') }}
@@ -80,6 +80,15 @@
     </form>
 </div>
 @endsection
+@push('style')    
+<style>
+.header-pay{
+    background:#c9ddeb73;
+    -webkit-text-stroke:thin;
+    border-radius:8px;
+}
+</style>
+@endpush
 @push('custom-scripts')
     {!! Html::script('js/validate.min.js') !!}
     {!! Html::script('js/validator.messages.js') !!}

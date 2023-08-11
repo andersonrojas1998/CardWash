@@ -38,12 +38,14 @@
             <table class="table table-striped table-sm" id="table-product" >
                 <thead>
                     <tr>
+                        <th>Imagen</th>
                         <th>Nombre (Referencia)</th>
-                        <th>Marca</th>
-                        <th>Tipo</th>
+                        <th>Categoria</th>                        
+                        <th>Marca</th>                        
                         <th>Unidad de medida</th>
                         <th>Presentaci&oacute;n</th>
-                        <th>Cantidad</th>
+                        <th>Cantidad Stock</th>
+                        <th>Precio venta</th>
                         <th></th>
                     </tr>
                 </thead>

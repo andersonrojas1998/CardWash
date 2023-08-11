@@ -86,22 +86,22 @@
                                         <td>{{$venta->detalle_paquete->precio_venta}}</td>
                                     </tr>
                                 @endif
-                                @foreach($venta->detalle_venta_productos as $detalle_venta_producto)
-                                    @php
-                                    $total += $detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad;
-                                    @endphp
+                                @foreach($productos as $detalle_venta_producto)      
+                                @php
+                                    $total += $detalle_venta_producto->total_venta;
+                                    @endphp                          
                                     <tr>
-                                        <td>{{$detalle_venta_producto->detalle_compra_productos->producto->nombre.' - '.$detalle_venta_producto->detalle_compra_productos->producto->presentacion->nombre}}</td>
+                                        <td>{{$detalle_venta_producto->producto}}</td>
                                         <td>{{$detalle_venta_producto->precio_venta}}</td>
-                                        <td>{{$detalle_venta_producto->cantidad}}</td>
-                                        <td>{{$detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad}}</td>
+                                        <td>{{$detalle_venta_producto->cantidad_vendida}}</td>
+                                        <td>{{$detalle_venta_producto->total_venta}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td class="font-weight-bold text-right" colspan="3">Total:</td>
-                                    <td class="font-weight-bold td_importe_total">$<strong id="text_importe_total">{{$total}}</strong></td>
+                                    <td class="font-weight-bold td_importe_total">$<strong id="text_importe_total">{{number_format($total,0,',','.')}}</strong></td>
                                 </tr>
                             </tfoot>
                         </table>

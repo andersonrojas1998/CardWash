@@ -62,7 +62,7 @@ class CompraController extends Controller
                 'id_producto' => $id_producto,
                 'cantidad' => $request->all()['cantidad'][$key],
                 'precio_compra' => $request->all()['precio_compra'][$key],
-                'precio_venta' => $request->all()['precio_venta'][$key],
+                // 'precio_venta' => $request->all()['precio_venta'][$key],
                 'id_compra' => $compra->id
                 ];
             }
@@ -106,7 +106,7 @@ class CompraController extends Controller
                     'id_compra' => $compra->id,
                     'cantidad' => intval($request->all()['cantidad'][$key]),
                     'precio_compra' => $request->all()['precio_compra'][$key],
-                    'precio_venta' => $request->all()['precio_venta'][$key],
+                    // 'precio_venta' => $request->all()['precio_venta'][$key],
                 ];
                 $producto = Producto::find($values['id_producto']);
 

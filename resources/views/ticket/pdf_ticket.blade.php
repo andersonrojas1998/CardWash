@@ -44,9 +44,9 @@
     
 
     <p class="size-w3 padding-1" style="margin:0;"><b>Fecha :</b>  {{ date('Y-m-d h:i',strtotime($venta->fecha)) }}</p>
-    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Tipo Vehiculo :</b>   {{ $venta->detalle_paquete->tipo_vehiculo->descripcion }}</p>
-    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Placa : </b> {{ $venta->placa }}  </p>    
-    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Cliente : </b> {{ $venta->nombre_cliente }}  </p>    
+    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Tipo Vehiculo :</b>   {{  isset($venta->detalle_paquete->tipo_vehiculo->descripcion)? $venta->detalle_paquete->tipo_vehiculo->descripcion:'' }}</p>
+    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Placa : </b> {{ isset($venta->placa)? $venta->placa:''  }}  </p>    
+    <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Cliente : </b> {{ isset($venta->nombre_cliente)? $venta->nombre_cliente:$venta->nombre_cliente }}  </p>    
     <p class="size-w3 padding-1" style="margin:0;text-transform: uppercase;"><b>Numero : </b> {{ $venta->numero_telefono }}  </p>    
 </div>
 <hr>    
@@ -54,12 +54,12 @@
 </header>
 <body> 
 <div class="w3-row">
-<table class="w3-table w3-xlarge w3-bordered   padding-1"  >
+<table class="w3-table w3-bordered"  >
 <thead>
-<tr class="w3-xlarge padding-1" >
-            <th class="w3-light-grey padding-1">CONCEPTO</th>
-            <th class="w3-light-grey padding-1">CANT.</th>
-            <th class="w3-light-grey  padding-1">PRECIO</th>            
+<tr class="w3-xlarge" >
+            <th class="w3-light-grey padding-1" >CONCEPTO</th>
+            <th class="w3-light-grey padding-1" >CANT.</th>
+            <th class="w3-light-grey  padding-1" >PRECIO</th>            
             <th class=" w3-light-grey  padding-1">IMPORTE</th>            
         </tr>
 </thead>
@@ -77,15 +77,15 @@
                                         <td class="w3-xlarge padding-1">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>
                                     </tr>
                                 @endif
-                                @foreach($venta->detalle_venta_productos as $detalle_venta_producto)
+                                @foreach($productos as $detalle_venta_producto)
                                     @php
-                                    $total += $detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad;
+                                    $total += $detalle_venta_producto->total_venta;
                                     @endphp
                                     <tr  class="w3-xlarge  padding-1">
-                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->detalle_compra_productos->producto->nombre.' - '.$detalle_venta_producto->detalle_compra_productos->producto->presentacion->nombre}}</td>
-                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->cantidad}}</td>
+                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->producto}}</td>
+                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->cantidad_vendida}}</td>
                                         <td class="w3-xlarge padding-1">{{ number_format($detalle_venta_producto->precio_venta,0,',','.')}}</td>                                        
-                                        <td class="w3-xlarge padding-1">{{ number_format($detalle_venta_producto->precio_venta * $detalle_venta_producto->cantidad,0,',','.')}}</td>
+                                        <td class="w3-xlarge padding-1">{{ number_format($detalle_venta_producto->total_venta,0,',','.')}}</td>
                                     </tr>
                                 @endforeach      
 </tbody>

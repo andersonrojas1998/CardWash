@@ -8,6 +8,27 @@ $(document).ready(function() {
         dt_sales_user();
     }
 
+
+    $(document).on("click",".btn_search_income_store",function(){ 
+        var dateini=$("#date_ini").val();
+        var dateend=$("#date_end").val();
+        console.log(dateini,dateend);
+
+        $.ajax({
+            url:'/income_store/'+dateini+'/'+dateend,
+            type:"GET",            
+            dataType:"JSON",
+            success:function(data){
+                $(".tbl-tt_prd_qq").html(data.tt_prd_qq);
+                $(".tbl-tt_prd").html(data.tt_prd);
+                $(".tbl-income-service").html(data.service);
+                $(".tbl-income-prd").html(data.product);
+                $(".tbl-income-tt").html(data.total);
+            }
+        });
+
+    });     
+    
     
 
 
@@ -255,7 +276,7 @@ var dt_sales_user=function(){
 
 var dt_pay_pending=function(id,status){
     
-    $('.dt_pay_pending').DataTable({
+   var tdos= $('.dt_pay_pending').DataTable({
          "bDestroy": true,       
           dom: 'Bfrtip',
           buttons: ['excel','pdf'],      
@@ -263,6 +284,7 @@ var dt_pay_pending=function(id,status){
             url: "/usuarios/dt_pay_pending/"+id+"/"+status,
             method: "GET", 
             dataSrc: function (json) {
+                $('.payPSales').html('$. ' + json.pay_sales);
                 $('.payPending').html('$. ' + json.pay);
                 $('#id_usuario').val(id);
                 if (!json.data) {
@@ -287,6 +309,6 @@ var dt_pay_pending=function(id,status){
                 {"data": "precio_venta", render(data){  return  '<h4>$ '+ data +'</h4>'; }},
                 {"data": "porcentaje", render(data){  return  '<h4><label class="badge text-white badge-success">'+ data +' % </label></h4>'; }},            
                 {"data": "pago", render(data){  return  '<h4><label class="badge text-black badge-warning"> $ '+ data +'</label></h4>'; }},           
-        ]
-    });
+        ],        
+    });    
 }

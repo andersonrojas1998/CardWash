@@ -102,6 +102,27 @@ class ReportsController extends Controller
        return json_encode($data);
      }
 
+     public function income_store($ini,$end){
+       
+       $dateini=date('Y-m-d',strtotime($ini));
+       $dateend=date('Y-m-d',strtotime($end) );
+       $product=DB::SELECT("CALL sp_incomexproduct_day('$dateini','$dateend')  ");            
+        $service=DB::SELECT("CALL sp_incomexservice_day('$dateini','$dateend')  ");   
+        
+        $salett=DB::SELECT("CALL sp_incomexsales('$dateini','$dateend')  ");                    
+        $data=[];
+        
+        
+
+        $data['tt_prd']=  number_format(is_null($salett[0]->total_venta )? 0:floatval($salett[0]->total_venta ),0,',','.');
+        $data['tt_prd_qq']=  is_null($salett[0]->cantidad )? 0:floatval($salett[0]->cantidad );
+        $data['product']= number_format(is_null($product[0]->gananciasxproducto)? 0:floatval($product[0]->gananciasxproducto) ,0,',','.') ;
+        $data['service']=number_format(is_null($service[0]->gananciasxservicio)? 0: floatval($service[0]->gananciasxservicio),0,',','.') ;
+        $data['total']=number_format(floatval($service[0]->gananciasxservicio)+floatval($product[0]->gananciasxproducto),0,',','.');
+              
+       return json_encode($data);
+     }
+
      public function dt_expenses_month(){    
         $d=date('m');    
         $expenses=DB::SELECT("CALL sp_expenses('$d')  ");                 

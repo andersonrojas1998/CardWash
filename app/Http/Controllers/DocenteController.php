@@ -61,6 +61,7 @@ class DocenteController extends Controller
         $dataUs=DB::SELECT("CALL sp_cant_sales_user('$idUser','$status')");         
         $data=[];
         $total=0;
+        $psale=0;
         foreach($dataUs as $key => $us)
         {                            
             $data['data'][$key]['no_venta']=$us->no_venta;   
@@ -72,7 +73,9 @@ class DocenteController extends Controller
             $data['data'][$key]['porcentaje']=$us->porcentaje;
             $data['data'][$key]['pago']=  round($us->precio_venta*$us->porcentaje/100);
            $total+=round($us->precio_venta*$us->porcentaje/100);
+           $psale+=$us->precio_venta; 
         }
+        $data['pay_sales']=$psale;
         $data['pay']=$total;
         return json_encode($data);          
     }

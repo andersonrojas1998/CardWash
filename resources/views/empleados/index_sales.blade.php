@@ -1,5 +1,11 @@
 @extends('layout.master')
 @section('content')
+
+
+<div class="row">
+
+
+
 <div class="card">
 <div class="p-4  bg-light text-center">        
         <h4 class="mb-0">Administraci&oacute;n de Servicios Prestados</h4>        
@@ -27,7 +33,95 @@
         </div>
     </div>
     </div>  
-    </div>
+ </div>
+
+
+
+
+
+
+<div class="card"> 
+
+
+      <div class="card-body">
+              <div class="row">
+              <div class="col-lg-6">
+              <label>Fecha ini:</label>
+                 <input type="date" class="form-control" id="date_ini">
+              </div> 
+              <div class="col-lg-6">
+                <label>Fecha fin:</label>
+                  <input type="date" class="form-control" id="date_end">
+                </div>                         
+              </div>
+              <div class="d-flex justify-content-center pt-4">
+                <button type="button" title="" data-toggle="tooltip" class="btn btn-icons btn-rounded btn-success btn_search_income_store" data-original-title="Consultar"><i class="mdi mdi-account-search mdi-18px"></i></button>
+              </div> 
+              
+<br>
+
+            <div class="p-4  bg-light text-center">                
+                <h5 class="text-danger">Montos Ingresados al  Establecimiento </p>  <p class="text-muted">Sin Descuento  del pago al trabajador  (*)</h5>     
+            </div>
+                <div class="col-lg-6">
+                <table class="table table-striped text-center">
+                  <thead>
+                    <tr>
+                      <th>Cantidad</th>
+                      <th>Servicios Prestados</th>                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="tbl-tt_prd_qq">0</td>
+                      <th>TOTAL :</th>
+                      <th class="text-danger tbl-tt_prd">0</th>                      
+                    </tr>
+                  </tbody>
+                  </table>
+                </div>
+
+<hr>
+                <div class=" p-4  bg-light text-center">
+                  <h4 class="text-success">Ganacias del Establecimiento <p class="text-muted ">Aplicando Descuentos</p>    </h4>
+                </div>
+
+                      
+                <div class="col-lg-6">
+                <table class="table table-striped text-center">
+                  <thead>
+                    <tr>
+                      <th>Servicios Prestados</th>
+                      <th>Venta de Productos Lubriteca</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="tbl-income-service">$ 0</td>
+                      <td class="tbl-income-prd">$ 0</td>
+                    </tr>
+                    <tr>
+                      <th>TOTAL: </th>
+                      <th  class="tbl-income-tt text-success"></th>
+                    </tr>
+                  </tbody>
+                  </table>
+                </div>
+                  
+              </div>
+            </div>
+
+
+
+
+              
+
+
+</div>
+
+
+
+
 
 
 <div class="modal fade" id="mdl_paySales" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,12 +157,27 @@
     <br>
     <hr>
     <div class="row">
-        <div class="card" style="border-bottom:outset;border-radius:15px;">
-            <div class="card-body">
-              <h4 class="card-title"><p class="text-muted text-success">Se debe realizar el pago del siguiente valor : </p></h4>
-              <label>Total Pago :  <h2 class="payPending"> </h2>  </label>
-          </div>
-        </div>
+
+    <div class="col-lg-3">
+    <div class="card" style="border-bottom:outset;border-radius:15px;">
+                <div class="card-body">
+                  <h4 class="card-title"><p class="text-muted text-primary">Ingreso por ventas : </p>  <p class="text-danger">Sin Descuento  del pago al trabajador</p></h4>
+                  <label class="text-primary">Total Pago :  <h2 class="payPSales text-success"> </h2>  </label>
+              </div>
+            </div>
+    </div>    
+    <div class="col-lg-6">
+    <div class="card" style="border-bottom:outset;border-radius:15px;">
+                <div class="card-body">
+                  <h4 class="card-title"><p class="text-muted text-success">Se debe realizar el pago del siguiente valor : </p> <p class="text-success">Aplica pago al trabajador (*)</p></h4>
+                  <label class="text-primary">Total Pago :  <h2 class="payPending text-success"> </h2>  </label>
+              </div>
+            </div>
+    </div>
+
+
+
+        
      </div>  
     </div>
       <div class="modal-footer">
@@ -114,13 +223,24 @@
     <br>
     <hr>
     <div class="row">
+        
+    <div class="col-lg-3">
+    <div class="card" style="border-bottom:outset;border-radius:15px;">
+                <div class="card-body">
+                  <h4 class="card-title"><p class="text-muted text-primary">Ingreso por ventas : </p>  <p class="text-danger">Sin Descuento  del pago al trabajador</p></h4>
+                  <label class="text-primary">Total Pago :  <h2 class="payPSales text-success"> </h2>  </label>
+              </div>
+            </div>
+    </div>
+        <div class="col-lg-6">
         <div class="card" style="border-bottom:outset;border-radius:15px;">
-            <div class="card-body">
-              <h4 class="card-title"><p class="text-muted text-success">Se realizo  el pago del siguiente valor : </p></h4>
-              <label>Total Pago :  <h2 class="payPending"> </h2>  </label>
-          </div>
+                    <div class="card-body">
+                      <h4 class="card-title"><p class="text-muted text-success">Se realizo  el pago del siguiente valor : </p> <p class="text-success">Aplica Pago Al Trabajador (*)</p></h4>
+                      <label class="text-primary">Total Pago :  <h2 class="payPending text-success"> </h2>  </label>
+                  </div>
+                </div>
         </div>
-     </div>  
+ </div>  
   
       
     </div>
