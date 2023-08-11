@@ -131,7 +131,7 @@
                                         <input type="number" class="form-control" id="cc">
                                     </div>
                                     <div class="col-lg-6">
-                                        <label>R : <p class="text-muted"> Rentabilidad o ganancia que se aspira a obtener con la venta del producto.</p> </label>
+                                        <label>R  : <p class="text-muted"> Rentabilidad o ganancia que se aspira a obtener con la venta del producto.  (%)</p> </label>
                                         <input type="number" class="form-control"  id="rr">
                                     </div>
                                 </div>
