@@ -70,22 +70,22 @@
                                     @php
                                     $total += $venta->detalle_paquete->precio_venta;
                                     @endphp
-                                    <tr  class="w3-xlarge  padding-1">
-                                        <td class="w3-xlarge padding-1" style="text-transform: uppercase;" >{{$venta->detalle_paquete->paquete->nombre}}</td>
-                                        <td  class="w3-xlarge padding-1">1</td>
-                                        <td class="w3-xlarge padding-1">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>                                        
-                                        <td class="w3-xlarge padding-1">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>
+                                    <tr  class="w3-xlarge  padding-1 w3-center">
+                                        <td class="w3-xlarge padding-1 w3-center" style="text-transform: uppercase;" >{{$venta->detalle_paquete->paquete->nombre}}</td>
+                                        <td  class="w3-xlarge padding-1 w3-center">1</td>
+                                        <td class="w3-xlarge padding-1 w3-center">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>                                        
+                                        <td class="w3-xlarge padding-1 w3-center">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>
                                     </tr>
                                 @endif
                                 @foreach($productos as $detalle_venta_producto)
                                     @php
                                     $total += $detalle_venta_producto->total_venta;
                                     @endphp
-                                    <tr  class="w3-xlarge  padding-1">
-                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->producto}}</td>
-                                        <td class="w3-xlarge padding-1">{{$detalle_venta_producto->cantidad_vendida}}</td>
-                                        <td class="w3-xlarge padding-1">{{ number_format($detalle_venta_producto->precio_venta,0,',','.')}}</td>                                        
-                                        <td class="w3-xlarge padding-1">{{ number_format($detalle_venta_producto->total_venta,0,',','.')}}</td>
+                                    <tr  class="w3-xlarge  padding-1 w3-center">
+                                        <td class="w3-xlarge padding-1 w3-center">{{$detalle_venta_producto->producto}}</td>
+                                        <td class="w3-xlarge padding-1 w3-center">{{$detalle_venta_producto->cantidad_vendida}}</td>
+                                        <td class="w3-xlarge padding-1 w3-center">{{ number_format($detalle_venta_producto->precio_venta,0,',','.')}}</td>                                        
+                                        <td class="w3-xlarge padding-1 w3-center">{{ number_format($detalle_venta_producto->total_venta,0,',','.')}}</td>
                                     </tr>
                                 @endforeach      
 </tbody>
