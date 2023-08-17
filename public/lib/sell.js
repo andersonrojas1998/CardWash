@@ -31,7 +31,7 @@ $(function(){
                 $("#div-buttons-package").empty();
                
                 $.each(data.paquetes, function(i, paquete){
-                    console.log(paquete);
+                   // console.log(paquete);
                     $("#div-buttons-package").append([
                         $("<label>", {
                             class: "btn btn-outline-primary",
@@ -44,21 +44,22 @@ $(function(){
                                     class: "button_package"
                                 }).attr({
                                     "data-price": paquete.precio,
+                                    "data-percent": paquete.porcentaje,
                                     "data-id": paquete.id_detalle_paquete,
                                     "data-text" : paquete.nombre + " - " + paquete.tipo_vehiculo.descripcion
                                 }),
-                                $("<input>", {
+                               /* $("<input>", {
                                     type: "hidden",
                                     name: "precio_venta_paquete",
                                     value: paquete.precio,
-                                    class: "button_package"
+                                   // class: "button_package"
                                 }),
                                 $("<input>", {
                                     type: "hidden",
                                     name: "porcentaje_paquete",
                                     value: paquete.porcentaje,
-                                    class: "button_package"
-                                }),
+                                  //  class: "button_package"
+                                }),*/
                                 $("<div>", {
                                     class: "card border border-dark text-center text-light",
                                     style: "border-radius: 1em; overflow:hidden; max-width:205.938px;",
@@ -99,6 +100,14 @@ $(function(){
     });
 
     $(document).on("click", ".button_package", function(){
+
+        
+
+        
+
+
+
+
         if(!$("#tr-package").is(":empty")){
             $("#importe_total").val(parseFloat($("#importe_total").val()) - $("#tr-package .btn-remove-package").data("total"));
         }
@@ -117,12 +126,27 @@ $(function(){
             $("<td>", {
                 text: "$ " + $(this).data("price")
             }),
+            $("<input>", {
+                type: "hidden",
+                name: "precio_venta_paquete",
+                value: $(this).data("price"),
+               
+            }),
+            $("<input>", {
+                type: "hidden",
+                name: "porcentaje_paquete",
+                value: $(this).data("percent"),                              
+            }),
             $("<td>", {
                 html: $('<a>',{
                     class: 'btn-remove-package',
                     html: $("<i>", {
                         class : "mdi mdi-minus-box text-danger mdi-24px"
                     })
+
+
+
+                    
                 }).attr({
                     "data-id": $(this).val(),
                     "data-total": $(this).data("price")
