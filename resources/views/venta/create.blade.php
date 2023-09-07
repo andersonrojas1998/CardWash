@@ -4,6 +4,15 @@
     <div class="card-header"><h3>Registrar Venta</h3></div>
     <form id="form_create_sell" action="{{route('venta.store')}}" method="POST">
         {{ csrf_field() }}
+
+        @if (session('fail'))
+            <div class="alert alert-warning">
+               <ul><li>{{ session('fail') }}</li></ul> 
+            </div>
+        @endif
+
+
+
         <fieldset>
             <div class="card-body">
                 <div class="d-flex justify-content-around mb-3">

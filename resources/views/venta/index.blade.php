@@ -25,6 +25,7 @@
             <table class="table table-striped table-sm" id="table-sell">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Fecha</th>
                         <th>Cliente</th>
                         <th>Placa</th>
@@ -40,6 +41,7 @@
                     @foreach($ventas as $venta)
 
                     <tr>
+                        <th>{{$venta->id}}</th>
                         <td>{{date('Y-m-d h:i',strtotime($venta->fecha) )}}</td>
                         <th class="text-primary">{{$venta->nombre_cliente}}</th>
                         <td>

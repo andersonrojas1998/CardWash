@@ -29,8 +29,6 @@ class VentaController extends Controller
         $tipos_vehiculo = TipoVehiculo::all();
         $date = Carbon::now();
         $date->setTimezone('America/Bogota');
-        //$productos = DetalleCompraProductos::select(DB::raw("*, cast(if((detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto)) is null, detalle_compra_productos.cantidad, (detalle_compra_productos.cantidad-(SELECT sum(cantidad) FROM detalle_venta_productos AS dvp WHERE detalle_compra_productos.id_detalle_compra = dvp.id_detalle_producto))) AS unsigned) cantidad_disponible"))->join("producto as p", "p.id", "detalle_compra_productos.id_producto")->where("id_area","!=","3")->get()->where('cantidad_disponible', '>', 0);
-        $area='1,2';
         $productos=DB::SELECT("CALL sp_products('1,2')  ");
         $usuarios = users::select("users.*")->join("roles as r", "cargo", "r.id")->where("r.slug", "Lavador")->get();
         return view('venta.create', compact('tipos_vehiculo', 'date', 'productos', 'usuarios'));
@@ -49,7 +47,11 @@ class VentaController extends Controller
     {
         try{   
                      
-            $status=1;        
+            $status=1; 
+            
+            if(!isset($request->all()['id_producto'])   &&    !isset($request->all()['id_detalle_paquete']) ){
+                return redirect()->back()->with('fail', 'Por favor diligenciar los campos correspondientes.');
+            }
             if(isset($request->all()['id_producto'])   &&    !isset($request->all()['id_detalle_paquete']) ){
                 $status=3;
             }
@@ -59,7 +61,6 @@ class VentaController extends Controller
             $venta->total_venta= floatval($request->all()['importe_total']);
             $venta->precio_venta_paquete= (isset($request->all()['precio_venta_paquete']))? floatval($request->all()['precio_venta_paquete']):0;            
             $venta->porcentaje_paquete= (isset($request->all()['porcentaje_paquete']))?  intval($request->all()['porcentaje_paquete']):0;
-
             $venta->save();
            
             if(isset($request->all()['id_producto'])){
@@ -131,10 +132,11 @@ class VentaController extends Controller
         }
     }
 
-    public function edit()
+    public function edit($id_venta)
     {
         $tipos_vehiculo = TipoVehiculo::all();
-        return view('venta.edit', compact('tipos_vehiculo'));
+        $venta=Venta::find($id_venta);
+        return view('venta.edit', compact('tipos_vehiculo','venta'));
     }
 
 

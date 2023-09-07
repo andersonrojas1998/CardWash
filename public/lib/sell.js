@@ -1,11 +1,15 @@
+
+
 $(function(){
+
+    
 
     $('#table-sell').DataTable(
         {
         dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],}
+        buttons: ['excel', 'pdf', 'print'],
+        order: [[0, 'desc']]
+    }
     );
 
     if($('#succes_message').length)
@@ -47,19 +51,7 @@ $(function(){
                                     "data-percent": paquete.porcentaje,
                                     "data-id": paquete.id_detalle_paquete,
                                     "data-text" : paquete.nombre + " - " + paquete.tipo_vehiculo.descripcion
-                                }),
-                               /* $("<input>", {
-                                    type: "hidden",
-                                    name: "precio_venta_paquete",
-                                    value: paquete.precio,
-                                   // class: "button_package"
-                                }),
-                                $("<input>", {
-                                    type: "hidden",
-                                    name: "porcentaje_paquete",
-                                    value: paquete.porcentaje,
-                                  //  class: "button_package"
-                                }),*/
+                                }),                              
                                 $("<div>", {
                                     class: "card border border-dark text-center text-light",
                                     style: "border-radius: 1em; overflow:hidden; max-width:205.938px;",
@@ -99,15 +91,88 @@ $(function(){
         });
     });
 
+
+
+    if($('.edit-sell').length){
+
+        var pack=$('.edit-sell').attr('data-pack');
+
+        $.ajax({
+            url: $('.edit-sell').attr('data-url-old'),
+            type: "GET",
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+            success: function(data, textStatus, xhr){
+                $("#div-packages").removeClass("d-none");
+                $("#div-buttons-package").empty();
+               
+                $.each(data.paquetes, function(i, paquete){
+                    console.log(paquete);
+                    $("#div-buttons-package").append([
+                        $("<label>", {
+                            class: (paquete.id==pack)? "btn btn-outline-primary active":" btn btn-outline-primary"   ,
+                            //style: "min-width:240.938px;",
+                            html: [
+                                $("<input>", {
+                                    type: "radio",
+                                    name: "id_detalle_paquete",
+                                    value: paquete.id_detalle_paquete,
+                                    class: "button_package"
+                                }).attr({
+                                    "data-price": paquete.precio,
+                                    "data-percent": paquete.porcentaje,
+                                    "data-id": paquete.id_detalle_paquete,
+                                    "data-text" : paquete.nombre + " - " + paquete.tipo_vehiculo.descripcion
+                                }),                              
+                                $("<div>", {
+                                    class: "card border border-dark text-center text-light",
+                                    style: "border-radius: 1em; overflow:hidden; max-width:205.938px;",
+                                    html: [
+                                        $("<div>", {
+                                            class: "card-header px-2",
+                                            style: "background-color: black;",
+                                            html: "<h1 class='m-0 text-uppercase'><strong>" + paquete.nombre + "</strong></h1>"
+                                        }),
+                                        $("<div>", {
+                                            class: "card-body px-2 py-3",
+                                            style: "background: linear-gradient(" + paquete.color.split(',')[0] + ", #a8a4a4); color: " + paquete.color.split(',')[1] + ";",
+                                            html: [
+                                                '<h2 class="m-0"><strong>' + paquete.tipo_vehiculo.descripcion + '</strong></h2>',
+                                                '<h2 class="m-0"><strong>$ ' + paquete.precio + '</strong></h2>',
+                                                '<hr class="my-3">',
+                                                $("<strong>", {
+                                                    class: "card-title",
+                                                    style: "color: #fff; text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;",
+                                                    id: "servicios-" + paquete.id,
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                    ]);
+                    $.each(paquete.servicios_paquete, function(j, servicio_paquete){
+                        $("#servicios-" + paquete.id).append(servicio_paquete.servicio.nombre);
+                        if(paquete.servicios_paquete[j+1]){
+                            $("#servicios-" + paquete.id).append(" - ");
+                        }
+                    })
+                });
+            }
+        });
+    }
+
+
+    
+
+
+
     $(document).on("click", ".button_package", function(){
-
-        
-
-        
-
-
-
-
+                
         if(!$("#tr-package").is(":empty")){
             $("#importe_total").val(parseFloat($("#importe_total").val()) - $("#tr-package .btn-remove-package").data("total"));
         }
@@ -323,12 +388,12 @@ $(function(){
                     link.href = window.URL.createObjectURL(blobURL);
                    
                     var printWindow = window.open(link,"theFrame");
-                //   printWindow.print();
+                   printWindow.print();
                 
                     //Close window once print is finished
-                   /* printWindow.onafterprint = function(){
+                    printWindow.onafterprint = function(){
                        printWindow.close()
-                    };*/
+                    };
                     //window.location.hash = '';
 
                     sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');

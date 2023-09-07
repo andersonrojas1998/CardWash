@@ -113,7 +113,7 @@
             <div class="card-footer">
             <div class="row justify-content-end">
                     <button class="btn btn-success d-print-none" ><i class="mdi  mdi-whatsapp  text-white " onclick="window.print()"></i>  w print-</button> &nbsp;
-                    <button class="btn btn-success d-print-none" ><i class="mdi  mdi-whatsapp  text-white " onclick="printIframe()"></i>  w print-iframe</button> &nbsp;
+                    <!-- <button class="btn btn-success d-print-none" ><i class="mdi  mdi-whatsapp  text-white " onclick="printIframe()"></i>  w print-iframe</button> &nbsp; -->
                     <button class="btn  btn-primary d-print-none btn_generateTicket btn-w-all"  data-id="{{$venta->id}}" > <i class="mdi  mdi-cloud-print text-white "></i>  Imprimir</button>
             </div>
             </div>
@@ -121,7 +121,7 @@
             
 </div>
 
-<iframe id="theFrame" width="400" height="300" name="theFrame"></iframe>
+<iframe id="theFrame" width="700" height="800" name="theFrame" ></iframe>
 
 
 @if(session('success'))
