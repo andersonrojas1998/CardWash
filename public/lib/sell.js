@@ -383,20 +383,39 @@ $(function(){
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                                         
                     var blobURL = new Blob([this.response], {type:'application/pdf'});
-                    var link = document.createElement('a');
-                    console.log(link);
-                    link.href = window.URL.createObjectURL(blobURL);
-                   
+
+             
+                    var link = document.createElement('a');                    
+                    link.href = window.URL.createObjectURL(blobURL);                                       
                     var printWindow = window.open(link,"theFrame");
-                 /*  printWindow.print();
+
+                    console.log(link);
+
+                    /*var newurl = window.URL.createObjectURL(blobURL);
+                    document.getElementById("theFrame").src = newurl;*/
+                   // printWindow.location.reload();
+                 
+
+
+
+                   var objFra = document.createElement('iframe'); // Create an IFrame.
+                    objFra.style.visibility = "hidden"; // Hide the frame.
+                    objFra.src = link; // Set source not done .pdf.
+                    objFra.onload = function(){
+                    objFra.contentWindow.focus(); // Set focus.
+                    objFra.contentWindow.print(); // Print it  
+                    };
+                    document.body.appendChild(objFra);
+
+                   // printWindow.print();
                 
                     //Close window once print is finished
-                    printWindow.onafterprint = function(){
+                  /* printWindow.onafterprint = function(){
                        printWindow.close()
                     };*/
                     //window.location.hash = '';
 
-                    sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
+                  //  sweetMessage('\u00A1Registro exitoso!', '\u00A1 Se ha realizado con \u00E9xito su solicitud!');
                 }
                 if (this.status === 500) { sweetMessage("ERROR!", "Error al generar el pdf !", "error", "#1976D2", false); }
             }

@@ -121,9 +121,14 @@
             
 </div>
 
-<!-- <iframe id="theFrame" width="700" height="800" name="theFrame" ></iframe> -->
+<iframe id="theFrame"  name="theFrame"  width="100%" height="100%" ></iframe>
 
-<embed id="theFrame" width="700" height="800" type="application/pdf" name="theFrame" >
+
+<!--<object data="mypdf.pdf" type="application/pdf" frameborder="0" width="100%" height="600px" style="padding: 20px;">
+    <embed  id="theFrame"  name="theFrame"  width="100%" height="600px"/> 
+</object>-->
+
+<!-- <object  id="theFrame"  type="application/pdf" name="theFrame"   width="100%" height="800px"></object> -->
 
 
 @if(session('success'))
