@@ -121,7 +121,9 @@
             
 </div>
 
-<iframe id="theFrame" width="700" height="800" name="theFrame" ></iframe>
+<!-- <iframe id="theFrame" width="700" height="800" name="theFrame" ></iframe> -->
+
+<embed id="theFrame" width="700" height="800" type="application/pdf" name="theFrame" >
 
 
 @if(session('success'))
