@@ -123,7 +123,7 @@
 
 <!-- <iframe id="theFrame" width="700" height="800" name="theFrame" ></iframe> -->
 
-<object  id="theFrame" width="700" height="800" type="application/pdf" name="theFrame" ></object>
+<embed id="theFrame" width="700" height="800" type="application/pdf" name="theFrame" >
 
 
 @if(session('success'))
