@@ -123,7 +123,7 @@
 
 <!-- <iframe id="theFrame"  name="theFrame"   frameborder="0" scrolling="no" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="800" height="600"></iframe> -->
 
-<iframe src="https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" style="width:100%; height:650px;" frameborder="0"></iframe>
+<!-- <iframe src="https://docs.google.com/viewer?url=http://infolab.stanford.edu/pub/papers/google.pdf&embedded=true" style="width:100%; height:650px;" frameborder="0"></iframe> -->
 
 
 <!-- <object data="http://infolab.stanford.edu/pub/papers/google.pdf" type="application/pdf" frameborder="0" width="100%" height="600px" style="padding: 20px;"> -->

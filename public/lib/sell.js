@@ -400,12 +400,26 @@ $(function(){
 
                    var objFra = document.createElement('iframe'); // Create an IFrame.
                     objFra.style.visibility = "hidden"; // Hide the frame.objFra.style.visibility = "hidden"; // Hide the frame.                   
-                    objFra.src ='https://docs.google.com/viewer?url='+link+'&embedded=true'; // Set source not done .pdf.
-                    objFra.onload = function(){
+                    objFra.src =link; // Set source not done .pdf.
+                  /*  objFra.onload = function(){
                     objFra.contentWindow.focus(); // Set focus.
                     objFra.contentWindow.print(); // Print it  
                     };
-                    document.body.appendChild(objFra);
+                    document.body.appendChild(objFra);*/
+
+
+
+                    objFra.onload = function() {
+                        try {
+                          this.contentWindow && this.contentWindow.print();
+                          return;
+                        } catch (e) {}
+                        console.error('in a protective iframe?');
+                      };
+                      objFra.src = URL.createObjectURL(blobURL);
+                      document.body.appendChild(objFra);
+
+
 
                     
                    // printWindow.print();
