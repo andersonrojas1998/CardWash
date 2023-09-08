@@ -400,7 +400,7 @@ $(function(){
 
                    var objFra = document.createElement('iframe'); // Create an IFrame.
                     objFra.style.visibility = "hidden"; // Hide the frame.objFra.style.visibility = "hidden"; // Hide the frame.                   
-                    objFra.src =link; // Set source not done .pdf.
+                    //objFra.src =link; // Set source not done .pdf.
                   /*  objFra.onload = function(){
                     objFra.contentWindow.focus(); // Set focus.
                     objFra.contentWindow.print(); // Print it  
