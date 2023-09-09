@@ -20,7 +20,7 @@
         }
         @page {            
             margin:0;                                           
-            size:A4;
+            size:A4 landscape;
            
         }  
         
