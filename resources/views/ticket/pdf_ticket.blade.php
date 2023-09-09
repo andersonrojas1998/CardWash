@@ -24,7 +24,7 @@
                 
 
 
-                size:8.27in 13.69in; margin:.5in .5in .5in .5in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0;
+                size:10.27in 14.69in; margin:.5in .5in .5in .5in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0;
 
 
 
