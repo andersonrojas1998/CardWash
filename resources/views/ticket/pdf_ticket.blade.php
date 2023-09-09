@@ -21,10 +21,10 @@
         @page {
                 margin-top: 20px;                
                 padding:0;                
-                
+                /* // font-size:10pt; */
 
-
-                size:10.27in 14.69in; margin:.5in .5in .5in .5in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0;
+                size:210mm 297mm ;
+               /* // size:10.27in 14.69in; margin:.5in .5in .5in .5in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0; */
 
 
 
