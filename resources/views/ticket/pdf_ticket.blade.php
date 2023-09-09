@@ -20,7 +20,7 @@
         }
         @page {            
             margin:0;                                           
-            size:B6;
+            size:B5;
            
         }  
         
@@ -34,7 +34,7 @@
 <div class="w3-row" >
 
 <div class="w3-col  w3-center">
-        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="500" width="400">
+        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="450" width="400">
     </div>
 <div class="w3-row"  >        
     <div class="w3-col w3-center w3-jumbo  " >
