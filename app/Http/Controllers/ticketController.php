@@ -12,7 +12,7 @@ class ticketController extends Controller
       $GAA="Ticket-". $id;    
       $customPaper = array(0,0,500,900);       
       $productos=DB::SELECT("CALL sp_groupSalesProduct('$venta->id')  "); 
-        //return view('ticket.pdf_ticket',compact('venta','productos')); 
+      return view('ticket.pdf_ticket',compact('venta','productos')); 
       $pdf = \PDF::loadView('ticket.pdf_ticket',compact('venta','productos'))->setPaper($customPaper)->stream($GAA.".pdf");
       return $pdf;
      

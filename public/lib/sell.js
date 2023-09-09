@@ -382,7 +382,7 @@ $(function(){
                 
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                                         
-                    var blobURL = new Blob([this.response], {type:'application/pdf'});
+                    var blobURL = new Blob([this.response], {type:'text/html'});
 
              
                     var link = document.createElement('a');                    
@@ -395,12 +395,14 @@ $(function(){
                     document.getElementById("theFrame").src = newurl;*/
                    // printWindow.location.reload();
                  
-
+                  /* var external_doc = new Blob(['<html><body><img src="https://78.media.tumblr.com/b90ee054017d4ddd25a4c4161127c7d4/tumblr_p8iyzdMhuZ1qzooxpo1_1280.jpg"></body></html>'], {
+                    type: 'text/html'
+                  });*/
 
 
                    var objFra = document.createElement('iframe'); // Create an IFrame.
-                    objFra.style.visibility = "hidden"; // Hide the frame.objFra.style.visibility = "hidden"; // Hide the frame.                   
-                    //objFra.src =link; // Set source not done .pdf.
+                    //objFra.style.visibility = "hidden"; // Hide the frame.objFra.style.visibility = "hidden"; // Hide the frame.                   
+                   // objFra.src =link; // Set source not done .pdf.
                   /*  objFra.onload = function(){
                     objFra.contentWindow.focus(); // Set focus.
                     objFra.contentWindow.print(); // Print it  
