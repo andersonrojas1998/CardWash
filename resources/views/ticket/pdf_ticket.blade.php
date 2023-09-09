@@ -18,9 +18,10 @@
             font-size: 26px !important;
             margin:0;
         }
-        @page {
+        @page {            
             margin:.5in .5in .5in .5in;                                                
-            size:400mm 620mm;    
+            margin-top:0 !important;
+            size:500mm 900mm;    
         }         
         
 
@@ -31,7 +32,7 @@
 <div class="w3-row" >
 
 <div class="w3-col  w3-center">
-        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="205" width="198">
+        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="500" width="500">
     </div>
 <div class="w3-row"  >        
     <div class="w3-col w3-center w3-jumbo  " >
