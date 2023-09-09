@@ -20,7 +20,7 @@
         }
         @page {            
             margin:0;                                           
-            size:B5 landscape;
+            size:B6;
            
         }  
         
