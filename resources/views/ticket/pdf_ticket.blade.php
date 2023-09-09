@@ -20,9 +20,11 @@
         }
         @page {            
             margin:.5in .5in .5in .5in;                                                
-            margin-top:0 !important;
-            size:500mm 900mm;    
-        }         
+            size:B7;
+           
+        }  
+        
+       
         
 
         </style> 
