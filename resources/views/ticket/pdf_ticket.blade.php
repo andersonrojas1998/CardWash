@@ -19,8 +19,7 @@
             margin:0;
         }
         @page {            
-            margin:.5in .5in .5in .5in;  
-            margin-top:0;                                              
+            margin:0;                                           
             size:A4;
            
         }  
@@ -35,7 +34,7 @@
 <div class="w3-row" >
 
 <div class="w3-col  w3-center">
-        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="250" width="300">
+        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="500" width="400">
     </div>
 <div class="w3-row"  >        
     <div class="w3-col w3-center w3-jumbo  " >
@@ -60,13 +59,13 @@
 </header>
 <body> 
 <div class="w3-row">
-<table class="w3-table w3-bordered"  >
+<table class="w3-table w3-bordered "  >
 <thead>
-<tr class="w3-jumbo w3-center" >
-            <th class="w3-light-grey padding-1 w3-center" >CONCEPTO</th>
-            <th class="w3-light-grey padding-1 w3-center" >CANT.</th>
-            <th class="w3-light-grey  padding-1 w3-center" >PRECIO</th>            
-            <th class=" w3-light-grey  padding-1 w3-center">IMPORTE</th>            
+<tr class=" w3-center" >
+            <th class="w3-jumbo w3-light-grey padding-1 w3-center" >CONCEPTO</th>
+            <th class=" w3-jumbo w3-light-grey padding-1 w3-center" >CANT.</th>
+            <th class="w3-jumbo w3-light-grey  padding-1 w3-center" >PRECIO</th>            
+            <th class="w3-jumbo w3-light-grey  padding-1 w3-center">IMPORTE</th>            
         </tr>
 </thead>
 <tbody>
@@ -103,7 +102,7 @@
 </tfoot>
 </table>                        
 <hr>
-    <p class="w3-jumbo w3-serif  w3-center" style="margin:15px;">¡ GRACIAS POR SU COMPRA ! </p>
+    <p class="w3-jumbo w3-serif  w3-center w3-margin-top" >¡ GRACIAS POR SU COMPRA ! </p>
     </div> 
     </body>
 </html>
