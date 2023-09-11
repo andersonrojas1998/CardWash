@@ -160,7 +160,9 @@ $(function(){
                         if(paquete.servicios_paquete[j+1]){
                             $("#servicios-" + paquete.id).append(" - ");
                         }
-                    })
+                    });
+
+                    $('.button_package').click();
                 });
             }
         });

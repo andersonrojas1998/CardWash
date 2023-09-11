@@ -11,9 +11,10 @@ use App\Model\users;
 use App\Model\Venta;
 use Carbon\Carbon;
 use Exception;
-use Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
 
 class VentaController extends Controller
 {
@@ -155,13 +156,20 @@ class VentaController extends Controller
     }
 
 
-    public function update(StoreVenta $request, Venta $venta)
+    public function update(Request $request)
     {
+       
+        
         try{
-            dd($request);
-            $venta->update($request->all());
+            $venta=Venta::find(intval($request->all()['id_venta']));            
+            $venta->id_detalle_paquete= intval($request->all()['id_detalle_paquete']);              
+            $venta->total_venta= floatval($request->all()['importe_total']);
+            $venta->precio_venta_paquete= (isset($request->all()['precio_venta_paquete']))? floatval($request->all()['precio_venta_paquete']):0;            
+            $venta->porcentaje_paquete= (isset($request->all()['porcentaje_paquete']))?  intval($request->all()['porcentaje_paquete']):0;
+            $venta->save();                   
+            
+            return redirect()->route('venta.show', [intval($request->all()['id_venta'])])->with('success', 'Se ha modificado la venta satisfactoriamente');
 
-            return redirect()->route('compra.index')->with('success', 'Se ha modificado la venta satisfactoriamente');
         }catch(Exception $e){
             return redirect()->route('compra.index')->with('fail', 'Ha ocurrido un error al guardar<br><br>' . $e->getMessage());
         }

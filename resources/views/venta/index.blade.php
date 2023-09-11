@@ -44,7 +44,7 @@
                         <th>{{$venta->id}}</th>
                         <td>{{date('Y-m-d h:i',strtotime($venta->fecha) )}}</td>
                         <th class="text-primary">{{$venta->nombre_cliente}}</th>
-                        <td>
+                        <th>
                             @if($venta->placa)
                                 <div class="bg-warning py-2 px-1 text-center border border-dark rounded">
                                     {{$venta->placa}}
@@ -52,7 +52,7 @@
                             @else
                                 Sin registro
                             @endif
-                        </td>
+                        </th>
                         <td>
                             @if($venta->numero_telefono)
                                 {{$venta->numero_telefono}}
@@ -87,6 +87,9 @@
                         @if($venta->estado_venta->id<>2 &&  $venta->estado_venta->id<>3)
                             <a id="btn_show_change_user" data-venta="{{ $venta->id }}" data-id="{{ $venta->user->id }}" title="Cambio de Prestador" data-toggle="modal" data-target="#modal_edit_user_service"    data-toggle="tooltip">
                                 <i class="mdi mdi-account-convert text-primary mdi-24px"></i>
+                            </a>
+                            <a href="{{route('venta.edit',[$venta->id])}}" data-venta="{{ $venta->id }}" data-id="{{ $venta->user->id }}" title="Editar Venta"   data-toggle="tooltip">
+                                <i class="mdi mdi-pencil-box-outline text-primary mdi-24px"></i>
                             </a>
                         @endif                           
                             <a href="{{route('venta.show',[$venta->id])}}" title="Ver detalle" data-toggle="tooltip">

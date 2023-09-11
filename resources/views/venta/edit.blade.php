@@ -2,7 +2,8 @@
 @section('content')
 <div class="card">
     <div class="card-header"><h3>Editar Venta  - {{ $venta->id }}</h3></div>
-    <form id="form_create_sell" action="{{route('venta.store')}}" method="POST">
+    <form id="form_create_sell_edit" action="{{route('venta.update')}}" method="POST">
+        <input type="hidden" name="id_venta" value="{{ $venta->id }}">
         {{ csrf_field() }}
 
         @if (session('fail'))
@@ -18,7 +19,7 @@
                 <div class="d-flex justify-content-around mb-3">
                     <div class="col-lg-4">
                         <label for="input_name_customer">Cliente&nbsp;:</label>
-                        <input type="text" disabled id="input_name_customer" name="nombre_cliente" class="form-control text-uppercase" placeholder="Cliente" value="{{ $venta->nombre_cliente }}" required>
+                        <input type="text" disabled id="input_name_customer" name="nombre_cliente" class="form-control text-uppercase" placeholder="Cliente" value="{{ $venta->nombre_cliente }}" >
                         
                     </div>
 
@@ -41,7 +42,7 @@
                     </div>
                     <div class="col-lg-4">
                         <label for="input_phone_number" class="control-label">Telefono&nbsp;:</label>
-                        <input type="number" disabled id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Telefono del cliente" value="{{ $venta->numero_telefono }}" required>                       
+                        <input type="number" disabled id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Telefono del cliente" value="{{ $venta->numero_telefono }}" >                       
                     </div>
                 </div>
 
@@ -141,7 +142,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-center">
-                    <button type="submit" id="btn_create_sell" class="btn btn-success btn-w-all">Generar Venta <i  class="mdi mdi-content-save-all mdi-18px"></i></button>
+                    <button type="submit" id="btn_create_sell_edit" class="btn btn-success btn-w-all">Generar Venta <i  class="mdi mdi-content-save-all mdi-18px"></i></button>
                 </div>
             </div>
         </fieldset>
