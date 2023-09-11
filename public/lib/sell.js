@@ -109,8 +109,10 @@ $(function(){
                 $("#div-packages").removeClass("d-none");
                 $("#div-buttons-package").empty();
                
-                $.each(data.paquetes, function(i, paquete){   
-                    var conditional=(parseInt(paquete.id)== parseInt(pack))? "active":"";                 
+                $.each(data.paquetes, function(i, paquete){  
+                    console.log(parseInt(paquete.id),parseInt(pack)); 
+                    var conditional=(parseInt(paquete.id)== parseInt(pack))? " focus active":"";     
+                    console            
                     $("#div-buttons-package").append([
                         $("<label>", {
                             class: "btn btn-outline-primary" + conditional ,
