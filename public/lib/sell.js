@@ -109,11 +109,10 @@ $(function(){
                 $("#div-packages").removeClass("d-none");
                 $("#div-buttons-package").empty();
                
-                $.each(data.paquetes, function(i, paquete){
-                    console.log(paquete.id,pack);
+                $.each(data.paquetes, function(i, paquete){                    
                     $("#div-buttons-package").append([
                         $("<label>", {
-                            class: (paquete.id==pack)? "btn btn-outline-primary active":" btn btn-outline-primary"   ,
+                            class: (parseInt(paquete.id)== parseInt(pack))? "btn btn-outline-primary active":" btn btn-outline-primary"   ,
                             //style: "min-width:240.938px;",
                             html: [
                                 $("<input>", {
