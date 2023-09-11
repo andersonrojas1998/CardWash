@@ -110,7 +110,7 @@ $(function(){
                 $("#div-buttons-package").empty();
                
                 $.each(data.paquetes, function(i, paquete){
-                    console.log(paquete);
+                    console.log(paquete.id,pack);
                     $("#div-buttons-package").append([
                         $("<label>", {
                             class: (paquete.id==pack)? "btn btn-outline-primary active":" btn btn-outline-primary"   ,
