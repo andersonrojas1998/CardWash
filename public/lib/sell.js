@@ -107,23 +107,23 @@ $(function(){
             headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
             success: function(data, textStatus, xhr){
                 $("#div-packages").removeClass("d-none");
-                $("#div-buttons-package").empty();
-               
-                $.each(data.paquetes, function(i, paquete){  
-                    console.log(parseInt(paquete.id),parseInt(pack)); 
-                    var conditional=(parseInt(paquete.id)== parseInt(pack))? " focus active":"";     
-                    console            
+                $("#div-buttons-package").empty();                               
+                $.each(data.paquetes, function(i, paquete){                      
+                    var conditional="";                
+                    if(parseInt(paquete.id) == parseInt(pack)){                        
+                        conditional+=" active";                                                                          
+                    }
                     $("#div-buttons-package").append([
                         $("<label>", {
-                            class: "btn btn-outline-primary" + conditional ,
-                            //style: "min-width:240.938px;",
+                            class: "btn btn-outline-primary" + conditional ,                            
                             html: [
                                 $("<input>", {
                                     type: "radio",
                                     name: "id_detalle_paquete",
                                     value: paquete.id_detalle_paquete,
-                                    class: "button_package"
+                                    class: "button_package" 
                                 }).attr({
+                                    "data-cc":conditional,
                                     "data-price": paquete.precio,
                                     "data-percent": paquete.porcentaje,
                                     "data-id": paquete.id_detalle_paquete,
@@ -157,6 +157,10 @@ $(function(){
                             ]
                         }),
                     ]);
+
+                    if(parseInt(paquete.id) == parseInt(pack)){                        
+                        $('input[name="id_detalle_paquete"][value='+parseInt(paquete.id_detalle_paquete)+']').prop("checked",true).click(); 
+                    }                    
                     $.each(paquete.servicios_paquete, function(j, servicio_paquete){
                         $("#servicios-" + paquete.id).append(servicio_paquete.servicio.nombre);
                         if(paquete.servicios_paquete[j+1]){
@@ -164,8 +168,7 @@ $(function(){
                         }
                     });
 
-                    $('.button_package').click();
-                });
+                });                
             }
         });
     }
