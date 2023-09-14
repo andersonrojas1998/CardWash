@@ -144,9 +144,9 @@ class VentaController extends Controller
     public function updateUser(){
        
             DB::table('venta')
-            ->where('id', intval(Request::input('id_venta')))            
+            ->where('id', intval(\Request::input('id_venta')))            
             ->update([
-                'id_usuario' =>intval(Request::input('id_user'))                         
+                'id_usuario' =>intval(\Request::input('id_user'))                         
                 ]
         );
         return 1;
