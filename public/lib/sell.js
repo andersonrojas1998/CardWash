@@ -7,7 +7,7 @@ $(function(){
     $('#table-sell').DataTable(
         {
         dom: 'Bfrtip',
-        buttons: ['excel', 'pdf', 'print'],
+        buttons: ['excel', 'pdf'],
         order: [[0, 'desc']]
     }
     );

@@ -20,7 +20,7 @@ class VentaController extends Controller
 {
     public function index()
     {
-        $ventas = Venta::orderBy('id','desc')->get();
+        $ventas =  Venta::orderBy('id','desc')->get()->take(120);
         $usuarios = users::select("users.*")->join("roles as r", "cargo", "r.id")->where("r.slug", "Lavador")->get();
         return view('venta.index', compact('ventas','usuarios'));
     }
