@@ -8,7 +8,7 @@ $(function(){
         {
         dom: 'Bfrtip',
         buttons: ['excel', 'pdf', 'print'],
-      //  order: [[0, 'desc']]
+        order: [[0, 'desc']]
     }
     );
 
