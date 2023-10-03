@@ -133,7 +133,7 @@ $(document).ready(function() {
     $(document).on("click","#btn_createdExpense",function(){ 
         $.ajax({ url:"/reports/concept_expenses",type:"GET",success:function(data){
             let arr=JSON.parse(data);
-            console.log(arr);
+           // console.log(arr);
             for(let i=0;i<arr.length;i++){                    
                 $('#id_concepto').append('<option   value="'+arr[i].id+'" >'+ firstLetter(arr[i].concepto.toLowerCase())  +'</option>');            
             }
@@ -242,7 +242,7 @@ $(document).ready(function() {
                     var text = [];
                     text.push('<div class="chartjs-legend"><ul>');
                     for (var i = 0; i < chart.data.datasets.length; i++) {
-                        console.log(chart.data.datasets[i]); // see what's inside the obj.
+                        //console.log(chart.data.datasets[i]); // see what's inside the obj.
                         text.push("<li>");
                         text.push(
                             '<span style="background-color:' +
@@ -280,7 +280,7 @@ $(document).ready(function() {
             type:"GET",
             success:function(data){                            
                 let arr=JSON.parse(data); 
-                console.log( Object.values(arr.label));
+               // console.log( Object.values(arr.label));
                 var lineData = {
                     labels:  Object.values(arr.label)  ,
                     datasets: [
@@ -342,7 +342,7 @@ $(document).ready(function() {
                         var text = [];
                         text.push('<div class="chartjs-legend"><ul>');
                         for (var i = 0; i < chart.data.datasets.length; i++) {
-                            console.log(chart.data.datasets[i]); // see what's inside the obj.
+                          //  console.log(chart.data.datasets[i]); // see what's inside the obj.
                             text.push("<li>");
                             text.push(
                                 '<span style="background-color:' +
@@ -469,7 +469,7 @@ $(document).ready(function() {
             type:"GET",
             success:function(data){
             let d= JSON.parse(data);
-        console.log(d);
+        //console.log(d);
             var stackedbarChartCanvas = $("#char_utility_month")
             .get(0)
             .getContext("2d");
@@ -552,7 +552,7 @@ $(document).ready(function() {
                     var text = [];
                     text.push('<div class="chartjs-legend"><ul>');
                     for (var i = 0; i < chart.data.datasets.length; i++) {
-                        console.log(chart.data.datasets[i]); // see what's inside the obj.
+                       // console.log(chart.data.datasets[i]); // see what's inside the obj.
                         text.push("<li>");
                         text.push(
                             '<span style="background-color:' +

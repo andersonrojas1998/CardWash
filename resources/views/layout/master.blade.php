@@ -50,7 +50,7 @@
 
   <!-- base js -->
   {!! Html::script('js/app.js') !!}
-  {!! Html::script('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') !!}
+  <!-- {!! Html::script('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') !!} -->
 
 
   {!! Html::script('js/datatable/jquery.datatable.min.js') !!}
@@ -58,8 +58,8 @@
 
 
   {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js') !!}    
-    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js') !!}    
-      {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js') !!}    
+    <!-- {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js') !!}     -->
+      <!-- {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js') !!}     -->
 
   {!! Html::script('js/datatable/datatable.buttons.min.js') !!}
   {!! Html::script('js/datatable/buttons.html5.min.js') !!}            
@@ -78,11 +78,7 @@
   <!-- end plugin js -->
 
   <!-- common js -->
-  {!! Html::script('assets/js/off-canvas.js') !!}
-  {!! Html::script('assets/js/hoverable-collapse.js') !!}
-  {!! Html::script('assets/js/misc.js') !!}
-  {!! Html::script('assets/js/settings.js') !!}
-  {!! Html::script('assets/js/todolist.js') !!}
+
   <!-- end common js -->
 
   @stack('custom-scripts')
