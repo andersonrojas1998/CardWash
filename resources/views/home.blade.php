@@ -35,8 +35,8 @@
 @endsection
 
 @push('plugin-scripts')
-  {!! Html::script('/assets/plugins/chartjs/chart.min.js') !!}
+  <!-- {!! Html::script('/assets/plugins/chartjs/chart.min.js') !!} -->
 @endpush
 @push('custom-scripts') 
-  <script src="{{ asset('/lib/report.js') }}"></script>    
+  <!-- <script src="{{ asset('/lib/report.js') }}"></script>     -->
 @endpush
