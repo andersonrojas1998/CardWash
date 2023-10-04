@@ -50,7 +50,7 @@
 
   <!-- base js -->
   {!! Html::script('js/app.js') !!}
-  <!-- {!! Html::script('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') !!} -->
+  {!! Html::script('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') !!}
 
 
   {!! Html::script('js/datatable/jquery.datatable.min.js') !!}
