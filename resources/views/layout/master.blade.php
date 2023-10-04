@@ -73,6 +73,13 @@
   {!! Html::script('lib/global.js') !!}
   <!-- end base js -->
 
+
+  {!! Html::script('assets/js/off-canvas.js') !!}
+  {!! Html::script('assets/js/hoverable-collapse.js') !!}
+  {!! Html::script('assets/js/misc.js') !!}
+  {!! Html::script('assets/js/settings.js') !!}
+  {!! Html::script('assets/js/todolist.js') !!}
+
   <!-- plugin js -->
   @stack('plugin-scripts')
   <!-- end plugin js -->

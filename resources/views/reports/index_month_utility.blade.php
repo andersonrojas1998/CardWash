@@ -33,10 +33,6 @@
 <script src="{{ asset('/lib/report.js') }}"></script>    
   {!! Html::script('/assets/plugins/chartjs/chart.min.js') !!}
 
-  {!! Html::script('assets/js/off-canvas.js') !!}
-  {!! Html::script('assets/js/hoverable-collapse.js') !!}
-  {!! Html::script('assets/js/misc.js') !!}
-  {!! Html::script('assets/js/settings.js') !!}
-  {!! Html::script('assets/js/todolist.js') !!}
+ 
 @endpush
 
