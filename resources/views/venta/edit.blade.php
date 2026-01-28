@@ -19,7 +19,7 @@
                 <div class="d-flex justify-content-around mb-3">
                     <div class="col-lg-4">
                         <label for="input_name_customer">Cliente&nbsp;:</label>
-                        <input type="text" disabled id="input_name_customer" name="nombre_cliente" class="form-control text-uppercase" placeholder="Cliente" value="{{ $venta->nombre_cliente }}" >
+                        <input type="text"  id="input_name_customer" name="nombre_cliente" class="form-control text-uppercase" placeholder="Cliente" value="{{ $venta->nombre_cliente }}" >
                         
                     </div>
 
@@ -37,12 +37,12 @@
                 <div class="d-flex justify-content-around mb-3 pb-3">
                     <div class="col-lg-4">
                         <label for="input_license_plate" class="control-label">Placa&nbsp;:</label>
-                        <input type="text" disabled id="input_license_plate" name="placa" class="form-control text-uppercase" placeholder="Placa" value="{{$venta->placa}}">
+                        <input type="text"  id="input_license_plate" name="placa" class="form-control text-uppercase" placeholder="Placa" value="{{$venta->placa}}">
                         
                     </div>
                     <div class="col-lg-4">
                         <label for="input_phone_number" class="control-label">Telefono&nbsp;:</label>
-                        <input type="number" disabled id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Telefono del cliente" value="{{ $venta->numero_telefono }}" >                       
+                        <input type="number"  id="input_phone_number" name="numero_telefono" class="form-control text-uppercase" placeholder="Telefono del cliente" value="{{ $venta->numero_telefono }}" >                       
                     </div>
                 </div>
 

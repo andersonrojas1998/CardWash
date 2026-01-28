@@ -161,7 +161,10 @@ class VentaController extends Controller
        
         
         try{
-            $venta=Venta::find(intval($request->all()['id_venta']));            
+            $venta=Venta::find(intval($request->all()['id_venta']));
+            $venta->placa=$request->all()['placa'];
+            $venta->nombre_cliente=$request->all()['nombre_cliente'];
+            $venta->numero_telefono=$request->all()['numero_telefono'];            
             $venta->id_detalle_paquete= intval($request->all()['id_detalle_paquete']);              
             $venta->total_venta= floatval($request->all()['importe_total']);
             $venta->precio_venta_paquete= (isset($request->all()['precio_venta_paquete']))? floatval($request->all()['precio_venta_paquete']):0;            
