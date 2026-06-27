@@ -1,108 +1,237 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Ticket-{{ $venta->id}}  </title>
-        <meta name="description" content="CardWash">
-        <meta name="viewport" content="width=device-width, initial-scale=1">                        
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <style type="text/css">
-        .padding-1{
-            padding:0  !important;            
-            margin:0 !important;  
-        }
-        .padding-2{
-            padding:2px 2px  !important;            
-        }
-        .size-w3{
-            font-size: 26px !important;
-            margin:0;
-        }
-        @page {            
-            margin:0;                                           
-            size:B5;
-           
-        }  
-        
-       
-        
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Ticket #{{ $venta->id }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        </style> 
+        @page {
+            size: 58mm auto;
+            margin: 3mm 2mm;
+        }
+
+        body {
+            width: 54mm;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 8pt;
+            color: #000;
+            background: #fff;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 4px;
+            margin-bottom: 4px;
+        }
+
+        .logo {
+            width: 36mm;
+            height: auto;
+            margin-bottom: 3px;
+        }
+
+        .business-name {
+            font-size: 11pt;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .business-sub {
+            font-size: 7pt;
+            line-height: 1.3;
+        }
+
+        .invoice-title {
+            font-size: 9pt;
+            font-weight: bold;
+            text-align: center;
+            margin: 4px 0 2px;
+            text-transform: uppercase;
+            border-top: 1px dashed #000;
+            border-bottom: 1px dashed #000;
+            padding: 2px 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 7.5pt;
+            padding: 1px 0;
+        }
+
+        .info-row .label { font-weight: bold; }
+
+        .section-divider {
+            border-top: 1px dashed #000;
+            margin: 4px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 7.5pt;
+        }
+
+        thead tr th {
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            padding: 1px 2px;
+            text-align: left;
+            font-size: 7pt;
+        }
+
+        thead tr th:last-child,
+        thead tr th:nth-child(2),
+        thead tr th:nth-child(3) {
+            text-align: right;
+        }
+
+        tbody tr td {
+            padding: 2px 2px;
+            vertical-align: top;
+        }
+
+        tbody tr td:nth-child(2),
+        tbody tr td:nth-child(3),
+        tbody tr td:nth-child(4) {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .td-concepto {
+            max-width: 22mm;
+            word-break: break-word;
+            text-transform: uppercase;
+        }
+
+        .total-row {
+            border-top: 1px solid #000;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+
+        .total-row td {
+            padding: 3px 2px !important;
+        }
+
+        .footer {
+            text-align: center;
+            border-top: 1px dashed #000;
+            margin-top: 5px;
+            padding-top: 4px;
+            font-size: 7.5pt;
+        }
+
+        .footer .gracias {
+            font-size: 9pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer .vuelva {
+            font-size: 7pt;
+            margin-top: 2px;
+        }
+    </style>
 </head>
-<header>
+<body>
 
-<div class="w3-row" >
-
-<div class="w3-col  w3-center">
-        <img class="rounded"  src="{{ asset('/icon.jpg') }}" height="450" width="400">
+    <div class="header">
+        <img class="logo" src="{{ asset('/icon.jpg') }}" alt="Logo">
+        <div class="business-name">JUANCHO'S</div>
+        <div class="business-sub">
+            Lavado y Mantenimiento<br>
+            de Vehiculos Automotores<br>
+            JORGE ANDRES DIAZ CRUZ<br>
+            NIT: 1.144.189.073-3<br>
+            No Responsable del IVA
+        </div>
     </div>
-<div class="w3-row"  >        
-    <div class="w3-col w3-center w3-jumbo  " >
-           <p><b class="w3-jumbo ">JUANCHO'S </b> <br>
-           Lavado y Mantenimiento de Vehiculos Automotores <br>
-            JORGE ANDRES DIAZ CRUZ <br>          
-            Nit: 1.144.189.073-3 <br>            
-           <b class="w3-jumbo "> No Responsable del IVA</b>
-           </p>            
-           <p class="w3-jumbo ">FACTURA DE VENTA  <b> No.  {{ $venta->id}}</b> </p>
+
+    <div class="invoice-title">
+        Factura de Venta No. {{ $venta->id }}
     </div>
-    
 
-    <p class="w3-jumbo  padding-1" style="margin:0;"><b>Fecha :</b>  {{ date('Y-m-d h:i',strtotime($venta->fecha)) }}</p>
-    <p class="w3-jumbo  padding-1" style="margin:0;text-transform: uppercase;"><b>Tipo Vehiculo :</b>   {{  isset($venta->detalle_paquete->tipo_vehiculo->descripcion)? $venta->detalle_paquete->tipo_vehiculo->descripcion:'' }}</p>
-    <p class="w3-jumbo  padding-1" style="margin:0;text-transform: uppercase;"><b>Placa : </b> {{ isset($venta->placa)? $venta->placa:''  }}  </p>    
-    <p class="w3-jumbo  padding-1" style="margin:0;text-transform: uppercase;"><b>Cliente : </b> {{ isset($venta->nombre_cliente)? $venta->nombre_cliente:$venta->nombre_cliente }}  </p>    
-    <p class="w3-jumbo  padding-1" style="margin:0;text-transform: uppercase;"><b>Numero : </b> {{ $venta->numero_telefono }}  </p>    
-</div>
-<hr>    
-</div>
-</header>
-<body> 
-<div class="w3-row">
-<table class="w3-table w3-bordered "  >
-<thead>
-<tr class=" w3-center" >
-            <th class="w3-jumbo w3-light-grey padding-1 w3-center" >CONCEPTO</th>
-            <th class=" w3-jumbo w3-light-grey padding-1 w3-center" >CANT.</th>
-            <th class="w3-jumbo w3-light-grey  padding-1 w3-center" >PRECIO</th>            
-            <th class="w3-jumbo w3-light-grey  padding-1 w3-center">IMPORTE</th>            
-        </tr>
-</thead>
-<tbody>
+    <div style="margin: 4px 0;">
+        <div class="info-row">
+            <span class="label">Fecha:</span>
+            <span>{{ date('d/m/Y H:i', strtotime($venta->fecha)) }}</span>
+        </div>
+        @if(isset($venta->detalle_paquete->tipo_vehiculo->descripcion))
+        <div class="info-row">
+            <span class="label">Vehículo:</span>
+            <span style="text-transform:uppercase;">{{ $venta->detalle_paquete->tipo_vehiculo->descripcion }}</span>
+        </div>
+        @endif
+        @if(isset($venta->placa) && $venta->placa)
+        <div class="info-row">
+            <span class="label">Placa:</span>
+            <span style="text-transform:uppercase;">{{ $venta->placa }}</span>
+        </div>
+        @endif
+        @if(isset($venta->nombre_cliente) && $venta->nombre_cliente)
+        <div class="info-row">
+            <span class="label">Cliente:</span>
+            <span style="text-transform:uppercase;">{{ $venta->nombre_cliente }}</span>
+        </div>
+        @endif
+        @if($venta->numero_telefono)
+        <div class="info-row">
+            <span class="label">Tel:</span>
+            <span>{{ $venta->numero_telefono }}</span>
+        </div>
+        @endif
+    </div>
 
-@php $total = 0; @endphp
-                                @if($venta->detalle_paquete)
-                                    @php
-                                    $total += $venta->detalle_paquete->precio_venta;
-                                    @endphp
-                                    <tr  class="w3-jumbo  padding-1 w3-center">
-                                        <td class="w3-jumbo padding-1 w3-center" style="text-transform: uppercase;" >{{$venta->detalle_paquete->paquete->nombre}}</td>
-                                        <td  class="w3-jumbo padding-1 w3-center">1</td>
-                                        <td class="w3-jumbo padding-1 w3-center">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>                                        
-                                        <td class="w3-jumbo padding-1 w3-center">{{number_format($venta->detalle_paquete->precio_venta,0,',','.')}}</td>
-                                    </tr>
-                                @endif
-                                @foreach($productos as $detalle_venta_producto)
-                                    @php
-                                    $total += $detalle_venta_producto->total_venta;
-                                    @endphp
-                                    <tr  class="w3-jumbo  padding-1 w3-center">
-                                        <td class="w3-jumbo padding-1 w3-center">{{$detalle_venta_producto->producto}}</td>
-                                        <td class="w3-jumbo padding-1 w3-center">{{$detalle_venta_producto->cantidad_vendida}}</td>
-                                        <td class="w3-jumbo padding-1 w3-center">{{ number_format($detalle_venta_producto->precio_venta,0,',','.')}}</td>                                        
-                                        <td class="w3-jumbo padding-1 w3-center">{{ number_format($detalle_venta_producto->total_venta,0,',','.')}}</td>
-                                    </tr>
-                                @endforeach      
-</tbody>
-<tfoot>
-    <tr class="w3-jumbo padding-1">
-        <th class=" w3-jumbo w3-right-align  padding-1" colspan="3">TOTAL &nbsp;</th>
-        <th class="w3-jumbo padding-1">$ {{ number_format($total,0,',','.')}}</th>
-    </tr>
-</tfoot>
-</table>                        
-<hr>
-    <p class="w3-jumbo w3-serif  w3-center w3-margin-top" >¡ GRACIAS POR SU COMPRA ! </p>
-    </div> 
-    </body>
+    <div class="section-divider"></div>
+
+    @php $total = 0; @endphp
+    <table>
+        <thead>
+            <tr>
+                <th style="width:45%;">Concepto</th>
+                <th style="width:10%;">Cant</th>
+                <th style="width:20%;">P.Unit</th>
+                <th style="width:25%;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if($venta->detalle_paquete)
+                @php $total += $venta->detalle_paquete->precio_venta; @endphp
+                <tr>
+                    <td class="td-concepto">{{ $venta->detalle_paquete->paquete->nombre }}</td>
+                    <td>1</td>
+                    <td>{{ number_format($venta->detalle_paquete->precio_venta, 0, ',', '.') }}</td>
+                    <td>{{ number_format($venta->detalle_paquete->precio_venta, 0, ',', '.') }}</td>
+                </tr>
+            @endif
+            @foreach($productos as $dp)
+                @php $total += $dp->total_venta; @endphp
+                <tr>
+                    <td class="td-concepto">{{ $dp->producto }}</td>
+                    <td>{{ $dp->cantidad_vendida }}</td>
+                    <td>{{ number_format($dp->precio_venta, 0, ',', '.') }}</td>
+                    <td>{{ number_format($dp->total_venta, 0, ',', '.') }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr class="total-row">
+                <td colspan="3" style="text-align:right; padding-right:4px;">TOTAL:</td>
+                <td>$ {{ number_format($total, 0, ',', '.') }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="footer">
+        <div class="gracias">¡ Gracias por su visita !</div>
+        <div class="vuelva">Vuelva pronto.</div>
+    </div>
+
+</body>
 </html>
