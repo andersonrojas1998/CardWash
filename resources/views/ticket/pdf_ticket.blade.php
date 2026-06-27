@@ -244,11 +244,7 @@
         <div class="vuelva">Vuelva pronto.</div>
     </div>
 
-    <script>
-        window.onload = function() {
-            window.print();
-        };
-    </script>
+   
 
 </body>
 </html>
