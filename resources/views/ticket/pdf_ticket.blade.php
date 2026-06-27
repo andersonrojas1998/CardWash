@@ -8,7 +8,12 @@
 
         @page {
             size: 58mm auto;
-            margin: 3mm 2mm;
+            margin: 2mm 2mm 4mm 2mm;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
         }
 
         body {
@@ -17,6 +22,15 @@
             font-size: 8pt;
             color: #000;
             background: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media print {
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
         }
 
         .header {
@@ -27,9 +41,11 @@
         }
 
         .logo {
-            width: 36mm;
-            height: auto;
-            margin-bottom: 3px;
+            display: block;
+            margin: 0 auto 3px;
+            width: 24mm;
+            height: 24mm;
+            object-fit: contain;
         }
 
         .business-name {
@@ -79,33 +95,28 @@
             font-weight: bold;
             text-transform: uppercase;
             border-bottom: 1px solid #000;
-            padding: 1px 2px;
+            padding: 1px 0;
             text-align: left;
             font-size: 7pt;
         }
 
-        thead tr th:last-child,
-        thead tr th:nth-child(2),
-        thead tr th:nth-child(3) {
-            text-align: right;
-        }
+        .th-right { text-align: right; }
 
-        tbody tr td {
-            padding: 2px 2px;
-            vertical-align: top;
-        }
-
-        tbody tr td:nth-child(2),
-        tbody tr td:nth-child(3),
-        tbody tr td:nth-child(4) {
-            text-align: right;
-            white-space: nowrap;
-        }
-
+        /* Fila nombre del item */
         .td-concepto {
-            max-width: 22mm;
-            word-break: break-word;
             text-transform: uppercase;
+            font-weight: bold;
+            padding: 2px 0 0 0;
+            word-break: break-word;
+        }
+
+        /* Fila cant x precio = total (segunda línea) */
+        .td-detalle {
+            color: #333;
+            padding: 0 0 2px 0;
+            text-align: right;
+            font-size: 7pt;
+            border-bottom: 1px dotted #ccc;
         }
 
         .total-row {
@@ -115,7 +126,7 @@
         }
 
         .total-row td {
-            padding: 3px 2px !important;
+            padding: 3px 0 !important;
         }
 
         .footer {
@@ -194,10 +205,8 @@
     <table>
         <thead>
             <tr>
-                <th style="width:45%;">Concepto</th>
-                <th style="width:10%;">Cant</th>
-                <th style="width:20%;">P.Unit</th>
-                <th style="width:25%;">Total</th>
+                <th style="width:60%;">Descripcion</th>
+                <th class="th-right" style="width:40%;">Cant x Precio</th>
             </tr>
         </thead>
         <tbody>
@@ -205,25 +214,27 @@
                 @php $total += $venta->detalle_paquete->precio_venta; @endphp
                 <tr>
                     <td class="td-concepto">{{ $venta->detalle_paquete->paquete->nombre }}</td>
-                    <td>1</td>
-                    <td>{{ number_format($venta->detalle_paquete->precio_venta, 0, ',', '.') }}</td>
-                    <td>{{ number_format($venta->detalle_paquete->precio_venta, 0, ',', '.') }}</td>
+                    <td class="td-detalle">
+                        1 x {{ number_format($venta->detalle_paquete->precio_venta, 0, ',', '.') }}
+                        = <b>{{ number_format($venta->detalle_paquete->precio_venta, 0, ',', '.') }}</b>
+                    </td>
                 </tr>
             @endif
             @foreach($productos as $dp)
                 @php $total += $dp->total_venta; @endphp
                 <tr>
-                    <td class="td-concepto">{{ $dp->producto }}</td>
-                    <td>{{ $dp->cantidad_vendida }}</td>
-                    <td>{{ number_format($dp->precio_venta, 0, ',', '.') }}</td>
-                    <td>{{ number_format($dp->total_venta, 0, ',', '.') }}</td>
+                    <td class="td-concepto" style="text-transform:uppercase;">{{ $dp->producto }}</td>
+                    <td class="td-detalle">
+                        {{ $dp->cantidad_vendida }} x {{ number_format($dp->precio_venta, 0, ',', '.') }}
+                        = <b>{{ number_format($dp->total_venta, 0, ',', '.') }}</b>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
         <tfoot>
             <tr class="total-row">
-                <td colspan="3" style="text-align:right; padding-right:4px;">TOTAL:</td>
-                <td>$ {{ number_format($total, 0, ',', '.') }}</td>
+                <td style="text-align:right;">TOTAL:</td>
+                <td style="text-align:right;">$ {{ number_format($total, 0, ',', '.') }}</td>
             </tr>
         </tfoot>
     </table>
