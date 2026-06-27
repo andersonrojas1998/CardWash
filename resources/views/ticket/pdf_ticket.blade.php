@@ -19,7 +19,7 @@
         body {
             width: 54mm;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 8pt;
+            font-size: 10pt;
             color: #000;
             background: #fff;
             margin: 0;
@@ -49,19 +49,19 @@
         }
 
         .business-name {
-            font-size: 11pt;
+            font-size: 14pt;
             font-weight: bold;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
         .business-sub {
-            font-size: 7pt;
-            line-height: 1.3;
+            font-size: 9pt;
+            line-height: 1.4;
         }
 
         .invoice-title {
-            font-size: 9pt;
+            font-size: 11pt;
             font-weight: bold;
             text-align: center;
             margin: 4px 0 2px;
@@ -74,7 +74,7 @@
         .info-row {
             display: flex;
             justify-content: space-between;
-            font-size: 7.5pt;
+            font-size: 9.5pt;
             padding: 1px 0;
         }
 
@@ -88,7 +88,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 7.5pt;
+            font-size: 9.5pt;
         }
 
         thead tr th {
@@ -97,7 +97,7 @@
             border-bottom: 1px solid #000;
             padding: 1px 0;
             text-align: left;
-            font-size: 7pt;
+            font-size: 9pt;
         }
 
         .th-right { text-align: right; }
@@ -115,14 +115,14 @@
             color: #333;
             padding: 0 0 2px 0;
             text-align: right;
-            font-size: 7pt;
+            font-size: 9pt;
             border-bottom: 1px dotted #ccc;
         }
 
         .total-row {
             border-top: 1px solid #000;
             font-weight: bold;
-            font-size: 9pt;
+            font-size: 12pt;
         }
 
         .total-row td {
@@ -134,18 +134,18 @@
             border-top: 1px dashed #000;
             margin-top: 5px;
             padding-top: 4px;
-            font-size: 7.5pt;
+            font-size: 9pt;
         }
 
         .footer .gracias {
-            font-size: 9pt;
+            font-size: 11pt;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .footer .vuelva {
-            font-size: 7pt;
+            font-size: 9pt;
             margin-top: 2px;
         }
     </style>
@@ -243,6 +243,12 @@
         <div class="gracias">¡ Gracias por su visita !</div>
         <div class="vuelva">Vuelva pronto.</div>
     </div>
+
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 
 </body>
 </html>
