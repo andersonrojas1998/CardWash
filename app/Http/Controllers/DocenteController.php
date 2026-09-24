@@ -32,7 +32,7 @@ class DocenteController extends Controller
             foreach($us->RolesUser as $i=>$v){
                 $name[]=$v->rol->name;
             }         
-            $data['data'][$key]['cargo']=  implode($name,' - ');
+            $data['data'][$key]['cargo']=  implode(' - ', $name);
             $data['data'][$key]['estado']=$us->estado;            
         }      
         return json_encode($data);          
