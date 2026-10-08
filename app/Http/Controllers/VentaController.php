@@ -20,9 +20,72 @@ class VentaController extends Controller
 {
     public function index()
     {
-        $ventas =  Venta::orderBy('id','desc')->get()->take(120);
         $usuarios = users::select("users.*")->join("roles as r", "cargo", "r.id")->where("r.slug", "Lavador")->get();
-        return view('venta.index', compact('ventas','usuarios'));
+        return view('venta.index', compact('usuarios'));
+    }
+
+    public function dataServicios()
+    {
+        $ventas = Venta::with([
+                'detalle_paquete.paquete',
+                'detalle_paquete.tipo_vehiculo',
+                'user',
+                'estado_venta'
+            ])
+            ->whereNotNull('id_detalle_paquete')
+            ->orderBy('id', 'desc')
+            ->take(500)
+            ->get();
+
+        $data = $ventas->map(function ($v) {
+            return [
+                'id'            => $v->id,
+                'fecha'         => date('d/m/Y H:i', strtotime($v->fecha)),
+                'cliente'       => $v->nombre_cliente ?? '-',
+                'placa'         => $v->placa ?? '-',
+                'tipo_vehiculo' => optional(optional($v->detalle_paquete)->tipo_vehiculo)->descripcion ?? '-',
+                'paquete'       => optional(optional($v->detalle_paquete)->paquete)->nombre ?? '-',
+                'atendido_por'  => optional($v->user)->name ?? '-',
+                'total'         => (float) $v->total_venta,
+                'estado'        => optional($v->estado_venta)->nombre ?? '-',
+                'id_estado'     => $v->id_estado_venta,
+                'id_usuario'    => $v->id_usuario,
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+
+    public function dataProductos()
+    {
+        $ventas = Venta::with([
+                'detalle_venta_productos.detalle_compra_productos.producto',
+                'user',
+                'estado_venta'
+            ])
+            ->whereNull('id_detalle_paquete')
+            ->orderBy('id', 'desc')
+            ->take(500)
+            ->get();
+
+        $data = $ventas->map(function ($v) {
+            $productos = $v->detalle_venta_productos->map(function ($dvp) {
+                return optional(optional($dvp->detalle_compra_productos)->producto)->nombre ?? null;
+            })->filter()->unique()->implode(', ');
+
+            return [
+                'id'           => $v->id,
+                'fecha'        => date('d/m/Y H:i', strtotime($v->fecha)),
+                'cliente'      => $v->nombre_cliente ?? '-',
+                'productos'    => $productos ?: '-',
+                'atendido_por' => optional($v->user)->name ?? '-',
+                'total'        => (float) $v->total_venta,
+                'estado'       => optional($v->estado_venta)->nombre ?? '-',
+                'id_estado'    => $v->id_estado_venta,
+            ];
+        });
+
+        return response()->json(['data' => $data]);
     }
 
     public function create()

@@ -364,27 +364,26 @@ var loadAreaOptions = function(){
                 }
             }
         },
+        autoWidth: false,
         columnDefs: [
-            {"className": "text-center", "targets": "_all"},
+            {"className": "text-center align-middle", "targets": "_all"},
         ],
         columns:[
-            {"data": "imagen",render(data){
-                if(data){
-                    return '<img src="'+data+'" alt="imagen" style="width:70px;height:70px;object-fit:cover;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);">';
-                }
-                return '<span class="mdi mdi-image-off-outline mdi-36px text-muted" title="Sin imagen"></span>';
+            {"data": "imagen", "width": "80px", render(data){
+                var src = data ? data : '/img/default-product.svg';
+                return '<img src="'+src+'" alt="producto" style="width:60px;height:60px;object-fit:cover;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);" onerror="this.src=\'/img/default-product.svg\'">';
             }},
-            {"data": "producto", render(data){ return '<b class="text-primary text-uppercase"> '+ data +'</b>' ;  }},
-            {"data": "tipo_producto", render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  } },            
-            {"data": "marca", render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  }},            
-            {"data": "unidad_medida",render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  }},
-            {"data": "presentacion" , render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  }},
-            { "data": "cant_disponible",render(data){ 
+            {"data": "producto", "width": "22%", render(data){ return '<b class="text-primary text-uppercase">'+ data +'</b>' ;  }},
+            {"data": "tipo_producto", "width": "13%", render(data){ return '<span class="text-uppercase">'+ data +'</span>' ;  } },
+            {"data": "marca", "width": "10%", render(data){ return '<span class="text-uppercase">'+ data +'</span>' ;  }},
+            {"data": "unidad_medida", "width": "11%", render(data){ return '<span class="text-uppercase">'+ data +'</span>' ;  }},
+            {"data": "presentacion", "width": "10%", render(data){ return '<span class="text-uppercase">'+ data +'</span>' ;  }},
+            { "data": "cant_disponible", "width": "9%", render(data){
                 let color=(data<5)? 'badge-warning':'badge-success';
-                return '<h4><label class="badge text-white '+color+'">'+ data  +'</label></h4>';
+                return '<span class="badge text-white '+color+'" style="font-size:13px;padding:5px 8px;">'+ data +'</span>';
              }},
-            { "data": "precio_venta",render(data){ return  '<b class="text-danger"> '+ new Intl.NumberFormat().format(parseInt(data) )+'</b>' ; }},            
-            {"data": "actions", render(data, ps, producto){
+            { "data": "precio_venta", "width": "10%", render(data){ return '<b class="text-danger">$'+ new Intl.NumberFormat('es-CO').format(parseInt(data))+'</b>' ; }},
+            {"data": "actions", "width": "55px", render(data, ps, producto){
                 
                 let div = $('<div>',{
                     html: $("<a>", {
