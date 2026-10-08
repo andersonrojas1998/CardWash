@@ -12,6 +12,8 @@ class Venta extends Model
         'nombre_cliente',
         'placa',
         'numero_telefono',
+        'km_actual',
+        'km_proximo_cambio',
         'id_detalle_paquete',
         'id_usuario',
         "id_estado_venta"

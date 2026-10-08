@@ -6,6 +6,7 @@ use App\Model\Producto;
 use App\Model\Tipo_Producto;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -14,27 +15,32 @@ class ProductoController extends Controller
     }
 
     public function dataTable($area){
-  
+
         $products=[];
        if(intval($area) == -1){
-             $products=DB::SELECT("CALL sp_products_all()  ");        
-             //$products=Producto::select(DB::raw("*, CAST(if((SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id) IS NULL, 0, (SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id)) AS unsigned) cant_disponible"))->get();
+             $products=DB::SELECT("CALL sp_products_all()  ");
         }else{
             $products=DB::SELECT("CALL sp_products('$area')  ");
-            //$products= Producto::select(DB::raw("*, CAST(if((SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id) IS NULL, 0, (SELECT sum(dcp.cantidad) FROM detalle_compra_productos AS dcp WHERE dcp.id_producto = producto.id) - (SELECT sum(dvp.cantidad) FROM detalle_venta_productos AS dvp INNER JOIN detalle_compra_productos AS dcp ON dvp.id_detalle_producto=dcp.id_detalle_compra WHERE dcp.id_producto = producto.id)) AS unsigned) cant_disponible"))->where("id_area", $area)->get();
         }
+
+        $imagenes = Producto::pluck('imagen', 'id');
+
        $data = [
             "status" => "200",
             "data" => []
         ];
         foreach ($products as $producto ) {
-
-            //if(intval($area) == -1){
             $producto->presentacion;
             $producto->tipo_producto;
             $producto->marca;
             $producto->unidad_medida;
-            //}
+            $imagenPath = $imagenes[$producto->id] ?? null;
+            // Ignorar el placeholder legacy; solo mostrar imágenes reales subidas
+            if ($imagenPath && $imagenPath[0] !== '/') {
+                $producto->imagen = asset('storage/' . $imagenPath);
+            } else {
+                $producto->imagen = null;
+            }
            array_push($data['data'], $producto);
         }
 
@@ -48,8 +54,10 @@ class ProductoController extends Controller
 
     public function store(StoreProducto $request){
         try{
-          
-            $producto = new Producto($request->all());               
+            $producto = new Producto($request->except('imagen'));
+            if ($request->hasFile('imagen')) {
+                $producto->imagen = $request->file('imagen')->store('productos', 'public');
+            }
             $producto->save();
 
             return redirect()->route('producto.index')->with('success', 'Se ha creado el producto "' . $producto->nombre . '" satisfactoriamente.');
@@ -66,7 +74,15 @@ class ProductoController extends Controller
     public function update(StoreProducto $request){
         try{
             $producto = Producto::find($request->input('id'));
-            $producto->update($request->all());
+            $data = $request->except(['imagen', 'id']);
+            if ($request->hasFile('imagen')) {
+                // Solo eliminar si es ruta de storage (no rutas legacy /images/...)
+                if ($producto->imagen && $producto->imagen[0] !== '/') {
+                    Storage::disk('public')->delete($producto->imagen);
+                }
+                $data['imagen'] = $request->file('imagen')->store('productos', 'public');
+            }
+            $producto->update($data);
 
             return redirect()->route('producto.index')->with('success', 'Se ha modificado el producto "' . $producto->nombre . '" satisfactoriamente.');
         }catch(Exception $e){

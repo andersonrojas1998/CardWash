@@ -137,6 +137,29 @@ $(function(){
         $('#select-presentation-edit').val($(this).data('id-presentacion'));
         $('.select2-edit').trigger('change.select2');
         $("#input-price-edit").val($(this).data('precio_venta'));
+        // Mostrar imagen actual en modal de edición
+        var img = $(this).data('imagen');
+        if(img){
+            $('#preview-edit-img').attr('src', img).show();
+            $('#preview-edit-placeholder').hide();
+        } else {
+            $('#preview-edit-img').attr('src','').hide();
+            $('#preview-edit-placeholder').show();
+        }
+        $('#input-imagen-edit').val('');
+    });
+
+    // Preview imagen en modal editar
+    $(document).on('change', '#input-imagen-edit', function(){
+        var file = this.files[0];
+        if(file){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#preview-edit-img').attr('src', e.target.result).show();
+                $('#preview-edit-placeholder').hide();
+            };
+            reader.readAsDataURL(file);
+        }
     });
 
     $.ajax({
@@ -345,7 +368,12 @@ var loadAreaOptions = function(){
             {"className": "text-center", "targets": "_all"},
         ],
         columns:[
-            {"data": "imagen",render(data){ return '<img src="'+ data+'" alt="image"  width="150"  height="150">'; }},
+            {"data": "imagen",render(data){
+                if(data){
+                    return '<img src="'+data+'" alt="imagen" style="width:70px;height:70px;object-fit:cover;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);">';
+                }
+                return '<span class="mdi mdi-image-off-outline mdi-36px text-muted" title="Sin imagen"></span>';
+            }},
             {"data": "producto", render(data){ return '<b class="text-primary text-uppercase"> '+ data +'</b>' ;  }},
             {"data": "tipo_producto", render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  } },            
             {"data": "marca", render(data){ return '<p class="text-uppercase"> '+ data +'</p>' ;  }},            
@@ -373,6 +401,7 @@ var loadAreaOptions = function(){
                         'data-id-unidad-medida': producto.id_unidad_medida,
                         'data-id-presentacion': producto.id_presentacion,
                         'data-precio_venta': producto.precio_venta,
+                        'data-imagen': producto.imagen || '',
                         'data-toggle': 'modal',
                         'data-target': '#modal_edit_product',
                     })

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Model\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ticketController extends Controller
 {
@@ -17,6 +18,22 @@ class ticketController extends Controller
       return $pdf;
      
     }
+    public function etiquetaAceite($id)
+    {
+        $venta    = Venta::find($id);
+        $productos = DB::SELECT("CALL sp_groupSalesProduct('$venta->id')");
+        return view('ticket.etiqueta_aceite', compact('venta', 'productos'));
+    }
+
+    public function historialVehiculo($placa)
+    {
+        $placa  = strtoupper($placa);
+        $ventas = Venta::where('placa', $placa)
+                    ->orderBy('id', 'desc')
+                    ->get();
+        return view('ticket.historial', compact('ventas', 'placa'));
+    }
+
     public function sendMessageWpp(){
 
   

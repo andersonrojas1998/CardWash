@@ -7,7 +7,7 @@
                 </button>
                 <h5 class="modal-title text-uppercase text-center text-light">Editar producto&nbsp;<span class="mdi mdi-package"></span></h5>
             </div>
-            <form id="edit-product-form" action="{{ route('producto.update') }}" method="POST">
+            <form id="edit-product-form" action="{{ route('producto.update') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 <fieldset>
@@ -54,6 +54,23 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- IMAGEN DEL PRODUCTO --}}
+                        <div class="row mb-3 mt-3">
+                            <div class="col-lg-12">
+                                <label class="control-label">Imagen del producto :</label>
+                                <div class="d-flex align-items-center" style="gap:15px;">
+                                    <div id="preview-edit-wrap" style="width:90px;height:90px;border:2px dashed #ccc;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f8f9fa;flex-shrink:0;">
+                                        <span id="preview-edit-placeholder" class="mdi mdi-image-outline mdi-36px text-muted"></span>
+                                        <img id="preview-edit-img" src="" alt="preview" style="width:100%;height:100%;object-fit:cover;display:none;">
+                                    </div>
+                                    <div>
+                                        <input type="file" name="imagen" id="input-imagen-edit" accept="image/*" class="form-control-file">
+                                        <small class="text-muted">Dejar vacío para mantener la imagen actual.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row mt-4">
                             <div class="col-lg-4">
                                 <label class="control-label">Unidad de medida&nbsp;:</label>

@@ -52,6 +52,26 @@
                     </div>
                 </div>
 
+                {{-- Campos km para ficha de aceite --}}
+                <div class="card mt-2 mb-3 border-warning" id="card-km-aceite" style="display:none!important;">
+                    <div class="card-header text-center bg-warning text-dark">
+                        <i class="mdi mdi-oil"></i>&nbsp;<strong>Datos para Ficha de Cambio de Aceite</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around">
+                            <div class="col-lg-4">
+                                <label class="control-label">Km Actual&nbsp;:</label>
+                                <input type="number" name="km_actual" id="input_km_actual" class="form-control" placeholder="Ej: 80000" value="{{old('km_actual')}}">
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="control-label">Km Próximo Cambio&nbsp;:</label>
+                                <input type="number" name="km_proximo_cambio" id="input_km_proximo" class="form-control" placeholder="Ej: 85000" value="{{old('km_proximo_cambio')}}">
+                            </div>
+                        </div>
+                        <p class="text-center text-muted mt-2 mb-0"><small>Al guardar la venta podrás imprimir la etiqueta para el vidrio del vehículo</small></p>
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-around mb-3 pb-3">
                     <div class="col-lg-4">
                         <label>¿Qui&eacute;n presta el servicio?&nbsp;:</label>
@@ -189,4 +209,29 @@
     {!! Html::script('js/validate.min.js') !!}
     {!! Html::script('js/validator.messages.js') !!}
     {!! Html::script('lib/sell.js') !!}
+    <script>
+        // Mostrar card km cuando hay productos en el carrito
+        function checkKmCard() {
+            var rows = $('#table-products tbody tr').not('#tr-package').length;
+            var pkgRow = $('#tr-package td').length;
+            if (rows > 0 || pkgRow > 0) {
+                $('#card-km-aceite').show();
+            } else {
+                $('#card-km-aceite').hide();
+            }
+        }
+        $(document).on('click', '#btn-add-products', function() {
+            setTimeout(checkKmCard, 300);
+        });
+        $(document).on('click', '.btn-remove-product', function() {
+            setTimeout(checkKmCard, 300);
+        });
+        // Auto-calcular próximo km (km actual + 5000)
+        $('#input_km_actual').on('input', function() {
+            var kmActual = parseInt($(this).val());
+            if (!isNaN(kmActual) && $('#input_km_proximo').val() === '') {
+                $('#input_km_proximo').val(kmActual + 5000);
+            }
+        });
+    </script>
 @endpush

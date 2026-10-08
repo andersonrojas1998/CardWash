@@ -110,10 +110,23 @@
                 
             </div>
 
+            @if($venta->km_actual)
+            <div class="card mx-5 mb-3 border-warning">
+                <div class="card-body d-flex justify-content-between align-items-center py-2">
+                    <div>
+                        <strong><i class="mdi mdi-oil"></i> Ficha de Aceite</strong>&nbsp;
+                        <span class="text-muted">Km actual: {{ number_format($venta->km_actual,0,',','.') }} &bull; Próximo: {{ number_format($venta->km_proximo_cambio,0,',','.') }}</span>
+                    </div>
+                    <a href="/etiquetaAceite/{{$venta->id}}" target="_blank" class="btn btn-warning btn-sm">
+                        <i class="mdi mdi-sticker-outline"></i>&nbsp;Imprimir Etiqueta
+                    </a>
+                </div>
+            </div>
+            @endif
+
             <div class="card-footer">
             <div class="row justify-content-end">
-                    <!-- <button class="btn btn-success d-print-none" ><i class="mdi  mdi-whatsapp  text-white " onclick="window.print()"></i>  Enviar Mensaje</button> &nbsp; -->
-                    <button class="btn  btn-primary d-print-none btn_generateTicket btn-w-all"  data-id="{{$venta->id}}" > <i class="mdi  mdi-cloud-print text-white "></i>  Imprimir</button>
+                    <button class="btn btn-primary d-print-none btn_generateTicket btn-w-all" data-id="{{$venta->id}}"><i class="mdi mdi-cloud-print text-white"></i>&nbsp;Imprimir Factura</button>
             </div>
             </div>
            

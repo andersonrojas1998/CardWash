@@ -26,6 +26,14 @@
           where tb3.user_id='$idUser' ORDER BY tb1.nombre ASC ");
  @endphp
  
+ {{-- LUBRITECA POS --}}
+ <li class="nav-item">
+     <a class="nav-link" href="{{ url('lubriteca') }}">
+         <i class="menu-icon mdi mdi-oil"></i>
+         <span class="menu-title">Lubriteca</span>
+     </a>
+ </li>
+
  @foreach($menus as $menu)
  <li class="nav-item {{ active_class(['basic-ui/*']) }}">
       <a class="nav-link" data-toggle="collapse" href="#{{$menu->nombre}}" aria-expanded="{{ is_active_route(['basic-ui/*']) }}" aria-controls="basic-ui">

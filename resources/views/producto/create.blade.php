@@ -116,6 +116,37 @@
                    
 
 <hr>
+                    {{-- IMAGEN DEL PRODUCTO --}}
+                    <div class="row mb-3">
+                        <div class="col-lg-12">
+                            <label class="control-label">Imagen del producto :</label>
+                            <div class="d-flex align-items-center gap-3">
+                                <div id="preview-create-wrap" style="width:90px;height:90px;border:2px dashed #ccc;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
+                                    <span id="preview-create-placeholder" class="mdi mdi-image-outline mdi-36px text-muted"></span>
+                                    <img id="preview-create-img" src="" alt="preview" style="width:100%;height:100%;object-fit:cover;display:none;">
+                                </div>
+                                <div>
+                                    <input type="file" name="imagen" id="input-imagen-create" accept="image/*" class="form-control-file">
+                                    <small class="text-muted">JPG, PNG o WEBP. Máx 2MB.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                    document.getElementById('input-imagen-create').addEventListener('change', function(){
+                        var file = this.files[0];
+                        if(file){
+                            var reader = new FileReader();
+                            reader.onload = function(e){
+                                document.getElementById('preview-create-img').src = e.target.result;
+                                document.getElementById('preview-create-img').style.display = 'block';
+                                document.getElementById('preview-create-placeholder').style.display = 'none';
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                    </script>
+
                     <div class="row">
 
                     <div class="col-lg-12">
