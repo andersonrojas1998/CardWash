@@ -8,10 +8,10 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         /* ══════════════════════════════════════════
-           PANTALLA: preview con fondo gris
+           PANTALLA: preview ampliado con fondo gris
            ══════════════════════════════════════════ */
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
             background: #DDDFE4;
             display: flex;
             flex-direction: column;
@@ -26,17 +26,18 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 12px;
+            max-width: 440px;
+            margin-bottom: 18px;
         }
-        .actions-bar h4 { font-size: .9rem; font-weight: 800; color: #1A202C; }
+        .actions-bar h4 { font-family: Arial, sans-serif; font-size: .9rem; font-weight: 800; color: #1A202C; }
+        .actions-bar small { display: block; font-weight: 500; color: #6B7280; font-size: .7rem; margin-top: 2px; }
         .actions-bar .btns { display: flex; gap: 8px; }
 
         .btn-back {
             display: inline-flex; align-items: center; gap: 5px;
             padding: 8px 14px; border: 1.5px solid #D1D5DB;
             border-radius: 8px; background: #fff;
-            color: #374151; font-size: .78rem; font-weight: 600;
+            color: #374151; font-family: Arial, sans-serif; font-size: .78rem; font-weight: 600;
             text-decoration: none; cursor: pointer;
         }
         .btn-back:hover { border-color: #6B7280; text-decoration: none; }
@@ -45,191 +46,158 @@
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px; background: #C0392B; color: #fff;
             border: none; border-radius: 8px;
-            font-size: .78rem; font-weight: 800; cursor: pointer;
+            font-family: Arial, sans-serif; font-size: .78rem; font-weight: 800; cursor: pointer;
         }
         .btn-print:hover { background: #9B2335; }
 
-        /* ── Sombra en pantalla ── */
+        /* ── Contenedor del preview: reserva el espacio del sticker escalado ── */
         .sticker-wrap {
-            box-shadow: 0 14px 45px rgba(0,0,0,.28), 0 3px 10px rgba(0,0,0,.12);
-            border-radius: 10px;
-            overflow: hidden;
+            --zoom: 2.2;
+            width: calc(50mm * var(--zoom));
+            height: calc(25mm * var(--zoom));
+        }
+        .sticker-wrap .sticker {
+            transform: scale(var(--zoom));
+            transform-origin: top left;
+            box-shadow: 0 2px 8px rgba(0,0,0,.18);
+            border-radius: 1.2mm;
         }
 
         /* ══════════════════════════════════════════
-           STICKER — tema OSCURO en pantalla
+           STICKER — tamaño real 50 × 25 mm
            ══════════════════════════════════════════ */
         .sticker {
-            width: 76mm;
-            background: #0C1020;
+            width: 50mm;
+            height: 25mm;
+            background: #fff;
+            color: #111;
             display: flex;
-            flex-direction: column;
-            color: #fff;
-            position: relative;
+            align-items: stretch;
+            gap: 1.6mm;
+            padding: 1.4mm 1.6mm 1.4mm 1.4mm;
             overflow: hidden;
         }
 
-        /* Decoraciones de fondo */
-        .sticker::before {
-            content: '';
-            position: absolute; top: -18mm; right: -14mm;
-            width: 52mm; height: 52mm; border-radius: 50%;
-            background: radial-gradient(circle, rgba(220,30,30,.2) 0%, transparent 65%);
-            pointer-events: none;
-        }
-
-        /* ─ Header ─ */
-        .s-header {
-            display: flex; align-items: center; gap: 2.5mm;
-            padding: 2.5mm 3.5mm 2mm;
-            border-bottom: .5mm solid rgba(200,30,30,.6);
-            background: rgba(255,255,255,.04);
+        /* ─ QR ─ */
+        .s-qr-box {
+            position: relative;
+            width: 22.2mm;
+            height: 22.2mm;
             flex-shrink: 0;
         }
-        .s-logo {
-            width: 9mm; height: 9mm; border-radius: 50%;
-            object-fit: contain; background: #fff; flex-shrink: 0;
+        .s-qr {
+            width: 100%;
+            height: 100%;
+            display: block;
+            image-rendering: pixelated;
         }
-        .s-brand { flex: 1; min-width: 0; }
-        .s-brand-name  { font-size: 7.5pt; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: .3px; }
-        .s-brand-sub   { font-size: 4.5pt; color: rgba(255,255,255,.42); letter-spacing: .3px; }
-        .s-badge {
-            background: #DC1E1E; color: #fff;
-            font-size: 4.5pt; font-weight: 900;
-            padding: .8mm 1.8mm; border-radius: .8mm;
-            letter-spacing: .5px; text-transform: uppercase; flex-shrink: 0;
-        }
-
-        /* ─ Placa ─ */
-        .s-plate { text-align: center; padding: 3.5mm 3mm 2.5mm; flex-shrink: 0; }
-        .s-plate-label {
-            font-size: 4.5pt; color: rgba(255,255,255,.38);
-            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1mm;
-        }
-        .s-plate-number {
-            font-size: 32pt; font-weight: 900; color: #fff;
-            letter-spacing: 3px; text-transform: uppercase; line-height: 1;
+        /* Logo centrado: ocupa ~22% del QR (seguro con corrección de errores H) */
+        .s-qr-logo {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 5.2mm; height: 5.2mm;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 50%;
+            padding: .35mm;
+            object-fit: contain;
         }
 
-        /* ─ Divisor ─ */
-        .s-div {
-            height: .3mm; margin: 0 3.5mm; flex-shrink: 0;
-            background: linear-gradient(to right, transparent, rgba(220,30,30,.65), transparent);
+        /* ─ Info ─ */
+        .s-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-left: .3mm solid #111;
+            padding-left: 1.6mm;
         }
 
-        /* ─ KM ─ */
-        .s-km { padding: 2.5mm 3.5mm; flex-shrink: 0; }
-        .s-km-row { display: flex; align-items: center; margin-bottom: 1.5mm; }
-        .s-km-item { flex: 1; }
-        .s-km-lbl { font-size: 4.5pt; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .8px; margin-bottom: .5mm; }
-        .s-km-val { font-size: 14pt; font-weight: 900; color: #fff; line-height: 1; }
-        .s-km-val.next { color: #F59E0B; }
-        .s-km-sep { width: .25mm; height: 8mm; background: rgba(255,255,255,.1); margin: 0 3mm; }
-        .s-prog-track { background: rgba(255,255,255,.07); border-radius: 2mm; height: 2mm; overflow: hidden; }
-        .s-prog-fill  { height: 100%; border-radius: 2mm; background: linear-gradient(to right, #DC1E1E, #F59E0B); }
-
-        /* ─ Productos ─ */
-        .s-products { padding: 2mm 3.5mm; flex: 1; overflow: hidden; }
-        .s-prod-lbl { font-size: 4pt; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 1.2mm; }
-        .s-prod-item {
-            display: flex; align-items: flex-start; gap: 1.5mm;
-            padding: .8mm 0; border-bottom: .15mm solid rgba(255,255,255,.05);
+        .s-brand {
+            display: flex; align-items: center; gap: .8mm;
+            font-size: 4.6pt; font-weight: 800;
+            text-transform: uppercase; letter-spacing: .25px;
+            white-space: nowrap; overflow: hidden;
+            padding-bottom: .5mm;
+            border-bottom: .2mm solid #BBB;
         }
-        .s-prod-item:last-child { border-bottom: none; }
-        .s-prod-dot { width: 1.3mm; height: 1.3mm; border-radius: 50%; background: #DC1E1E; flex-shrink: 0; margin-top: .6mm; }
-        .s-prod-name { font-size: 6.5pt; color: rgba(255,255,255,.9); line-height: 1.3; text-transform: uppercase; font-weight: 600; flex: 1; }
-        .s-prod-qty  { font-size: 5.5pt; color: rgba(255,255,255,.35); flex-shrink: 0; }
-
-        /* ─ Footer + QR ─ */
-        .s-footer {
-            display: flex; align-items: flex-start; gap: 3mm;
-            padding: 2.5mm 3.5mm;
-            border-top: .3mm solid rgba(255,255,255,.06);
-            background: rgba(0,0,0,.2); flex-shrink: 0;
+        .s-brand-dot {
+            width: 1.3mm; height: 1.3mm; border-radius: .3mm;
+            background: #C0392B; flex-shrink: 0;
         }
-        .s-qr { width: 26mm; height: 26mm; background: #fff; padding: 1.5mm; border-radius: 1.5mm; flex-shrink: 0; display: block; }
-        .s-qr-info { flex: 1; min-width: 0; }
-        .s-scan-cta { font-size: 6.5pt; font-weight: 900; color: #F59E0B; text-transform: uppercase; letter-spacing: .3px; line-height: 1.3; margin-bottom: 1mm; }
-        .s-scan-sub { font-size: 5pt; color: rgba(255,255,255,.48); line-height: 1.4; }
-        .s-scan-meta { font-size: 4.5pt; color: rgba(255,255,255,.25); margin-top: 1.5mm; line-height: 1.4; }
+        .s-brand span { overflow: hidden; text-overflow: ellipsis; }
+
+        .s-next-lbl {
+            font-size: 4.3pt; font-weight: 700; color: #555;
+            text-transform: uppercase; letter-spacing: .9px;
+            margin-top: .6mm;
+        }
+        .s-next-val {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14pt; font-weight: 900; line-height: 1;
+            letter-spacing: -.2px; white-space: nowrap;
+        }
+        .s-next-val small { font-size: 6pt; font-weight: 800; margin-left: .4mm; letter-spacing: 0; }
+
+        .s-meta {
+            font-size: 4.8pt; color: #333; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis;
+        }
+        .s-meta b { color: #111; }
+
+        .s-line {
+            font-size: 5.2pt; font-weight: 800; text-transform: uppercase;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .s-line .plate {
+            border: .25mm solid #111; border-radius: .5mm;
+            padding: 0 .6mm; margin-right: .6mm; letter-spacing: .4px;
+        }
+
+        .s-scan {
+            font-size: 4pt; color: #555; text-transform: uppercase;
+            letter-spacing: .5px; white-space: nowrap; overflow: hidden;
+        }
 
         /* ══════════════════════════════════════════
-           IMPRESIÓN — tema BLANCO (sin fondo oscuro)
-           El fondo blanco imprime en Chrome, Firefox,
-           Edge sin necesitar "Gráficos de fondo".
-           Solo el QR (imagen) y el texto/bordes.
+           IMPRESIÓN — etiqueta térmica 50 × 25 mm
+           Solo negro: sin fondos ni degradados.
            ══════════════════════════════════════════ */
-        @page { size: auto; margin: 0; }
+        @page { size: 50mm 25mm; margin: 0; }
 
         @media print {
             html, body {
+                width: 50mm !important;
+                height: 25mm !important;
                 background: #fff !important;
                 padding: 0 !important;
                 margin: 0 !important;
                 display: block !important;
                 min-height: 0 !important;
+                overflow: hidden !important;
             }
 
             .actions-bar { display: none !important; }
 
-            .sticker-wrap {
+            .sticker-wrap { width: 50mm !important; height: 25mm !important; }
+            .sticker-wrap .sticker {
+                transform: none !important;
                 box-shadow: none !important;
                 border-radius: 0 !important;
-                width: 100%;
+                page-break-after: avoid;
+                break-after: avoid;
             }
 
-            /* Sticker ocupa toda la hoja / etiqueta */
-            .sticker {
-                width: 100% !important;
-                min-height: 100vh !important;
-                background: #fff !important;
-                color: #111 !important;
-                border-top: 5pt solid #C0392B;
-            }
-            .sticker::before, .sticker::after { display: none !important; }
-
-            /* Header */
-            .s-header { background: #F7F7F7 !important; border-bottom-color: #C0392B !important; }
-            .s-brand-name  { color: #111 !important; }
-            .s-brand-sub   { color: #888 !important; }
-            .s-badge       { background: #C0392B !important; color: #fff !important; }
-
-            /* Placa */
-            .s-plate-label  { color: #888 !important; }
-            .s-plate-number { color: #111 !important; text-shadow: none !important; }
-
-            /* Divisor */
-            .s-div { background: #e0e0e0 !important; }
-
-            /* KM */
-            .s-km-lbl { color: #777 !important; }
-            .s-km-val { color: #111 !important; }
-            .s-km-val.next { color: #C0392B !important; }
-            .s-km-sep { background: #e0e0e0 !important; }
-            .s-prog-track { background: #ebebeb !important; }
-            /* La barra de progreso usa background-color por lo que necesita el flag */
-            .s-prog-fill {
+            .s-brand-dot {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
-                background: linear-gradient(to right, #C0392B, #E67E22) !important;
+                background: #000 !important;
             }
-
-            /* Productos */
-            .s-prod-lbl  { color: #888 !important; }
-            .s-prod-name { color: #111 !important; }
-            .s-prod-qty  { color: #888 !important; }
-            .s-prod-dot  {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                background: #C0392B !important;
-            }
-            .s-prod-item { border-bottom-color: #eee !important; }
-
-            /* Footer */
-            .s-footer { background: #F7F7F7 !important; border-top-color: #e0e0e0 !important; }
-            .s-scan-cta  { color: #C0392B !important; }
-            .s-scan-sub  { color: #555 !important; }
-            .s-scan-meta { color: #999 !important; }
+            .s-next-lbl, .s-meta, .s-scan { color: #000 !important; }
+            /* Térmica monocroma: logo en escala de grises con contraste para que no salga como mancha */
+            .s-qr-logo { filter: grayscale(1) contrast(1.4); }
+            .s-brand { border-bottom-color: #000 !important; }
         }
     </style>
 </head>
@@ -237,22 +205,26 @@
 
 @php
     $historialUrl = config('app.url') . '/historial/' . urlencode($venta->placa ?: 'SIN-PLACA');
-    $qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=' . urlencode($historialUrl) . '&color=000000&bgcolor=ffffff&margin=4';
+    $qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . urlencode($historialUrl) . '&color=000000&bgcolor=ffffff&margin=0&qzone=1&ecc=H';
 
-    $kmActual  = intval($venta->km_actual);
-    $kmProximo = intval($venta->km_proximo_cambio);
-    $intervalo = 5000;
-    $kmBase    = $kmProximo - $intervalo;
-    $progreso  = ($kmBase > 0 && $kmActual > $kmBase)
-                    ? min(100, round(($kmActual - $kmBase) / $intervalo * 100))
-                    : 0;
-    $tieneKm   = $kmActual > 0 && $kmProximo > 0;
+    $kmActual   = intval($venta->km_actual);
+    $kmProximo  = intval($venta->km_proximo_cambio);
+    $tieneKm    = $kmProximo > 0;
     $tienePlaca = !empty(trim($venta->placa ?? ''));
+
+    $fechaServicio  = \Carbon\Carbon::parse($venta->fecha);
+    $fechaSugerida  = $fechaServicio->copy()->addMonths(3);
+
+    $primerProducto = count($productos) ? $productos[0]->producto : '';
+    $masProductos   = max(0, count($productos) - 1);
 @endphp
 
 {{-- Barra de acciones (solo pantalla) --}}
 <div class="actions-bar">
-    <h4>Preview del sticker #{{ $venta->id }}</h4>
+    <h4>
+        Sticker #{{ $venta->id }}
+        <small>Tamaño real 50 × 25 mm (vista ampliada)</small>
+    </h4>
     <div class="btns">
         <a href="{{ route('lubriteca.index') }}" class="btn-back">&#8592; Nueva venta</a>
         <button class="btn-print" onclick="window.print()">
@@ -265,106 +237,52 @@
 <div class="sticker-wrap">
 <div class="sticker">
 
-    {{-- HEADER --}}
-    <div class="s-header">
-        <img class="s-logo" src="{{ asset('/icon.jpg') }}" alt="Logo">
-        <div class="s-brand">
-            <div class="s-brand-name">Juancho's Car Wash</div>
-            <div class="s-brand-sub">Lavado &amp; Lubriteca Automotriz</div>
-        </div>
-        <div class="s-badge">Lubriteca</div>
-    </div>
-
-    {{-- PLACA --}}
-    <div class="s-plate">
-        @if($tienePlaca)
-        <div class="s-plate-label">Placa del veh&iacute;culo</div>
-        <div class="s-plate-number">{{ $venta->placa }}</div>
-        @else
-        <div class="s-plate-label">Cliente</div>
-        <div class="s-plate-number" style="font-size:16pt;letter-spacing:1px;">{{ $venta->nombre_cliente }}</div>
-        @endif
-    </div>
-
-    <div class="s-div"></div>
-
-    {{-- KM --}}
-    @if($tieneKm)
-    <div class="s-km">
-        <div class="s-km-row">
-            <div class="s-km-item">
-                <div class="s-km-lbl">Km actual</div>
-                <div class="s-km-val">{{ number_format($kmActual, 0, ',', '.') }}</div>
-            </div>
-            <div class="s-km-sep"></div>
-            <div class="s-km-item" style="text-align:right">
-                <div class="s-km-lbl">Pr&oacute;ximo cambio</div>
-                <div class="s-km-val next">{{ number_format($kmProximo, 0, ',', '.') }}</div>
-            </div>
-        </div>
-        <div class="s-prog-track">
-            <div class="s-prog-fill" style="width:{{ $progreso }}%"></div>
-        </div>
-    </div>
-    @else
-    <div style="padding:2mm 3.5mm;">
-        <div class="s-km-lbl">Fecha del servicio</div>
-        <div class="s-km-val" style="font-size:10pt;">{{ date('d/m/Y', strtotime($venta->fecha)) }}</div>
-    </div>
-    @endif
-
-    <div class="s-div"></div>
-
-    {{-- PRODUCTOS --}}
-    <div class="s-products">
-        <div class="s-prod-lbl">Productos / Servicios realizados</div>
-        @forelse($productos as $p)
-            <div class="s-prod-item">
-                <div class="s-prod-dot"></div>
-                <div class="s-prod-name">
-                    {{ $p->producto }}@if(!empty($p->marca ?? ''))&nbsp;<span style="opacity:.45;font-weight:400">{{ $p->marca }}</span>@endif
-                </div>
-                @if(intval($p->cantidad_vendida ?? 0) > 1)
-                <div class="s-prod-qty">×{{ $p->cantidad_vendida }}</div>
-                @endif
-            </div>
-        @empty
-            <div class="s-prod-item"><div class="s-prod-dot"></div><div class="s-prod-name">Sin detalle</div></div>
-        @endforelse
-    </div>
-
-    {{-- FOOTER + QR --}}
-    <div class="s-footer">
+    <div class="s-qr-box">
         <img class="s-qr" src="{{ $qrUrl }}" alt="QR historial vehículo">
-        <div class="s-qr-info">
-            <div class="s-scan-cta">&#128247; Escanear para<br>ver historial</div>
-            <div class="s-scan-sub">Historial completo de<br>servicios del veh&iacute;culo</div>
-            <div class="s-scan-meta">
-                {{ date('d/m/Y H:i', strtotime($venta->fecha)) }}<br>
-                Factura #{{ $venta->id }}
-            </div>
+        <img class="s-qr-logo" src="{{ asset('/icon.jpg') }}" alt="">
+    </div>
+
+    <div class="s-info">
+        <div class="s-brand">
+            <div class="s-brand-dot"></div>
+            <span>Juancho's Car Wash</span>
         </div>
+
+        <div>
+            @if($tieneKm)
+            <div class="s-next-lbl">Pr&oacute;ximo cambio</div>
+            <div class="s-next-val" id="nextVal">{{ number_format($kmProximo, 0, ',', '.') }}<small>KM</small></div>
+            @else
+            <div class="s-next-lbl">Pr&oacute;x. cambio sugerido</div>
+            <div class="s-next-val" id="nextVal">{{ $fechaSugerida->format('d/m/Y') }}</div>
+            @endif
+        </div>
+
+        <div class="s-meta">
+            @if($kmActual > 0)<b>Actual</b> {{ number_format($kmActual, 0, ',', '.') }} &middot; @endif{{ $fechaServicio->format('d/m/Y') }}
+        </div>
+
+        <div class="s-line">
+            @if($tienePlaca)<span class="plate">{{ $venta->placa }}</span>@else{{ $venta->nombre_cliente }} &middot; @endif{{ $primerProducto }}@if($masProductos > 0) +{{ $masProductos }}@endif
+        </div>
+
+        <div class="s-scan">&#9656; Escanea: historial &middot; #{{ $venta->id }}</div>
     </div>
 
 </div>
 </div>
 
 <script>
-/* Auto-ajuste del font-size en impresión según área disponible */
-window.addEventListener('beforeprint', function () {
-    /* Escala la fuente de la placa para que no se corte */
-    var plate = document.querySelector('.s-plate-number');
-    if (plate) {
-        var len = (plate.textContent || '').trim().length;
-        if (len <= 6) plate.style.fontSize = '30pt';
-        else if (len <= 8) plate.style.fontSize = '24pt';
-        else plate.style.fontSize = '18pt';
+/* Reduce la fuente del valor principal si no cabe en el ancho disponible */
+(function () {
+    var el = document.getElementById('nextVal');
+    if (!el) return;
+    var size = 14;
+    while (el.scrollWidth > el.clientWidth && size > 8) {
+        size -= 0.5;
+        el.style.fontSize = size + 'pt';
     }
-});
-window.addEventListener('afterprint', function () {
-    var plate = document.querySelector('.s-plate-number');
-    if (plate) plate.style.fontSize = '';
-});
+})();
 </script>
 </body>
 </html>

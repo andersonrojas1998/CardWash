@@ -138,6 +138,9 @@ Route::any('/{page?}',function(){
 })->where('page','.*');*/
 Auth::routes();
 
+// Pública: historial del vehículo (QR del sticker de lubriteca, lo escanea el cliente)
+Route::get('historial/{placa}', 'ticketController@historialVehiculo')->name('historial.vehiculo');
+
 Route::group(['middleware' => ['auth']], function () {    
     Route::get('/home', 'HomeController@index')->name('home');                    
     require (__DIR__ . '/rt_teacher.php');
