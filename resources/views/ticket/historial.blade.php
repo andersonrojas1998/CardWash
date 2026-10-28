@@ -148,7 +148,7 @@
         {{-- Stats --}}
         @php
             $totalServicios = $ventas->count();
-            $ultimoKm = $ventas->whereNotNull('km_actual')->first();
+            $ultimoKm = $ventas->first(function ($v) { return !is_null($v->km_actual); });
         @endphp
         <div class="stats-row" style="margin-top: 16px;">
             <div class="stat-card">
