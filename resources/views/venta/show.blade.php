@@ -117,7 +117,7 @@
                         <strong><i class="mdi mdi-oil"></i> Ficha de Aceite</strong>&nbsp;
                         <span class="text-muted">Km actual: {{ number_format($venta->km_actual,0,',','.') }} &bull; Próximo: {{ number_format($venta->km_proximo_cambio,0,',','.') }}</span>
                     </div>
-                    <a href="/etiquetaAceite/{{$venta->id}}" target="_blank" class="btn btn-warning btn-sm">
+                    <a href="{{ route('lubriteca.sticker', $venta->id) }}" target="_blank" class="btn btn-warning btn-sm">
                         <i class="mdi mdi-sticker-outline"></i>&nbsp;Imprimir Etiqueta
                     </a>
                 </div>
