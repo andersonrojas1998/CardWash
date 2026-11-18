@@ -26,25 +26,32 @@ class VentaController extends Controller
 
     public function dataServicios()
     {
+        // Incluye servicios y ventas de productos (cambios de aceite, etc.) para ver el orden de llegada
         $ventas = Venta::with([
                 'detalle_paquete.paquete',
                 'detalle_paquete.tipo_vehiculo',
+                'detalle_venta_productos.detalle_compra_productos.producto',
                 'user',
                 'estado_venta'
             ])
-            ->whereNotNull('id_detalle_paquete')
             ->orderBy('id', 'desc')
             ->take(500)
             ->get();
 
         $data = $ventas->map(function ($v) {
+            $productos = $v->detalle_venta_productos->map(function ($dvp) {
+                return optional(optional($dvp->detalle_compra_productos)->producto)->nombre ?? null;
+            })->filter()->unique()->implode(', ');
+
             return [
                 'id'            => $v->id,
+                'tipo'          => $v->id_detalle_paquete ? 'servicio' : 'producto',
                 'fecha'         => date('d/m/Y H:i', strtotime($v->fecha)),
                 'cliente'       => $v->nombre_cliente ?? '-',
-                'placa'         => $v->placa ?? '-',
+                'placa'         => $v->placa ?: '-',
                 'tipo_vehiculo' => optional(optional($v->detalle_paquete)->tipo_vehiculo)->descripcion ?? '-',
                 'paquete'       => optional(optional($v->detalle_paquete)->paquete)->nombre ?? '-',
+                'productos'     => $productos,
                 'atendido_por'  => optional($v->user)->name ?? '-',
                 'total'         => (float) $v->total_venta,
                 'estado'        => optional($v->estado_venta)->nombre ?? '-',

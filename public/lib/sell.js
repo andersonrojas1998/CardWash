@@ -111,10 +111,21 @@ $(function(){
             { data: 'fecha',         className: 'text-nowrap' },
             { data: 'cliente',       render: function(d){ return '<span class="td-cliente">'+titleCase(d)+'</span>'; } },
             { data: 'placa',         className: 'text-center', render: function(d){ return renderPlaca(d); } },
-            { data: 'tipo_vehiculo', className: 'text-center text-uppercase', render: function(d){
+            { data: 'tipo_vehiculo', className: 'text-center text-uppercase', render: function(d,t,row){
+                if (row.tipo === 'producto') {
+                    return '<span class="mdi mdi-oil mdi-18px text-warning d-block"></span><small style="font-size:.68rem;">Producto</small>';
+                }
                 return '<span class="mdi '+vehicleIcon(d)+' mdi-18px text-primary d-block"></span><small style="font-size:.68rem;">'+d+'</small>';
             }},
-            { data: 'paquete',       render: function(d){ return '<b class="text-uppercase" style="font-size:.8rem;">'+d+'</b>'; } },
+            { data: 'paquete',       render: function(d,t,row){
+                if (row.tipo === 'producto') {
+                    return '<span class="badge badge-warning text-white mr-1" style="font-size:.6rem;">PRODUCTO</span>'
+                         + '<span class="text-uppercase" style="font-size:.78rem;">'+(row.productos || '-')+'</span>';
+                }
+                var h = '<b class="text-uppercase" style="font-size:.8rem;">'+d+'</b>';
+                if (row.productos) h += '<br><small class="text-muted text-uppercase">+ '+row.productos+'</small>';
+                return h;
+            }},
             { data: 'atendido_por',  className: 'text-uppercase', render: function(d){ return '<small>'+d+'</small>'; } },
             { data: 'total',         className: 'text-right', render: function(d){ return '<b class="text-danger">'+fmt(d)+'</b>'; } },
             { data: 'estado',        className: 'text-center', render: function(d,t,row){ return renderEstado(d, row.id_estado); } },
