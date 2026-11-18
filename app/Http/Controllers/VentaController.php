@@ -9,6 +9,7 @@ use App\Model\Producto;
 use App\Model\TipoVehiculo;
 use App\Model\users;
 use App\Model\Venta;
+use App\Services\StockService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -100,7 +101,11 @@ class VentaController extends Controller
         $tipos_vehiculo = TipoVehiculo::all();
         $date = Carbon::now();
         $date->setTimezone('America/Bogota');
-        $productos=DB::SELECT("CALL sp_products('1,2')  ");
+        // sp_products recibe un solo id de área: "IN('1,2')" en MySQL solo compara con 1, por eso se consulta por separado
+        $productos = array_merge(
+            DB::SELECT("CALL sp_products('1')"),
+            DB::SELECT("CALL sp_products('2')")
+        );
         $usuarios = users::select("users.*")->join("roles as r", "cargo", "r.id")->where("r.slug", "Lavador")->get();
         return view('venta.create', compact('tipos_vehiculo', 'date', 'productos', 'usuarios'));
     }
@@ -126,80 +131,32 @@ class VentaController extends Controller
             if(isset($request->all()['id_producto'])   &&    !isset($request->all()['id_detalle_paquete']) ){
                 $status=3;
             }
-            $venta = new Venta($request->all());
-            $venta->fecha=date('Y-m-d h:i:s');
-            $venta->id_estado_venta=$status;
-            $venta->total_venta= floatval($request->all()['importe_total']);
-            $venta->precio_venta_paquete= (isset($request->all()['precio_venta_paquete']))? floatval($request->all()['precio_venta_paquete']):0;            
-            $venta->porcentaje_paquete= (isset($request->all()['porcentaje_paquete']))?  intval($request->all()['porcentaje_paquete']):0;
-            $venta->save();
-           
-            if(isset($request->all()['id_producto'])){
+            $venta = DB::transaction(function () use ($request, $status) {
+                $venta = new Venta($request->all());
+                $venta->fecha = date('Y-m-d H:i:s');
+                $venta->id_estado_venta = $status;
+                $venta->km_actual = $request->km_actual ?: null;
+                $venta->km_proximo_cambio = $request->km_proximo_cambio ?: null;
+                $venta->total_venta = floatval($request->all()['importe_total']);
+                $venta->precio_venta_paquete = (isset($request->all()['precio_venta_paquete']))? floatval($request->all()['precio_venta_paquete']):0;
+                $venta->porcentaje_paquete = (isset($request->all()['porcentaje_paquete']))?  intval($request->all()['porcentaje_paquete']):0;
+                $venta->save();
 
-                //dd($request->all()['id_producto']);
-                foreach($request->all()['id_producto'] as $key => $id_producto){
-                  
-            
-                    $prd=intval($id_producto);
-                    $stock=DB::SELECT("CALL sp_sell_prd_stock('$prd')  "); // consultar productos  disponibilidad order by DESC cantidad
+                foreach ((array) $request->input('id_producto', []) as $key => $id_producto) {
+                    StockService::descontar(
+                        $venta->id,
+                        intval($id_producto),
+                        intval($request->input('cantidad')[$key]),
+                        floatval($request->input('precio_venta')[$key])
+                    );
+                }
 
-               
-                    $solicitado=intval($request->all()['cantidad'][$key]);   
-                    $pricesale=floatval($request->all()['precio_venta'][$key]);                
-                    $cantidadbd=0;                                        
-                    foreach($stock as $i=> $st){
-
-
-                     $cantidadbd+=intval($st->restante);
-                     $op=$solicitado-$cantidadbd;
-                        
-                        if($op< 0){   // cantidad cuando exiten mayor en BD  --  negativo
-
-
-                                $detalle_venta_producto = new DetalleVentaProductos([
-                                    "id_detalle_producto" => $st->id_detalle_compra, // $id_producto,
-                                     "id_venta" => $venta->id,
-                                     "cantidad" => $solicitado, //  $request->all()['cantidad'][$key],
-                                     "precio_venta" => $pricesale,
-                                     "margen_ganancia" => $pricesale - $st->precio_compra,
-                                 ]);
-                                 $detalle_venta_producto->save();
-
-                                break;
-                        }elseif($op > 0 ){ // cantidad de solicitado es mayor 
-                            // postivo 
-
-                            // se coloca el de la bd 
-                            $solicitado-=$cantidadbd;
-                            
-                             $detalle_venta_producto = new DetalleVentaProductos([
-                               "id_detalle_producto" => $st->id_detalle_compra, // $id_producto,
-                                "id_venta" => $venta->id,
-                                "cantidad" => $cantidadbd, //  $request->all()['cantidad'][$key],
-                                "precio_venta" =>$pricesale,
-                                "margen_ganancia" => $pricesale - $st->precio_compra,
-                            ]);
-                            $detalle_venta_producto->save();
-
-                        }else if ($op==0){
-
-
-                            $detalle_venta_producto = new DetalleVentaProductos([
-                                "id_detalle_producto" => $st->id_detalle_compra, // $id_producto,
-                                 "id_venta" => $venta->id,
-                                 "cantidad" => $cantidadbd, //  $request->all()['cantidad'][$key],
-                                 "precio_venta" => $pricesale,
-                                 "margen_ganancia" => $pricesale - $st->precio_compra,
-                             ]);
-                             $detalle_venta_producto->save();
-                        }
-                    }
-                }                
-            }
+                return $venta;
+            });
 
             return redirect()->route('venta.show', [$venta->id])->with('success', 'Se ha registrado la venta satisfactoriamente');
         }catch(Exception $e){
-            return redirect()->route('venta.index')->with('fail', 'Ha ocurrido un error al guardar<br><br>' . $e->getMessage());
+            return redirect()->back()->withInput()->with('fail', 'No se pudo guardar la venta: ' . $e->getMessage());
         }
     }
 

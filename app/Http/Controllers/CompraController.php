@@ -8,6 +8,7 @@ use App\Model\Compra;
 use App\Model\DetalleCompraProductos;
 use App\Model\Producto;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class CompraController extends Controller
 {
@@ -50,31 +51,30 @@ class CompraController extends Controller
     public function store(StoreCompra $request)
     {
         try{
-            
-            $compra = new Compra($request->all());
-            $compra->condiciones_id = 1;
-            $compra->save();
+            // Todo o nada: si falla un producto no queda la compra a medias (sin stock)
+            DB::transaction(function () use ($request) {
+                $compra = new Compra($request->all());
+                $compra->condiciones_id = 1;
+                $compra->save();
 
-            $detalle_compra_productos = [];
+                foreach($request->all()['id_producto'] as $key => $id_producto){
+                    $cantidad = intval($request->all()['cantidad'][$key]);
+                    if ($cantidad <= 0) {
+                        throw new Exception('La cantidad de cada producto debe ser mayor a 0.');
+                    }
 
-            foreach($request->all()['id_producto'] as $key => $id_producto){
-                $detalle_compra_productos[$key] = [
-                'id_producto' => $id_producto,
-                'cantidad' => $request->all()['cantidad'][$key],
-                'precio_compra' => $request->all()['precio_compra'][$key],
-                // 'precio_venta' => $request->all()['precio_venta'][$key],
-                'id_compra' => $compra->id
-                ];
-            }
+                    $producto = Producto::findOrFail($id_producto);
+                    $producto->cant_stock = $producto->cant_stock + $cantidad;
+                    $producto->update();
 
-            foreach($detalle_compra_productos as $key => $detalle_compra_producto){
-                $producto = Producto::find($detalle_compra_producto['id_producto']);
-                $producto->cant_stock = $producto->cant_stock + $detalle_compra_producto['cantidad'];
-                $producto->update();
-
-                $detalle_compra_producto = new DetalleCompraProductos($detalle_compra_producto);
-                $detalle_compra_producto->save();
-            }
+                    DetalleCompraProductos::create([
+                        'id_producto' => $id_producto,
+                        'cantidad' => $cantidad,
+                        'precio_compra' => $request->all()['precio_compra'][$key],
+                        'id_compra' => $compra->id
+                    ]);
+                }
+            });
 
             return redirect()->route('compra.index')->with('success', 'Se ha creado la compra satisfactoriamente');
         }catch(Exception $e){
@@ -96,9 +96,10 @@ class CompraController extends Controller
     public function update(UpdateCompra $request)
     {
         try{
+          DB::transaction(function () use ($request) {
             $compra = Compra::find($request->input('id'));
             $compra->update($request->all());
-            
+
             foreach ($request->all()['id_detalle_compra_producto'] as $key => $id_detalle_compra_producto) {
                 $detalle_compra_producto = DetalleCompraProductos::find($id_detalle_compra_producto);
                 $values = [
@@ -120,6 +121,7 @@ class CompraController extends Controller
                 $producto->cant_stock = $producto->cant_stock + $values['cantidad'];
                 $producto->save();
             }
+          });
 
             return redirect()->route('compra.index')->with('success', 'Se ha modificado la compra satisfactoriamente.');
         }catch(Exception $e){

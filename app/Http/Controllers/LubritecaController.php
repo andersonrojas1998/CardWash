@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\DetalleVentaProductos;
 use App\Model\Venta;
 use App\Model\users;
+use App\Services\StockService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -33,61 +34,32 @@ class LubritecaController extends Controller
         ]);
 
         try {
-            $venta = new Venta();
-            $venta->nombre_cliente    = strtoupper($request->nombre_cliente);
-            $venta->placa             = strtoupper($request->placa ?? '');
-            $venta->numero_telefono   = $request->numero_telefono;
-            $venta->km_actual         = $request->km_actual ?: null;
-            $venta->km_proximo_cambio = $request->km_proximo_cambio ?: null;
-            $venta->id_usuario        = $request->id_usuario;
-            $venta->id_estado_venta   = 3;
-            $venta->fecha             = date('Y-m-d H:i:s');
-            $venta->total_venta       = floatval($request->total_venta);
-            $venta->precio_venta_paquete = 0;
-            $venta->porcentaje_paquete   = 0;
-            $venta->save();
+            $venta = DB::transaction(function () use ($request) {
+                $venta = new Venta();
+                $venta->nombre_cliente    = strtoupper($request->nombre_cliente);
+                $venta->placa             = strtoupper($request->placa ?? '');
+                $venta->numero_telefono   = $request->numero_telefono;
+                $venta->km_actual         = $request->km_actual ?: null;
+                $venta->km_proximo_cambio = $request->km_proximo_cambio ?: null;
+                $venta->id_usuario        = $request->id_usuario;
+                $venta->id_estado_venta   = 3;
+                $venta->fecha             = date('Y-m-d H:i:s');
+                $venta->total_venta       = floatval($request->total_venta);
+                $venta->precio_venta_paquete = 0;
+                $venta->porcentaje_paquete   = 0;
+                $venta->save();
 
-            foreach ($request->productos as $item) {
-                $idProducto = intval($item['id_producto']);
-                $solicitado = intval($item['cantidad']);
-                $precioVenta = floatval($item['precio_venta']);
-
-                $stock = DB::SELECT("CALL sp_sell_prd_stock('$idProducto')");
-                $cantidadbd = 0;
-
-                foreach ($stock as $st) {
-                    $cantidadbd += intval($st->restante);
-                    $op = $solicitado - $cantidadbd;
-
-                    if ($op < 0) {
-                        DetalleVentaProductos::create([
-                            'id_detalle_producto' => $st->id_detalle_compra,
-                            'id_venta'            => $venta->id,
-                            'cantidad'            => $solicitado,
-                            'precio_venta'        => $precioVenta,
-                            'margen_ganancia'     => $precioVenta - $st->precio_compra,
-                        ]);
-                        break;
-                    } elseif ($op > 0) {
-                        $solicitado -= $cantidadbd;
-                        DetalleVentaProductos::create([
-                            'id_detalle_producto' => $st->id_detalle_compra,
-                            'id_venta'            => $venta->id,
-                            'cantidad'            => $cantidadbd,
-                            'precio_venta'        => $precioVenta,
-                            'margen_ganancia'     => $precioVenta - $st->precio_compra,
-                        ]);
-                    } else {
-                        DetalleVentaProductos::create([
-                            'id_detalle_producto' => $st->id_detalle_compra,
-                            'id_venta'            => $venta->id,
-                            'cantidad'            => $cantidadbd,
-                            'precio_venta'        => $precioVenta,
-                            'margen_ganancia'     => $precioVenta - $st->precio_compra,
-                        ]);
-                    }
+                foreach ($request->productos as $item) {
+                    StockService::descontar(
+                        $venta->id,
+                        intval($item['id_producto']),
+                        intval($item['cantidad']),
+                        floatval($item['precio_venta'])
+                    );
                 }
-            }
+
+                return $venta;
+            });
 
             return response()->json(['id' => $venta->id, 'success' => true]);
         } catch (Exception $e) {

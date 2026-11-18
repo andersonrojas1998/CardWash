@@ -164,7 +164,9 @@
            IMPRESIÓN — etiqueta térmica 50 × 25 mm
            Solo negro: sin fondos ni degradados.
            ══════════════════════════════════════════ */
-        @page { size: 50mm 25mm; margin: 0; }
+        /* Sin "size": si se declara 50x25 Chrome lo marca como horizontal y el driver lo rota.
+           El tamaño 50x25 lo define el papel de la impresora (Y43BT Label → 50 x 25 mm, vertical). */
+        @page { margin: 0; }
 
         @media print {
             html, body {
